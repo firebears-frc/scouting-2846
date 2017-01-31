@@ -39,20 +39,20 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	/** SQL statement to create event table */
 	static private final String SQL_CREATE_EVENTS =
 		"CREATE TABLE " + FRCEvent.TABLE_NAME + " (" +
-		FRCEvent.COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
-		FRCEvent.COL_KEY + " TEXT UNIQUE, " +
-		FRCEvent.COL_NAME + " TEXT NOT NULL, " +
-		FRCEvent.COL_SHORT + " TEXT, " +
-		FRCEvent.COL_OFFICIAL + " INTEGER NOT NULL, " +
-		FRCEvent.COL_EV_CODE + " TEXT NOT NULL, " +
-		FRCEvent.COL_EV_TYPE + " INTEGER NOT NULL, " +
-		FRCEvent.COL_DISTRICT + " INTEGER NOT NULL, " +
-		FRCEvent.COL_YEAR + " INTEGER NOT NULL, " +
-		FRCEvent.COL_WEEK + " INTEGER, " +
-		FRCEvent.COL_LOCATION + " TEXT NOT NULL, " +
+		FRCEvent.COL_ID +	" INTEGER PRIMARY KEY autoincrement, "+
+		FRCEvent.COL_KEY +	" TEXT UNIQUE NOT NULL, " +
+		FRCEvent.COL_NAME +	" TEXT NOT NULL, " +
+		FRCEvent.COL_SHORT +	" TEXT, " +
+		FRCEvent.COL_OFFICIAL +	" INTEGER NOT NULL, " +
+		FRCEvent.COL_EV_CODE +	" TEXT NOT NULL, " +
+		FRCEvent.COL_EV_TYPE +	" INTEGER NOT NULL, " +
+		FRCEvent.COL_DISTRICT +	" INTEGER NOT NULL, " +
+		FRCEvent.COL_YEAR +	" INTEGER NOT NULL, " +
+		FRCEvent.COL_WEEK +	" INTEGER, " +
+		FRCEvent.COL_LOCATION +	" TEXT NOT NULL, " +
 		FRCEvent.COL_VENUE_ADDRESS + " TEXT, " +
-		FRCEvent.COL_TIMEZONE + " TEXT, " +
-		FRCEvent.COL_WEBSITE + " TEXT)";
+		FRCEvent.COL_TIMEZONE +	" TEXT, " +
+		FRCEvent.COL_WEBSITE +	" TEXT)";
 
 	/** SQL statement to drop event table */
 	static private final String SQL_DROP_EVENTS =
@@ -77,6 +77,26 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		"'practice',' Practice Event','Practice','0','1','1'," +
 		"'DISTRICT','2017','0','LOCATION','VENUE','TZ','WEBSITE')";
 
+	/** SQL statement to create team table */
+	static private final String SQL_CREATE_TEAMS =
+		"CREATE TABLE " + Team.TABLE_NAME + " (" +
+		Team.COL_ID +		" INTEGER PRIMARY KEY autoincrement, "+
+		Team.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
+		Team.COL_TEAM_NUMBER +	" INTEGER NOT NULL, " +
+		Team.COL_NAME +		" TEXT NOT NULL, " +
+		Team.COL_NICKNAME +	" TEXT, " +
+		Team.COL_WEBSITE +	" TEXT, " +
+		Team.COL_LOCALITY +	" TEXT NOT NULL, " +
+		Team.COL_REGION +	" TEXT, " +
+		Team.COL_COUNTRY +	" TEXT, " +
+		Team.COL_LOCATION +	" TEXT NOT NULL, " +
+		Team.COL_ROOKIE_YEAR +	" INTEGER NOT NULL, " +
+		Team.COL_MOTTO +	" TEXT)";
+
+	/** SQL statement to drop team table */
+	static private final String SQL_DROP_TEAMS =
+		"DROP TABLE IF EXISTS " + Team.TABLE_NAME;
+
 	/** Create our DB helper */
 	public OurDbHelper(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -85,8 +105,9 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	@Override
        	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_EVENTS);
-		db.execSQL(SQL_INSERT_EVENTS);
+		db.execSQL(SQL_CREATE_TEAMS);
 		// FIXME: move somewhere else
+		db.execSQL(SQL_INSERT_EVENTS);
 		try {
 			insertEvents(db, TBAFetcher.fetchEvents());
 		}
@@ -113,6 +134,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion,
 		int newVersion)
 	{
+		db.execSQL(SQL_DROP_TEAMS);
 		db.execSQL(SQL_DROP_EVENTS);
 		onCreate(db);
 	}

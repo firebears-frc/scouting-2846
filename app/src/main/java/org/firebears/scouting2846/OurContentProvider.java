@@ -65,6 +65,9 @@ public class OurContentProvider extends ContentProvider {
 		if (suri.startsWith(FRCEvent.CONTENT_URI.toString())) {
 			return queryEvent(projection, selection,
 				selectionArgs, sortOrder);
+		} else if (suri.startsWith(Team.CONTENT_URI.toString())) {
+			return queryTeam(projection, selection,
+				selectionArgs, sortOrder);
 		} else
 			return null;
 	}
@@ -74,6 +77,15 @@ public class OurContentProvider extends ContentProvider {
 	{
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(FRCEvent.TABLE_NAME);
+		return qb.query(dbHelper.getReadableDatabase(), projection,
+			selection, selectionArgs, null, null, sortOrder);
+	}
+
+	private Cursor queryTeam(String[] projection, String selection,
+		String[] selectionArgs, String sortOrder)
+	{
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+		qb.setTables(Team.TABLE_NAME);
 		return qb.query(dbHelper.getReadableDatabase(), projection,
 			selection, selectionArgs, null, null, sortOrder);
 	}
