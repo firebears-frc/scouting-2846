@@ -21,7 +21,6 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
@@ -68,8 +67,7 @@ public class EventDetailActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (android.R.id.home == item.getItemId()) {
-			NavUtils.navigateUpTo(this, new Intent(this,
-			       EventListActivity.class));
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
