@@ -28,6 +28,9 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
@@ -82,6 +85,7 @@ public class EventListActivity extends AppCompatActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_list_activity);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		int[] cols = new int[] { R.id.event_id, R.id.event_content };
 		adapter = new SimpleCursorAdapter(this,
 			R.layout.event_list_entry, null, COLS, cols, 0);
@@ -106,5 +110,12 @@ public class EventListActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, EventDetailActivity.class);
 		intent.putExtra(EventDetailFragment.ARG_EVENT_ID, _id);
 		startActivity(intent);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.action_menu, menu);
+		return true;
 	}
 }

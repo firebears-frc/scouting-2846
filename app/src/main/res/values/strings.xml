@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Scouting 2846!</string>
     <string name="title_event_list">Event List</string>
+    <string name="action_refresh">Refresh</string>
 </resources>
