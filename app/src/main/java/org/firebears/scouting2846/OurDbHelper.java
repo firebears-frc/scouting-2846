@@ -21,13 +21,9 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 /**
  * Our DB helper.
@@ -58,25 +54,6 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_EVENTS =
 		"DROP TABLE IF EXISTS " + FRCEvent.TABLE_NAME;
 
-	/** SQL statement to insert practice event */
-	static private final String SQL_INSERT_EVENTS =
-		"INSERT INTO " + FRCEvent.TABLE_NAME + " (" +
-		FRCEvent.COL_KEY + ", " +
-		FRCEvent.COL_NAME + ", " +
-		FRCEvent.COL_SHORT + ", " +
-		FRCEvent.COL_OFFICIAL + ", " +
-		FRCEvent.COL_EV_CODE + ", " +
-		FRCEvent.COL_EV_TYPE + ", " +
-		FRCEvent.COL_DISTRICT + ", " +
-		FRCEvent.COL_YEAR + ", " +
-		FRCEvent.COL_WEEK + ", " +
-		FRCEvent.COL_LOCATION + ", " +
-		FRCEvent.COL_VENUE_ADDRESS + ", " +
-		FRCEvent.COL_TIMEZONE + ", " +
-		FRCEvent.COL_WEBSITE + ") VALUES (" +
-		"'practice',' Practice Event','Practice','0','1','1'," +
-		"'DISTRICT','2017','0','LOCATION','VENUE','TZ','WEBSITE')";
-
 	/** SQL statement to create team table */
 	static private final String SQL_CREATE_TEAMS =
 		"CREATE TABLE " + Team.TABLE_NAME + " (" +
@@ -106,28 +83,6 @@ public class OurDbHelper extends SQLiteOpenHelper {
        	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_EVENTS);
 		db.execSQL(SQL_CREATE_TEAMS);
-		// FIXME: move somewhere else
-		db.execSQL(SQL_INSERT_EVENTS);
-		try {
-			insertEvents(db, TBAFetcher.fetchEvents());
-		}
-		catch (Exception e) {
-			Log.e("OurDbHelper", "exception " + e);
-		}
-	}
-
-	static private void insertEvents(SQLiteDatabase db,
-		String js) throws JSONException
-	{
-//		ContentResolver cr = ctx.getContentResolver();
-		JSONArray ar = new JSONArray(js);
-		for (int i = 0; i < ar.length(); i++) {
-			ContentValues cv = FRCEvent.parse(ar.getJSONObject(i));
-			if (cv != null) {
-				db.insert(FRCEvent.TABLE_NAME, null, cv);
-//				cr.insert(FRCEvent.CONTENT_URI, cv);
-			}
-		}
 	}
 
 	@Override
