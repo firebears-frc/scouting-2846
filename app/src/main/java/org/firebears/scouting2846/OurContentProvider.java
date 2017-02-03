@@ -28,6 +28,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Content provider for DB stuff.
@@ -54,58 +55,56 @@ public class OurContentProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
+		// no MIME type
 		return null;
+	}
+
+	private String getTableName(Uri uri) {
+		String suri = uri.toString();
+		if (suri.startsWith(FRCEvent.CONTENT_URI.toString()))
+			return FRCEvent.TABLE_NAME;
+		else if (suri.startsWith(Team.CONTENT_URI.toString()))
+			return Team.TABLE_NAME;
+		else
+			return null;
 	}
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 		String[] selectionArgs, String sortOrder)
 	{
-		String suri = uri.toString();
-		if (suri.startsWith(FRCEvent.CONTENT_URI.toString())) {
-			return queryEvent(projection, selection,
-				selectionArgs, sortOrder);
-		} else if (suri.startsWith(Team.CONTENT_URI.toString())) {
-			return queryTeam(projection, selection,
-				selectionArgs, sortOrder);
+		String tn = getTableName(uri);
+		if (tn != null) {
+			SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+			qb.setTables(tn);
+			return qb.query(dbHelper.getReadableDatabase(),
+				projection, selection, selectionArgs, null,
+				null, sortOrder);
 		} else
 			return null;
 	}
 
-	private Cursor queryEvent(String[] projection, String selection,
-		String[] selectionArgs, String sortOrder)
-	{
-		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-		qb.setTables(FRCEvent.TABLE_NAME);
-		return qb.query(dbHelper.getReadableDatabase(), projection,
-			selection, selectionArgs, null, null, sortOrder);
-	}
-
-	private Cursor queryTeam(String[] projection, String selection,
-		String[] selectionArgs, String sortOrder)
-	{
-		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-		qb.setTables(Team.TABLE_NAME);
-		return qb.query(dbHelper.getReadableDatabase(), projection,
-			selection, selectionArgs, null, null, sortOrder);
-	}
-
 	@Override
 	public Uri insert(Uri uri, ContentValues cv) {
-		String suri = uri.toString();
-		if (suri.startsWith(FRCEvent.CONTENT_URI.toString())) {
-			SQLiteDatabase db = dbHelper.getWritableDatabase();	
-			long _id = db.insert(FRCEvent.TABLE_NAME, null, cv);
+		String tn = getTableName(uri);
+		if (tn != null) {
+			SQLiteDatabase db = dbHelper.getWritableDatabase();
+			long _id = db.insert(tn, null, cv);
 			return ContentUris.withAppendedId(uri, _id);
 		} else
 			return null;
 	}
 
 	@Override
-	public int update(Uri uri, ContentValues values, String selection,
+	public int update(Uri uri, ContentValues cv, String selection,
 		String[] selectionArgs)
 	{
-		return 0;
+		String tn = getTableName(uri);
+		if (tn != null) {
+			SQLiteDatabase db = dbHelper.getWritableDatabase();
+			return db.update(tn, cv, selection, selectionArgs);
+		} else
+			return 0;
 	}
 
 	@Override
