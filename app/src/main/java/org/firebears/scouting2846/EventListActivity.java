@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -126,10 +127,17 @@ public class EventListActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (R.id.action_refresh == item.getItemId()) {
-			new FetchEvents(this).execute();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		if (R.id.action_refresh == item.getItemId())
+			return onRefreshSelected();
+		else
+			return super.onOptionsItemSelected(item);
+	}
+
+	private boolean onRefreshSelected() {
+		View v = findViewById(R.id.event_list);
+		Snackbar.make(v, R.string.fetch_events, Snackbar.LENGTH_LONG)
+		        .show();
+		new FetchEvents(this).execute();
+		return true;
 	}
 }
