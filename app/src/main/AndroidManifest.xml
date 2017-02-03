@@ -30,6 +30,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.firebears.scouting2846.EventListActivity"/>
         </activity>
+        <activity
+            android:name=".TeamListActivity"
+            android:parentActivityName=".EventDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

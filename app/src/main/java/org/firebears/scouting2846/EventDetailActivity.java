@@ -21,12 +21,13 @@
  */
 package org.firebears.scouting2846;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 
 /**
  * An activity representing the details of an FRC event.
@@ -67,9 +68,23 @@ public class EventDetailActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (android.R.id.home == item.getItemId()) {
-			NavUtils.navigateUpFromSameTask(this);
+			onBackPressed();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void startEventTeams(View v) {
+		Intent intent = new Intent(this, TeamListActivity.class);
+		intent.putExtra(EventDetailFragment.ARG_EVENT_ID,getEventId());
+		startActivity(intent);
+	}
+
+	private int getEventId() {
+		return getIntent().getIntExtra(
+			EventDetailFragment.ARG_EVENT_ID, 0);
+	}
+
+	public void startEventMatches(View v) {
 	}
 }
