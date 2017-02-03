@@ -23,7 +23,7 @@ package org.firebears.scouting2846;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 import org.json.JSONArray;
@@ -31,9 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- *
+ * Task to fetch event list from TBA.
  */
-public class FetchTask extends AsyncTask<Void, Void, Void> {
+public class FetchEvents extends AsyncTask<Void, Void, Void> {
 
 	static private final String PRACTICE_JSON = "{" +
 		"\"key\": \"practice\"," +
@@ -51,9 +51,9 @@ public class FetchTask extends AsyncTask<Void, Void, Void> {
 		"\"website\": \"WEBSITE\"" +
 	"}";
 
-	private final Context context;
+	private final EventListActivity context;
 
-	public FetchTask(Context ctx) {
+	public FetchEvents(EventListActivity ctx) {
 		context = ctx;
 	}
 
@@ -61,17 +61,32 @@ public class FetchTask extends AsyncTask<Void, Void, Void> {
 	protected Void doInBackground(Void... v) {
 		ContentResolver cr = context.getContentResolver();
 		try {
-			cr.insert(FRCEvent.CONTENT_URI, createPracticeEvent());
+			insertOrUpdate(cr, createPracticeEvent());
 			insertEvents(cr, TBAFetcher.fetchEvents());
 		}
-		catch (Exception e) {
-			Log.e("FetchTask", "exception " + e);
+		catch (JSONException e) {
+			Log.e("FetchEvents", e.getMessage());
 		}
 		return null;
 	}
 
 	private ContentValues createPracticeEvent() throws JSONException {
 		return FRCEvent.parse(new JSONObject(PRACTICE_JSON));
+	}
+
+	static private final String[] COLS_KEY = {
+		FRCEvent.COL_KEY,
+	};
+
+	private void insertOrUpdate(ContentResolver cr, ContentValues cv) {
+		String key = FRCEvent.COL_KEY + "='" +
+			cv.getAsString(FRCEvent.COL_KEY) + "'";
+		Cursor c = cr.query(FRCEvent.CONTENT_URI, COLS_KEY, key, null,
+			null);
+		if (c.getCount() > 0)
+			cr.update(FRCEvent.CONTENT_URI, cv, key, null);
+		else
+			cr.insert(FRCEvent.CONTENT_URI, cv);
 	}
 
 	private void insertEvents(ContentResolver cr, String js)
@@ -81,7 +96,12 @@ public class FetchTask extends AsyncTask<Void, Void, Void> {
 		for (int i = 0; i < ar.length(); i++) {
 			ContentValues cv = FRCEvent.parse(ar.getJSONObject(i));
 			if (cv != null)
-				cr.insert(FRCEvent.CONTENT_URI, cv);
+				insertOrUpdate(cr, cv);
 		}
+	}
+
+	@Override
+	protected void onPostExecute(Void v) {
+		context.restartLoader();
 	}
 }

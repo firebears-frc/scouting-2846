@@ -106,6 +106,10 @@ public class EventListActivity extends AppCompatActivity {
 		getLoaderManager().initLoader(EVENT_LOADER_ID, null, cb);
 	}
 
+	public void restartLoader() {
+		getLoaderManager().restartLoader(EVENT_LOADER_ID, null, cb);
+	}
+
 	/** Start event detail activity */
 	private void startDetailActivity(int _id) {
 		Intent intent = new Intent(this, EventDetailActivity.class);
@@ -123,7 +127,7 @@ public class EventListActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (R.id.action_refresh == item.getItemId()) {
-			new FetchTask(this).execute();
+			new FetchEvents(this).execute();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
