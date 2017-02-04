@@ -52,6 +52,7 @@ public class EventListActivity extends AppCompatActivity {
 		FRCEvent.COL_NAME,
 		FRCEvent.COL_ID,
 		FRCEvent.COL_KEY,
+		FRCEvent.COL_SHORT,
 	};
 
 	/** Sort for loader */
@@ -115,9 +116,13 @@ public class EventListActivity extends AppCompatActivity {
 	private void startDetailActivity(Cursor c) {
 		int _id = c.getInt(c.getColumnIndex(FRCEvent.COL_ID));
 		String key = c.getString(c.getColumnIndex(FRCEvent.COL_KEY));
+		String short_name = c.getString(c.getColumnIndex(
+			FRCEvent.COL_SHORT));
 		Intent intent = new Intent(this, EventDetailActivity.class);
 		intent.putExtra(EventDetailFragment.ARG_EVENT_ID, _id);
 		intent.putExtra(EventDetailFragment.ARG_EVENT_KEY, key);
+		intent.putExtra(EventDetailFragment.ARG_EVENT_SHORT,
+			short_name);
 		startActivity(intent);
 	}
 

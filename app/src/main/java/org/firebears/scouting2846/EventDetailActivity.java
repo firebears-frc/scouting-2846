@@ -78,6 +78,8 @@ public class EventDetailActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, TeamListActivity.class);
 		intent.putExtra(TeamListActivity.ARG_EVENT_ID, getEventId());
 		intent.putExtra(TeamListActivity.ARG_EVENT_KEY, getEventKey());
+		intent.putExtra(TeamListActivity.ARG_EVENT_SHORT,
+			getEventShortName());
 		startActivity(intent);
 	}
 
@@ -89,6 +91,11 @@ public class EventDetailActivity extends AppCompatActivity {
 	private String getEventKey() {
 		return getIntent().getStringExtra(
 			EventDetailFragment.ARG_EVENT_KEY);
+	}
+
+	private String getEventShortName() {
+		return getIntent().getStringExtra(
+			EventDetailFragment.ARG_EVENT_SHORT);
 	}
 
 	public void startEventMatches(View v) {

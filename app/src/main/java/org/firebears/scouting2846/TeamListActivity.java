@@ -47,6 +47,7 @@ public class TeamListActivity extends AppCompatActivity {
 	/** Argument for event id */
 	static public final String ARG_EVENT_ID = "event_id";
 	static public final String ARG_EVENT_KEY = "event_key";
+	static public final String ARG_EVENT_SHORT = "event_short";
 
 	/** Loader ID */
 	static private final int TEAM_LOADER_ID = 39;
@@ -101,11 +102,20 @@ public class TeamListActivity extends AppCompatActivity {
 		return getIntent().getStringExtra(ARG_EVENT_KEY);
 	}
 
+	private String getEventShortName() {
+		return getIntent().getStringExtra(ARG_EVENT_SHORT);
+	}
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.team_list_activity);
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+		Toolbar bar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(bar);
+		if (bar != null) {
+			bar.setTitle(getEventShortName() + ' ' + getText(
+				R.string.title_team_list));
+		}
 		ActionBar ab = getSupportActionBar();
 		if (ab != null)
 			ab.setDisplayHomeAsUpEnabled(true);
