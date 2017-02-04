@@ -40,7 +40,8 @@ import android.widget.TextView;
 public class EventDetailFragment extends Fragment {
 
 	/** Argument for event id */
-	static public final String ARG_EVENT_ID = "item_id";
+	static public final String ARG_EVENT_ID = "event_id";
+	static public final String ARG_EVENT_KEY = "event_key";
 
 	/** Event detail loader ID */
 	static private final int EVENT_DETAIL_LOADER_ID = 38;

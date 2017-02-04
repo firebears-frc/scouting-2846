@@ -47,9 +47,22 @@ public class TBAFetcher {
 
 	/** Fetch event list as JSON */
 	static public String fetchEvents() {
+		return fetchData(EVENT_URL);
+	}
+
+	/** URL for event team list */
+	static private final String EVENT_TEAM_URL = BASE_URL + "event/";
+
+	/** Fetch event team list as JSON */
+	static public String fetchTeams(String ev_key) {
+		return fetchData(EVENT_TEAM_URL + ev_key + "/teams");
+	}
+
+	/** Fetch data from TBA site */
+	static private String fetchData(String u) {
 		try {
-			Log.e("TBAFetcher", "reading " + EVENT_URL);
-			return readUrl(EVENT_URL);
+			Log.e("TBAFetcher", "reading " + u);
+			return readUrl(u);
 		}
 		catch (Exception e) {
 			Log.e("TBAFetcher", "exception " + e);

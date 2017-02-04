@@ -76,13 +76,19 @@ public class EventDetailActivity extends AppCompatActivity {
 
 	public void startEventTeams(View v) {
 		Intent intent = new Intent(this, TeamListActivity.class);
-		intent.putExtra(EventDetailFragment.ARG_EVENT_ID,getEventId());
+		intent.putExtra(TeamListActivity.ARG_EVENT_ID, getEventId());
+		intent.putExtra(TeamListActivity.ARG_EVENT_KEY, getEventKey());
 		startActivity(intent);
 	}
 
 	private int getEventId() {
 		return getIntent().getIntExtra(
 			EventDetailFragment.ARG_EVENT_ID, 0);
+	}
+
+	private String getEventKey() {
+		return getIntent().getStringExtra(
+			EventDetailFragment.ARG_EVENT_KEY);
 	}
 
 	public void startEventMatches(View v) {

@@ -34,7 +34,7 @@ public class Team implements BaseColumns {
 
 	static public final String TABLE_NAME = "team";
 	static public final String COL_ID = "_id";
-	static public final String COL_KEY = "key";
+	static public final String COL_KEY = "tm_key";
 	static public final String COL_TEAM_NUMBER = "team_number";
 	static public final String COL_NAME = "name";
 	static public final String COL_NICKNAME = "nickname";
@@ -54,34 +54,34 @@ public class Team implements BaseColumns {
 		"key",
 		"team_number",
 		"name",
+		"nickname",
 		"locality",
 		"location",
 		"rookie_year",
 	};
 
-	/** Parse a JSON event object from TBA */
-	static public ContentValues parse(JSONObject ev) {
+	/** Parse a JSON team object from TBA */
+	static public ContentValues parse(JSONObject tm) {
 		for (String col: TEAM_REQ) {
-			if (ev.isNull(col))
+			if (tm.isNull(col))
 				return null;
 		}
 		ContentValues cv = new ContentValues();
-		cv.put(COL_KEY, ev.optString("key"));
-		cv.put(COL_TEAM_NUMBER, ev.optInt("team_number"));
-		cv.put(COL_NAME, ev.optString("name"));
-		if (ev.has("nickname"))
-			cv.put(COL_NICKNAME, ev.optString("nickname"));
-		if (ev.has("website"))
-			cv.put(COL_WEBSITE, ev.optString("website"));
-		cv.put(COL_LOCALITY, ev.optString("locality"));
-		if (ev.has("region"))
-			cv.put(COL_REGION, ev.optString("region"));
-		if (ev.has("country_name"))
-			cv.put(COL_COUNTRY, ev.optString("country_name"));
-		cv.put(COL_LOCATION, ev.optString("location"));
-		cv.put(COL_ROOKIE_YEAR, ev.optInt("rookie_year"));
-		if (ev.has("motto"))
-			cv.put(COL_MOTTO, ev.optString("motto"));
+		cv.put(COL_KEY, tm.optString("key"));
+		cv.put(COL_TEAM_NUMBER, tm.optInt("team_number"));
+		cv.put(COL_NAME, tm.optString("name"));
+		cv.put(COL_NICKNAME, tm.optString("nickname"));
+		if (tm.has("website"))
+			cv.put(COL_WEBSITE, tm.optString("website"));
+		cv.put(COL_LOCALITY, tm.optString("locality"));
+		if (tm.has("region"))
+			cv.put(COL_REGION, tm.optString("region"));
+		if (tm.has("country_name"))
+			cv.put(COL_COUNTRY, tm.optString("country_name"));
+		cv.put(COL_LOCATION, tm.optString("location"));
+		cv.put(COL_ROOKIE_YEAR, tm.optInt("rookie_year"));
+		if (tm.has("motto"))
+			cv.put(COL_MOTTO, tm.optString("motto"));
 		return cv;
 	}
 }

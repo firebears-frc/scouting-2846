@@ -50,7 +50,8 @@ public class EventListActivity extends AppCompatActivity {
 	static private final String[] COLS = {
 		FRCEvent.COL_WEEK,
 		FRCEvent.COL_NAME,
-		"_id",
+		FRCEvent.COL_ID,
+		FRCEvent.COL_KEY,
 	};
 
 	/** Sort for loader */
@@ -100,8 +101,7 @@ public class EventListActivity extends AppCompatActivity {
 			{
 				Cursor c = (Cursor) parent.getAdapter()
 					.getItem(position);
-				startDetailActivity(c.getInt(c.getColumnIndex(
-					"_id")));
+				startDetailActivity(c);
 			}
 		});
 		getLoaderManager().initLoader(EVENT_LOADER_ID, null, cb);
@@ -112,9 +112,12 @@ public class EventListActivity extends AppCompatActivity {
 	}
 
 	/** Start event detail activity */
-	private void startDetailActivity(int _id) {
+	private void startDetailActivity(Cursor c) {
+		int _id = c.getInt(c.getColumnIndex(FRCEvent.COL_ID));
+		String key = c.getString(c.getColumnIndex(FRCEvent.COL_KEY));
 		Intent intent = new Intent(this, EventDetailActivity.class);
 		intent.putExtra(EventDetailFragment.ARG_EVENT_ID, _id);
+		intent.putExtra(EventDetailFragment.ARG_EVENT_KEY, key);
 		startActivity(intent);
 	}
 

@@ -4,6 +4,7 @@
     <string name="title_team_list">Team List</string>
     <string name="action_refresh">Refresh</string>
     <string name="fetch_events">Fetching event list</string>
+    <string name="fetch_teams">Fetching team list</string>
     <string name="teams">Teams</string>
     <string name="matches">Matches</string>
 </resources>

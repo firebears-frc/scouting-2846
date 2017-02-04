@@ -44,6 +44,10 @@ import android.widget.ListView;
  */
 public class TeamListActivity extends AppCompatActivity {
 
+	/** Argument for event id */
+	static public final String ARG_EVENT_ID = "event_id";
+	static public final String ARG_EVENT_KEY = "event_key";
+
 	/** Loader ID */
 	static private final int TEAM_LOADER_ID = 39;
 
@@ -51,7 +55,7 @@ public class TeamListActivity extends AppCompatActivity {
 	static private final String[] COLS = {
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
-		"_id",
+		Team.COL_ID,
 	};
 
 	/** Cursor adapter */
@@ -62,13 +66,10 @@ public class TeamListActivity extends AppCompatActivity {
 		new LoaderCallbacks<Cursor>()
 	{
 		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-			if (TEAM_LOADER_ID == id) {
-				return new CursorLoader(TeamListActivity.this,
-					Team.CONTENT_URI, COLS, null, null,
-					Team.COL_TEAM_NUMBER);
-			} else
-				return null;
+		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
+			return (TEAM_LOADER_ID == id)
+			      ? createLoader(b)
+			      :	null;
 		}
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -80,6 +81,26 @@ public class TeamListActivity extends AppCompatActivity {
 		}
 	};
 
+	/** Create a loader for teams */
+	private Loader<Cursor> createLoader(Bundle b) {
+		return new CursorLoader(TeamListActivity.this,
+			Team.CONTENT_URI, COLS, getSelectionClause(),
+			null, Team.COL_TEAM_NUMBER);
+	}
+
+	private String getSelectionClause() {
+		int event_id = getEventId();
+		return (event_id > 0) ? ("event_id=" + event_id) : null;
+	}
+
+	private int getEventId() {
+		return getIntent().getIntExtra(ARG_EVENT_ID, 0);
+	}
+
+	private String getEventKey() {
+		return getIntent().getStringExtra(ARG_EVENT_KEY);
+	}
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,7 +109,7 @@ public class TeamListActivity extends AppCompatActivity {
 		ActionBar ab = getSupportActionBar();
 		if (ab != null)
 			ab.setDisplayHomeAsUpEnabled(true);
-		int[] cols = new int[] { R.id.team_id, R.id.team_content };
+		int[] cols = new int[] { R.id.team_number, R.id.team_nickname };
 		adapter = new SimpleCursorAdapter(this,
 			R.layout.team_list_entry, null, COLS, cols, 0);
 		ListView lv = (ListView) findViewById(R.id.team_list);
@@ -114,7 +135,7 @@ public class TeamListActivity extends AppCompatActivity {
 	/** Start team detail activity */
 	private void startDetailActivity(int _id) {
 /*		Intent intent = new Intent(this, EventDetailActivity.class);
-		intent.putExtra(EventDetailFragment.ARG_EVENT_ID, _id);
+		intent.putExtra(ARG_EVENT_ID, _id);
 		startActivity(intent);*/
 	}
 
@@ -137,10 +158,11 @@ public class TeamListActivity extends AppCompatActivity {
 	}
 
 	private boolean onRefreshSelected() {
-/*		View v = findViewById(R.id.team_list);
+		View v = findViewById(R.id.team_list);
 		Snackbar.make(v, R.string.fetch_teams, Snackbar.LENGTH_LONG)
 		        .show();
-		new FetchTeams(this).execute();*/
+		new FetchEventTeams(this, getEventId(),
+			getEventKey()).execute();
 		return true;
 	}
 }

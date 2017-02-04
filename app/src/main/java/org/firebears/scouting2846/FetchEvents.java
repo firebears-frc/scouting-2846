@@ -83,10 +83,16 @@ public class FetchEvents extends AsyncTask<Void, Void, Void> {
 			cv.getAsString(FRCEvent.COL_KEY) + "'";
 		Cursor c = cr.query(FRCEvent.CONTENT_URI, COLS_KEY, key, null,
 			null);
-		if (c.getCount() > 0)
-			cr.update(FRCEvent.CONTENT_URI, cv, key, null);
-		else
-			cr.insert(FRCEvent.CONTENT_URI, cv);
+		try {
+			if (c != null && c.getCount() > 0)
+				cr.update(FRCEvent.CONTENT_URI, cv, key, null);
+			else
+				cr.insert(FRCEvent.CONTENT_URI, cv);
+		}
+		finally {
+			if (c != null)
+				c.close();
+		}
 	}
 
 	private void insertEvents(ContentResolver cr, String js)
@@ -94,9 +100,12 @@ public class FetchEvents extends AsyncTask<Void, Void, Void> {
 	{
 		JSONArray ar = new JSONArray(js);
 		for (int i = 0; i < ar.length(); i++) {
-			ContentValues cv = FRCEvent.parse(ar.getJSONObject(i));
+			JSONObject jo = ar.getJSONObject(i);
+			ContentValues cv = FRCEvent.parse(jo);
 			if (cv != null)
 				insertOrUpdate(cr, cv);
+			else
+				Log.e("insertEvents", "parse " + jo);
 		}
 	}
 

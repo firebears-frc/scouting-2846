@@ -59,9 +59,9 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		"CREATE TABLE " + Team.TABLE_NAME + " (" +
 		Team.COL_ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		Team.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
-		Team.COL_TEAM_NUMBER +	" INTEGER NOT NULL, " +
+		Team.COL_TEAM_NUMBER +	" INTEGER UNIQUE NOT NULL, " +
 		Team.COL_NAME +		" TEXT NOT NULL, " +
-		Team.COL_NICKNAME +	" TEXT, " +
+		Team.COL_NICKNAME +	" TEXT NOT NULL, " +
 		Team.COL_WEBSITE +	" TEXT, " +
 		Team.COL_LOCALITY +	" TEXT NOT NULL, " +
 		Team.COL_REGION +	" TEXT, " +
@@ -74,21 +74,72 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_TEAMS =
 		"DROP TABLE IF EXISTS " + Team.TABLE_NAME;
 
+	/** SQL statement to create event/team relation table */
+	static private final String SQL_CREATE_EVENT_TEAMS =
+		"CREATE TABLE " + EventTeam.TABLE_NAME + " (" +
+		EventTeam.COL_ID +	" INTEGER PRIMARY KEY autoincrement, "+
+		EventTeam.COL_EVENT +	" INTEGER NOT NULL, " +
+		EventTeam.COL_TEAM +	" INTEGER NOT NULL, " +
+		"UNIQUE (" + EventTeam.COL_EVENT + ", " +
+		             EventTeam.COL_TEAM + ") ON CONFLICT REPLACE, " +
+		"FOREIGN KEY (" + EventTeam.COL_EVENT + ") REFERENCES " +
+			FRCEvent.TABLE_NAME + ", " +
+		"FOREIGN KEY (" + EventTeam.COL_TEAM + ") REFERENCES " +
+			Team.TABLE_NAME + ")";
+
+	/** SQL statement to drop event/teams relation table */
+	static private final String SQL_DROP_EVENT_TEAMS =
+		"DROP TABLE IF EXISTS " + EventTeam.TABLE_NAME;
+
+	/** SQL statement to create event/team view */
+	static private final String SQL_CREATE_ET_VIEW =
+		"CREATE VIEW " + EventTeam.VIEW_NAME + " AS SELECT " +
+		Team.TABLE_NAME + "." + Team.COL_ID + ", " +
+		EventTeam.COL_EVENT + ", " +
+		Team.COL_KEY + ", " +
+		Team.COL_TEAM_NUMBER + ", " +
+		Team.COL_NAME + ", " +
+		Team.COL_NICKNAME + ", " +
+		Team.COL_WEBSITE + ", " +
+		Team.COL_LOCALITY + ", " +
+		Team.COL_REGION + ", " +
+		Team.COL_COUNTRY + ", " +
+		Team.COL_LOCATION + ", " +
+		Team.COL_ROOKIE_YEAR + ", " +
+		Team.COL_MOTTO +
+		" FROM " + Team.TABLE_NAME +
+		" JOIN " + EventTeam.TABLE_NAME +
+		" ON " + Team.TABLE_NAME + "." + Team.COL_ID +
+		" = " + EventTeam.TABLE_NAME + "." + EventTeam.COL_TEAM;
+
+	/** SQL statement to drop event/teams relation view */
+	static private final String SQL_DROP_ET_VIEW =
+		"DROP VIEW IF EXISTS " + EventTeam.VIEW_NAME;
+
 	/** Create our DB helper */
 	public OurDbHelper(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	@Override
+	public void onConfigure(SQLiteDatabase db) {
+		db.setForeignKeyConstraintsEnabled(true);
+	}
+
+	@Override
        	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_EVENTS);
 		db.execSQL(SQL_CREATE_TEAMS);
+		db.execSQL(SQL_CREATE_EVENT_TEAMS);
+		db.execSQL(SQL_CREATE_ET_VIEW);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion,
 		int newVersion)
 	{
+		db.execSQL(SQL_DROP_ET_VIEW);
+		db.execSQL(SQL_DROP_EVENT_TEAMS);
 		db.execSQL(SQL_DROP_TEAMS);
 		db.execSQL(SQL_DROP_EVENTS);
 		onCreate(db);

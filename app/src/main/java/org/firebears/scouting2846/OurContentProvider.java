@@ -58,13 +58,18 @@ public class OurContentProvider extends ContentProvider {
 		return null;
 	}
 
-	private String getTableName(Uri uri) {
+	private String getTableName(Uri uri, String sel) {
 		String suri = uri.toString();
-		if (suri.startsWith(FRCEvent.CONTENT_URI.toString()))
+		if (suri.startsWith(EventTeam.CONTENT_URI.toString()))
+			return EventTeam.TABLE_NAME;
+		else if (suri.startsWith(FRCEvent.CONTENT_URI.toString()))
 			return FRCEvent.TABLE_NAME;
-		else if (suri.startsWith(Team.CONTENT_URI.toString()))
-			return Team.TABLE_NAME;
-		else
+		else if (suri.startsWith(Team.CONTENT_URI.toString())) {
+			if (sel != null && sel.contains(EventTeam.COL_EVENT))
+				return EventTeam.VIEW_NAME;
+			else
+				return Team.TABLE_NAME;
+		} else
 			return null;
 	}
 
@@ -72,7 +77,7 @@ public class OurContentProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 		String[] selectionArgs, String sortOrder)
 	{
-		String tn = getTableName(uri);
+		String tn = getTableName(uri, selection);
 		if (tn != null) {
 			SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 			qb.setTables(tn);
@@ -85,7 +90,7 @@ public class OurContentProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues cv) {
-		String tn = getTableName(uri);
+		String tn = getTableName(uri, null);
 		if (tn != null) {
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			long _id = db.insert(tn, null, cv);
@@ -98,7 +103,7 @@ public class OurContentProvider extends ContentProvider {
 	public int update(Uri uri, ContentValues cv, String selection,
 		String[] selectionArgs)
 	{
-		String tn = getTableName(uri);
+		String tn = getTableName(uri, null);
 		if (tn != null) {
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			return db.update(tn, cv, selection, selectionArgs);
