@@ -43,6 +43,8 @@ public class FRCEvent implements BaseColumns {
 	static public final String COL_DISTRICT = "district";
 	static public final String COL_YEAR = "year";
 	static public final String COL_WEEK = "week";
+	static public final String COL_START_DATE = "start_date";
+	static public final String COL_END_DATE = "end_date";
 	static public final String COL_LOCATION = "location";
 	static public final String COL_VENUE_ADDRESS = "venue_address";
 	static public final String COL_TIMEZONE = "timezone";
@@ -84,6 +86,10 @@ public class FRCEvent implements BaseColumns {
 		cv.put(COL_YEAR, ev.optInt("year"));
 		if (ev.has("week"))
 			cv.put(COL_WEEK, ev.optInt("week"));
+		if (ev.has("start_date"))
+			cv.put(COL_START_DATE, ev.optString("start_date"));
+		if (ev.has("end_date"))
+			cv.put(COL_END_DATE, ev.optString("end_date"));
 		cv.put(COL_LOCATION, ev.optString("location"));
 		cv.put(COL_VENUE_ADDRESS, ev.optString("venue_address"));
 		cv.put(COL_TIMEZONE, ev.optString("timezone"));

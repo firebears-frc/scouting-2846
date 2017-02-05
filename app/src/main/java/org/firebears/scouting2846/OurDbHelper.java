@@ -45,6 +45,8 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		FRCEvent.COL_DISTRICT +	" INTEGER NOT NULL, " +
 		FRCEvent.COL_YEAR +	" INTEGER NOT NULL, " +
 		FRCEvent.COL_WEEK +	" INTEGER, " +
+		FRCEvent.COL_START_DATE+" TEXT, " +
+		FRCEvent.COL_END_DATE + " TEXT, " +
 		FRCEvent.COL_LOCATION +	" TEXT NOT NULL, " +
 		FRCEvent.COL_VENUE_ADDRESS + " TEXT, " +
 		FRCEvent.COL_TIMEZONE +	" TEXT, " +

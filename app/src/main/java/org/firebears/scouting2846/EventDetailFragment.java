@@ -33,6 +33,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A fragment representing a single Event detail screen.
@@ -51,6 +54,8 @@ public class EventDetailFragment extends Fragment {
 	static private final String[] COLS = {
 		FRCEvent.COL_SHORT,
 		FRCEvent.COL_NAME,
+		FRCEvent.COL_START_DATE,
+		FRCEvent.COL_END_DATE,
 		FRCEvent.COL_LOCATION,
 		FRCEvent.COL_VENUE_ADDRESS,
 		FRCEvent.COL_WEBSITE,
@@ -85,6 +90,7 @@ public class EventDetailFragment extends Fragment {
 			}
 			setViewText(R.id.event_name, c,
 				FRCEvent.COL_NAME);
+			setViewDates(R.id.event_dates, c);
 			setViewText(R.id.event_location, c,
 				FRCEvent.COL_LOCATION);
 			setViewText(R.id.event_address, c,
@@ -104,6 +110,53 @@ public class EventDetailFragment extends Fragment {
 		TextView tv = (TextView) root_view.findViewById(id);
 		tv.setText(c.getString(c.getColumnIndex(col)));
 		return tv;
+	}
+
+	private void setViewDates(int id, Cursor c) {
+		Date start = parseDate(c.getString(c.getColumnIndex(
+			FRCEvent.COL_START_DATE)));
+		Date end = parseDate(c.getString(c.getColumnIndex(
+			FRCEvent.COL_END_DATE)));
+		TextView tv = (TextView) root_view.findViewById(id);
+		tv.setText(dateRange(start, end));
+	}
+
+	private Date parseDate(String dt) {
+		try {
+			if (dt != null && dt.length() == 10) {
+				SimpleDateFormat f = new SimpleDateFormat(
+					"yyyy-MM-dd");
+				return f.parse(dt);
+			}
+		}
+		catch (ParseException e) { }
+		return null;
+	}
+
+	private String dateRange(Date st, Date en) {
+		if (null == en)
+			return formatDate(st);
+		else if (null == st)
+			return formatDate(en);
+		else {
+			String sst = formatDate(st);
+			String sen = formatDate(en);
+			if (sst.equals(sen))
+				return sst;
+			if (sst.substring(0, 4).equals(sen.substring(0, 4)))
+				return sst + " to " + sen.substring(4);
+			else
+				return sst + " to " + sen;
+		}
+	}
+
+	private String formatDate(Date dt) {
+		if (dt != null) {
+			SimpleDateFormat f = new SimpleDateFormat(
+				"MMM d (EEE)");
+			return f.format(dt);
+		} else
+			return "";
 	}
 
 	/** Create a loader for Event details */
