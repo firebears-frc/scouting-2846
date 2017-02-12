@@ -48,6 +48,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.firebears.scouting2846.TeamListActivity"/>
         </activity>
+        <activity
+            android:name=".MatchListActivity"
+            android:parentActivityName=".EventDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.firebears.scouting2846.EventDetailActivity"/>
+        </activity>
     </application>
 
 </manifest>

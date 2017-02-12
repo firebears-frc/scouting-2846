@@ -118,6 +118,33 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_ET_VIEW =
 		"DROP VIEW IF EXISTS " + EventTeam.VIEW_NAME;
 
+	/** SQL statement to create match table */
+	static private final String SQL_CREATE_MATCHES =
+		"CREATE TABLE " + Match.TABLE_NAME + " (" +
+		Match.COL_ID +		" INTEGER PRIMARY KEY autoincrement, "+
+		Match.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
+		Match.COL_EVENT +	" INTEGER NOT NULL, " +
+		Match.COL_EVENT_KEY +	" TEXT NOT NULL, " +
+		Match.COL_COMP_LEVEL +	" INTEGER NOT NULL, " +
+		Match.COL_SET_NUMBER +	" INTEGER, " +
+		Match.COL_MATCH_NUMBER +" INTEGER, " +
+		Match.COL_ALLIANCES +	" TEXT, " +
+		Match.COL_SCORE_BREAKDOWN + " TEXT, " +
+		Match.COL_VIDEOS +	" TEXT, " +
+		Match.COL_TIME +	" INTEGER, " +
+		Match.COL_RED_0 +	" TEXT, " +
+		Match.COL_RED_1 +	" TEXT, " +
+		Match.COL_RED_2 +	" TEXT, " +
+		Match.COL_BLUE_0 +	" TEXT, " +
+		Match.COL_BLUE_1 +	" TEXT, " +
+		Match.COL_BLUE_2 +	" TEXT, " +
+		"FOREIGN KEY (" + Match.COL_EVENT + ") REFERENCES " +
+			FRCEvent.TABLE_NAME + ")";
+
+	/** SQL statement to drop match table */
+	static private final String SQL_DROP_MATCHES =
+		"DROP TABLE IF EXISTS " + Match.TABLE_NAME;
+
 	/** Create our DB helper */
 	public OurDbHelper(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -134,12 +161,14 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_CREATE_TEAMS);
 		db.execSQL(SQL_CREATE_EVENT_TEAMS);
 		db.execSQL(SQL_CREATE_ET_VIEW);
+		db.execSQL(SQL_CREATE_MATCHES);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion,
 		int newVersion)
 	{
+		db.execSQL(SQL_DROP_MATCHES);
 		db.execSQL(SQL_DROP_ET_VIEW);
 		db.execSQL(SQL_DROP_EVENT_TEAMS);
 		db.execSQL(SQL_DROP_TEAMS);

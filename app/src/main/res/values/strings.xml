@@ -2,9 +2,11 @@
     <string name="app_name">Scouting 2846!</string>
     <string name="title_event_list">Event List</string>
     <string name="title_team_list">Team List</string>
+    <string name="title_match_list">Match List</string>
     <string name="action_refresh">Refresh</string>
     <string name="fetch_events">Fetching event list</string>
     <string name="fetch_teams">Fetching team list</string>
+    <string name="fetch_matches">Fetching match list</string>
     <string name="teams">Teams</string>
     <string name="matches">Matches</string>
     <string name="rookie_year">Rookie year</string>

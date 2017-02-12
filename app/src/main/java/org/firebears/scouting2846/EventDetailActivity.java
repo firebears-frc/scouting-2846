@@ -99,5 +99,11 @@ public class EventDetailActivity extends AppCompatActivity {
 	}
 
 	public void startEventMatches(View v) {
+		Intent intent = new Intent(this, MatchListActivity.class);
+		intent.putExtra(MatchListActivity.ARG_EVENT_ID, getEventId());
+		intent.putExtra(MatchListActivity.ARG_EVENT_KEY, getEventKey());
+		intent.putExtra(MatchListActivity.ARG_EVENT_SHORT,
+			getEventShortName());
+		startActivity(intent);
 	}
 }

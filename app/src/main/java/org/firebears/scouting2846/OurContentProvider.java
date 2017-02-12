@@ -69,7 +69,9 @@ public class OurContentProvider extends ContentProvider {
 				return EventTeam.VIEW_NAME;
 			else
 				return Team.TABLE_NAME;
-		} else
+		} else if (suri.startsWith(Match.CONTENT_URI.toString()))
+			return Match.TABLE_NAME;
+		else
 			return null;
 	}
 
