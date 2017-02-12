@@ -10,4 +10,6 @@
     <string name="teams">Teams</string>
     <string name="matches">Matches</string>
     <string name="rookie_year">Rookie year</string>
+    <string name="red_alliance">Red Alliance</string>
+    <string name="blue_alliance">Blue Alliance</string>
 </resources>

@@ -71,7 +71,13 @@ public class Match implements BaseColumns {
 		return null;
 	}
 
-	static public String description(int lvl, int sn, int mn) {
+	static public String description(Cursor c) {
+		return description(cursorInt(c, Match.COL_COMP_LEVEL),
+		                   cursorInt(c, Match.COL_SET_NUMBER),
+		                   cursorInt(c, Match.COL_MATCH_NUMBER));
+	}
+
+	static private String description(int lvl, int sn, int mn) {
 		if (lvl >= 0 && lvl < COMP_LEVEL.length) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(COMP_LEVEL[lvl]);
@@ -84,6 +90,10 @@ public class Match implements BaseColumns {
 			return sb.toString();
 		} else
 			return null;
+	}
+
+	static private int cursorInt(Cursor c, String col_name) {
+		return c.getInt(c.getColumnIndex(col_name));
 	}
 
 	/** Parse a JSON match object from TBA */

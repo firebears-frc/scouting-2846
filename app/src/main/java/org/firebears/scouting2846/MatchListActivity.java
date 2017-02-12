@@ -113,10 +113,6 @@ public class MatchListActivity extends AppCompatActivity {
 		return getIntent().getStringExtra(ARG_EVENT_SHORT);
 	}
 
-	static private int cursorInt(Cursor c, String col_name) {
-		return c.getInt(c.getColumnIndex(col_name));
-	}
-
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -136,10 +132,7 @@ public class MatchListActivity extends AppCompatActivity {
 		adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
 			public boolean setViewValue(View v, Cursor c, int i) {
 				TextView tv = (TextView) v;
-				tv.setText(Match.description(
-					cursorInt(c, Match.COL_COMP_LEVEL),
-					cursorInt(c, Match.COL_SET_NUMBER),
-					cursorInt(c, Match.COL_MATCH_NUMBER)));
+				tv.setText(Match.description(c));
 				return true;
 			}
 		});
@@ -165,9 +158,9 @@ public class MatchListActivity extends AppCompatActivity {
 
 	/** Start match detail activity */
 	private void startDetailActivity(int _id) {
-//		Intent intent = new Intent(this, MatchDetailActivity.class);
-//		intent.putExtra(MatchDetailFragment.ARG_MATCH_ID, _id);
-//		startActivity(intent);
+		Intent intent = new Intent(this, MatchDetailActivity.class);
+		intent.putExtra(MatchDetailFragment.ARG_MATCH_ID, _id);
+		startActivity(intent);
 	}
 
 	@Override
