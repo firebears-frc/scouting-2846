@@ -25,6 +25,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
 import org.json.JSONObject;
 
 /**
@@ -57,43 +58,46 @@ public class FRCEvent implements BaseColumns {
 	static private final String[] EVENT_REQ = {
 		"key",
 		"name",
-		"short_name",
-		"official",
 		"event_code",
 		"event_type",
 		"event_district",
 		"year",
 		"timezone",
 		"location",
-		"venue_address",
-		"website",
 	};
 
 	/** Parse a JSON event object from TBA */
 	static public ContentValues parse(JSONObject ev) {
 		for (String col: EVENT_REQ) {
-			if (ev.isNull(col))
+			if (ev.isNull(col)) {
+				Log.e("FRCEvent.parse", col + " is null");
 				return null;
+			}
 		}
 		ContentValues cv = new ContentValues();
 		cv.put(COL_KEY, ev.optString("key"));
 		cv.put(COL_NAME, ev.optString("name"));
-		cv.put(COL_SHORT, ev.optString("short_name"));
-		cv.put(COL_OFFICIAL, ev.optBoolean("official"));
+		putString(cv, ev, COL_SHORT, "short_name");
+		cv.put(COL_OFFICIAL, ev.optBoolean("official", false));
 		cv.put(COL_EV_CODE, ev.optString("event_code"));
 		cv.put(COL_EV_TYPE, ev.optInt("event_type"));
 		cv.put(COL_DISTRICT, ev.optInt("event_district"));
 		cv.put(COL_YEAR, ev.optInt("year"));
 		if (ev.has("week"))
 			cv.put(COL_WEEK, ev.optInt("week"));
-		if (ev.has("start_date"))
-			cv.put(COL_START_DATE, ev.optString("start_date"));
-		if (ev.has("end_date"))
-			cv.put(COL_END_DATE, ev.optString("end_date"));
-		cv.put(COL_LOCATION, ev.optString("location"));
-		cv.put(COL_VENUE_ADDRESS, ev.optString("venue_address"));
-		cv.put(COL_TIMEZONE, ev.optString("timezone"));
-		cv.put(COL_WEBSITE, ev.optString("website"));
+		putString(cv, ev, COL_START_DATE, "start_date");
+		putString(cv, ev, COL_END_DATE, "end_date");
+		putString(cv, ev, COL_LOCATION, "location");
+		putString(cv, ev, COL_VENUE_ADDRESS, "venue_address");
+		putString(cv, ev, COL_TIMEZONE, "timezone");
+		putString(cv, ev, COL_WEBSITE, "website");
 		return cv;
+	}
+
+	static private void putString(ContentValues cv, JSONObject jo,
+		String col, String a)
+	{
+		if (jo.has(a) && !jo.isNull(a))
+			cv.put(col, jo.optString(a));
 	}
 }

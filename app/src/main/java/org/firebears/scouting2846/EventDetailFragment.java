@@ -108,7 +108,11 @@ public class EventDetailFragment extends Fragment {
 	/** Set text for a TextView from a Cursor column */
 	private TextView setViewText(int id, Cursor c, String col) {
 		TextView tv = (TextView) root_view.findViewById(id);
-		tv.setText(c.getString(c.getColumnIndex(col)));
+		int ci = c.getColumnIndex(col);
+		if (!c.isNull(ci)) {
+			String t = c.getString(ci);
+			tv.setText(t);
+		}
 		return tv;
 	}
 
