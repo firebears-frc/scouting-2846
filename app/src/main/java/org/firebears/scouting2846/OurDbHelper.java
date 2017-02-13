@@ -132,12 +132,12 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		Match.COL_SCORE_BREAKDOWN + " TEXT, " +
 		Match.COL_VIDEOS +	" TEXT, " +
 		Match.COL_TIME +	" INTEGER, " +
-		Match.COL_RED_0 +	" TEXT, " +
-		Match.COL_RED_1 +	" TEXT, " +
-		Match.COL_RED_2 +	" TEXT, " +
-		Match.COL_BLUE_0 +	" TEXT, " +
-		Match.COL_BLUE_1 +	" TEXT, " +
-		Match.COL_BLUE_2 +	" TEXT, " +
+		Match.COL_RED_0 +	" TEXT NOT NULL, " +
+		Match.COL_RED_1 +	" TEXT NOT NULL, " +
+		Match.COL_RED_2 +	" TEXT NOT NULL, " +
+		Match.COL_BLUE_0 +	" TEXT NOT NULL, " +
+		Match.COL_BLUE_1 +	" TEXT NOT NULL, " +
+		Match.COL_BLUE_2 +	" TEXT NOT NULL, " +
 		"FOREIGN KEY (" + Match.COL_EVENT + ") REFERENCES " +
 			FRCEvent.TABLE_NAME + ")";
 
