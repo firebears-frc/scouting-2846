@@ -21,23 +21,21 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
-import android.view.View;
 
 /**
- * An activity representing the details of an FRC event.
+ * An activity representing the details of an FRC team.
  */
-public class EventDetailActivity extends AppCompatActivity {
+public class TeamDetailActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_event_detail);
+		setContentView(R.layout.activity_team_detail);
 		setSupportActionBar((Toolbar)
 			findViewById(R.id.detail_toolbar));
 		ActionBar ab = getSupportActionBar();
@@ -47,21 +45,21 @@ public class EventDetailActivity extends AppCompatActivity {
 			addFragment();
 	}
 
-	/** Add event detail fragment */
+	/** Add team detail fragment */
 	private void addFragment() {
-		EventDetailFragment f = new EventDetailFragment();
+		TeamDetailFragment f = new TeamDetailFragment();
 		f.setArguments(createArguments());
 		getSupportFragmentManager().beginTransaction()
-			.add(R.id.event_detail_container, f)
+			.add(R.id.team_detail_container, f)
 			.commit();
 	}
 
 	/** Create arguments for fragment */
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
-		b.putInt(EventDetailFragment.ARG_EVENT_ID,
+		b.putInt(TeamDetailFragment.ARG_TEAM_ID,
 			getIntent().getIntExtra(
-			EventDetailFragment.ARG_EVENT_ID, 0));
+			TeamDetailFragment.ARG_TEAM_ID, 0));
 		return b;
 	}
 
@@ -74,36 +72,8 @@ public class EventDetailActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void startEventTeams(View v) {
-		Intent intent = new Intent(this, TeamListActivity.class);
-		intent.putExtra(TeamListActivity.ARG_EVENT_ID, getEventId());
-		intent.putExtra(TeamListActivity.ARG_EVENT_KEY, getEventKey());
-		intent.putExtra(TeamListActivity.ARG_EVENT_SHORT,
-			getEventShortName());
-		startActivity(intent);
-	}
-
-	private int getEventId() {
+	private int getTeamId() {
 		return getIntent().getIntExtra(
-			EventDetailFragment.ARG_EVENT_ID, 0);
-	}
-
-	private String getEventKey() {
-		return getIntent().getStringExtra(
-			EventDetailFragment.ARG_EVENT_KEY);
-	}
-
-	private String getEventShortName() {
-		return getIntent().getStringExtra(
-			EventDetailFragment.ARG_EVENT_SHORT);
-	}
-
-	public void startEventMatches(View v) {
-		Intent intent = new Intent(this, MatchListActivity.class);
-		intent.putExtra(MatchListActivity.ARG_EVENT_ID, getEventId());
-		intent.putExtra(MatchListActivity.ARG_EVENT_KEY, getEventKey());
-		intent.putExtra(MatchListActivity.ARG_EVENT_SHORT,
-			getEventShortName());
-		startActivity(intent);
+			TeamDetailFragment.ARG_TEAM_ID, 0);
 	}
 }
