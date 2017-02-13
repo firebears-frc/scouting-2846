@@ -28,6 +28,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -39,26 +40,24 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.ListView;
 
 /**
- * An activity representing a list of FRC events.
+ * An activity representing a list of FRC teams.
  */
-public class EventListActivity extends AppCompatActivity {
+public class TeamListActivity extends AppCompatActivity {
+
+	/** Argument for event id */
+	static public final String ARG_EVENT_ID = "event_id";
+	static public final String ARG_EVENT_KEY = "event_key";
+	static public final String ARG_EVENT_SHORT = "event_short";
 
 	/** Loader ID */
-	static private final int EVENT_LOADER_ID = 37;
+	static private final int TEAM_LOADER_ID = 39;
 
 	/** Columns to retrieve from the loader */
 	static private final String[] COLS = {
-		FRCEvent.COL_WEEK,
-		FRCEvent.COL_NAME,
-		FRCEvent.COL_ID,
-		FRCEvent.COL_KEY,
-		FRCEvent.COL_SHORT,
-		FRCEvent.COL_START_DATE,
+		Team.COL_TEAM_NUMBER,
+		Team.COL_NICKNAME,
+		Team.COL_ID,
 	};
-
-	/** Sort for loader */
-	static private final String SORT =
-		FRCEvent.COL_START_DATE + "," + FRCEvent.COL_NAME;
 
 	/** Cursor adapter */
 	private SimpleCursorAdapter adapter;
@@ -68,13 +67,10 @@ public class EventListActivity extends AppCompatActivity {
 		new LoaderCallbacks<Cursor>()
 	{
 		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-			if (EVENT_LOADER_ID == id) {
-				return new CursorLoader(EventListActivity.this,
-					FRCEvent.CONTENT_URI, COLS, null, null,
-					SORT);
-			} else
-				return null;
+		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
+			return (TEAM_LOADER_ID == id)
+			      ? createLoader(b)
+			      :	null;
 		}
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -86,15 +82,47 @@ public class EventListActivity extends AppCompatActivity {
 		}
 	};
 
+	/** Create a loader for teams */
+	private Loader<Cursor> createLoader(Bundle b) {
+		return new CursorLoader(TeamListActivity.this,
+			Team.CONTENT_URI, COLS, getSelectionClause(),
+			null, Team.COL_TEAM_NUMBER);
+	}
+
+	private String getSelectionClause() {
+		int event_id = getEventId();
+		return (event_id > 0) ? ("event_id=" + event_id) : null;
+	}
+
+	private int getEventId() {
+		return getIntent().getIntExtra(ARG_EVENT_ID, 0);
+	}
+
+	private String getEventKey() {
+		return getIntent().getStringExtra(ARG_EVENT_KEY);
+	}
+
+	private String getEventShortName() {
+		return getIntent().getStringExtra(ARG_EVENT_SHORT);
+	}
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.event_list_activity);
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-		int[] cols = new int[] { R.id.event_week, R.id.event_name };
+		setContentView(R.layout.team_list_activity);
+		Toolbar bar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(bar);
+		if (bar != null) {
+			bar.setTitle(getEventShortName() + ' ' + getText(
+				R.string.title_team_list));
+		}
+		ActionBar ab = getSupportActionBar();
+		if (ab != null)
+			ab.setDisplayHomeAsUpEnabled(true);
+		int[] cols = new int[] { R.id.team_number, R.id.team_nickname };
 		adapter = new SimpleCursorAdapter(this,
-			R.layout.event_list_entry, null, COLS, cols, 0);
-		ListView lv = (ListView) findViewById(R.id.event_list);
+			R.layout.team_list_entry, null, COLS, cols, 0);
+		ListView lv = (ListView) findViewById(R.id.team_list);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
@@ -103,27 +131,21 @@ public class EventListActivity extends AppCompatActivity {
 			{
 				Cursor c = (Cursor) parent.getAdapter()
 					.getItem(position);
-				startDetailActivity(c);
+				startDetailActivity(c.getInt(c.getColumnIndex(
+					"_id")));
 			}
 		});
-		getLoaderManager().initLoader(EVENT_LOADER_ID, null, cb);
+		getLoaderManager().initLoader(TEAM_LOADER_ID, null, cb);
 	}
 
 	public void restartLoader() {
-		getLoaderManager().restartLoader(EVENT_LOADER_ID, null, cb);
+		getLoaderManager().restartLoader(TEAM_LOADER_ID, null, cb);
 	}
 
-	/** Start event detail activity */
-	private void startDetailActivity(Cursor c) {
-		int _id = c.getInt(c.getColumnIndex(FRCEvent.COL_ID));
-		String key = c.getString(c.getColumnIndex(FRCEvent.COL_KEY));
-		String short_name = c.getString(c.getColumnIndex(
-			FRCEvent.COL_SHORT));
-		Intent intent = new Intent(this, EventDetailActivity.class);
-		intent.putExtra(EventDetailFragment.ARG_EVENT_ID, _id);
-		intent.putExtra(EventDetailFragment.ARG_EVENT_KEY, key);
-		intent.putExtra(EventDetailFragment.ARG_EVENT_SHORT,
-			short_name);
+	/** Start team detail activity */
+	private void startDetailActivity(int _id) {
+		Intent intent = new Intent(this, TeamDetailActivity.class);
+		intent.putExtra(TeamDetailFragment.ARG_TEAM_ID, _id);
 		startActivity(intent);
 	}
 
@@ -136,17 +158,21 @@ public class EventListActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (R.id.action_refresh == item.getItemId())
+		if (android.R.id.home == item.getItemId()) {
+			onBackPressed();
+			return true;
+		} else if (R.id.action_refresh == item.getItemId())
 			return onRefreshSelected();
 		else
 			return super.onOptionsItemSelected(item);
 	}
 
 	private boolean onRefreshSelected() {
-		View v = findViewById(R.id.event_list);
-		Snackbar.make(v, R.string.fetch_events, Snackbar.LENGTH_LONG)
+		View v = findViewById(R.id.team_list);
+		Snackbar.make(v, R.string.fetch_teams, Snackbar.LENGTH_LONG)
 		        .show();
-		new FetchEvents(this).execute();
+		new FetchEventTeams(this, getEventId(),
+			getEventKey()).execute();
 		return true;
 	}
 }

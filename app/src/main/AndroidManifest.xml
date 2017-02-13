@@ -30,6 +30,42 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.firebears.scouting2846.EventListActivity"/>
         </activity>
+        <activity
+            android:name=".TeamListActivity"
+            android:parentActivityName=".EventDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.firebears.scouting2846.EventDetailActivity"/>
+        </activity>
+        <activity
+            android:name=".TeamDetailActivity"
+            android:parentActivityName=".TeamListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.firebears.scouting2846.TeamListActivity"/>
+        </activity>
+        <activity
+            android:name=".MatchListActivity"
+            android:parentActivityName=".EventDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.firebears.scouting2846.EventDetailActivity"/>
+        </activity>
+        <activity
+            android:name=".MatchDetailActivity"
+            android:parentActivityName=".MatchListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.firebears.scouting2846.MatchListActivity"/>
+        </activity>
     </application>
 
 </manifest>

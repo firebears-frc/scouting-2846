@@ -21,13 +21,9 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 /**
  * Our DB helper.
@@ -49,6 +45,8 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		FRCEvent.COL_DISTRICT +	" INTEGER NOT NULL, " +
 		FRCEvent.COL_YEAR +	" INTEGER NOT NULL, " +
 		FRCEvent.COL_WEEK +	" INTEGER, " +
+		FRCEvent.COL_START_DATE+" TEXT, " +
+		FRCEvent.COL_END_DATE + " TEXT, " +
 		FRCEvent.COL_LOCATION +	" TEXT NOT NULL, " +
 		FRCEvent.COL_VENUE_ADDRESS + " TEXT, " +
 		FRCEvent.COL_TIMEZONE +	" TEXT, " +
@@ -58,33 +56,14 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_EVENTS =
 		"DROP TABLE IF EXISTS " + FRCEvent.TABLE_NAME;
 
-	/** SQL statement to insert practice event */
-	static private final String SQL_INSERT_EVENTS =
-		"INSERT INTO " + FRCEvent.TABLE_NAME + " (" +
-		FRCEvent.COL_KEY + ", " +
-		FRCEvent.COL_NAME + ", " +
-		FRCEvent.COL_SHORT + ", " +
-		FRCEvent.COL_OFFICIAL + ", " +
-		FRCEvent.COL_EV_CODE + ", " +
-		FRCEvent.COL_EV_TYPE + ", " +
-		FRCEvent.COL_DISTRICT + ", " +
-		FRCEvent.COL_YEAR + ", " +
-		FRCEvent.COL_WEEK + ", " +
-		FRCEvent.COL_LOCATION + ", " +
-		FRCEvent.COL_VENUE_ADDRESS + ", " +
-		FRCEvent.COL_TIMEZONE + ", " +
-		FRCEvent.COL_WEBSITE + ") VALUES (" +
-		"'practice',' Practice Event','Practice','0','1','1'," +
-		"'DISTRICT','2017','0','LOCATION','VENUE','TZ','WEBSITE')";
-
 	/** SQL statement to create team table */
 	static private final String SQL_CREATE_TEAMS =
 		"CREATE TABLE " + Team.TABLE_NAME + " (" +
 		Team.COL_ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		Team.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
-		Team.COL_TEAM_NUMBER +	" INTEGER NOT NULL, " +
+		Team.COL_TEAM_NUMBER +	" INTEGER UNIQUE NOT NULL, " +
 		Team.COL_NAME +		" TEXT NOT NULL, " +
-		Team.COL_NICKNAME +	" TEXT, " +
+		Team.COL_NICKNAME +	" TEXT NOT NULL, " +
 		Team.COL_WEBSITE +	" TEXT, " +
 		Team.COL_LOCALITY +	" TEXT NOT NULL, " +
 		Team.COL_REGION +	" TEXT, " +
@@ -97,43 +76,101 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_TEAMS =
 		"DROP TABLE IF EXISTS " + Team.TABLE_NAME;
 
+	/** SQL statement to create event/team relation table */
+	static private final String SQL_CREATE_EVENT_TEAMS =
+		"CREATE TABLE " + EventTeam.TABLE_NAME + " (" +
+		EventTeam.COL_ID +	" INTEGER PRIMARY KEY autoincrement, "+
+		EventTeam.COL_EVENT +	" INTEGER NOT NULL, " +
+		EventTeam.COL_TEAM +	" INTEGER NOT NULL, " +
+		"UNIQUE (" + EventTeam.COL_EVENT + ", " +
+		             EventTeam.COL_TEAM + ") ON CONFLICT REPLACE, " +
+		"FOREIGN KEY (" + EventTeam.COL_EVENT + ") REFERENCES " +
+			FRCEvent.TABLE_NAME + ", " +
+		"FOREIGN KEY (" + EventTeam.COL_TEAM + ") REFERENCES " +
+			Team.TABLE_NAME + ")";
+
+	/** SQL statement to drop event/teams relation table */
+	static private final String SQL_DROP_EVENT_TEAMS =
+		"DROP TABLE IF EXISTS " + EventTeam.TABLE_NAME;
+
+	/** SQL statement to create event/team view */
+	static private final String SQL_CREATE_ET_VIEW =
+		"CREATE VIEW " + EventTeam.VIEW_NAME + " AS SELECT " +
+		Team.TABLE_NAME + "." + Team.COL_ID + ", " +
+		EventTeam.COL_EVENT + ", " +
+		Team.COL_KEY + ", " +
+		Team.COL_TEAM_NUMBER + ", " +
+		Team.COL_NAME + ", " +
+		Team.COL_NICKNAME + ", " +
+		Team.COL_WEBSITE + ", " +
+		Team.COL_LOCALITY + ", " +
+		Team.COL_REGION + ", " +
+		Team.COL_COUNTRY + ", " +
+		Team.COL_LOCATION + ", " +
+		Team.COL_ROOKIE_YEAR + ", " +
+		Team.COL_MOTTO +
+		" FROM " + Team.TABLE_NAME +
+		" JOIN " + EventTeam.TABLE_NAME +
+		" ON " + Team.TABLE_NAME + "." + Team.COL_ID +
+		" = " + EventTeam.TABLE_NAME + "." + EventTeam.COL_TEAM;
+
+	/** SQL statement to drop event/teams relation view */
+	static private final String SQL_DROP_ET_VIEW =
+		"DROP VIEW IF EXISTS " + EventTeam.VIEW_NAME;
+
+	/** SQL statement to create match table */
+	static private final String SQL_CREATE_MATCHES =
+		"CREATE TABLE " + Match.TABLE_NAME + " (" +
+		Match.COL_ID +		" INTEGER PRIMARY KEY autoincrement, "+
+		Match.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
+		Match.COL_EVENT +	" INTEGER NOT NULL, " +
+		Match.COL_EVENT_KEY +	" TEXT NOT NULL, " +
+		Match.COL_COMP_LEVEL +	" INTEGER NOT NULL, " +
+		Match.COL_SET_NUMBER +	" INTEGER, " +
+		Match.COL_MATCH_NUMBER +" INTEGER, " +
+		Match.COL_ALLIANCES +	" TEXT, " +
+		Match.COL_SCORE_BREAKDOWN + " TEXT, " +
+		Match.COL_VIDEOS +	" TEXT, " +
+		Match.COL_TIME +	" INTEGER, " +
+		Match.COL_RED_0 +	" TEXT NOT NULL, " +
+		Match.COL_RED_1 +	" TEXT NOT NULL, " +
+		Match.COL_RED_2 +	" TEXT NOT NULL, " +
+		Match.COL_BLUE_0 +	" TEXT NOT NULL, " +
+		Match.COL_BLUE_1 +	" TEXT NOT NULL, " +
+		Match.COL_BLUE_2 +	" TEXT NOT NULL, " +
+		"FOREIGN KEY (" + Match.COL_EVENT + ") REFERENCES " +
+			FRCEvent.TABLE_NAME + ")";
+
+	/** SQL statement to drop match table */
+	static private final String SQL_DROP_MATCHES =
+		"DROP TABLE IF EXISTS " + Match.TABLE_NAME;
+
 	/** Create our DB helper */
 	public OurDbHelper(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	@Override
+	public void onConfigure(SQLiteDatabase db) {
+		db.setForeignKeyConstraintsEnabled(true);
+	}
+
+	@Override
        	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_EVENTS);
 		db.execSQL(SQL_CREATE_TEAMS);
-		// FIXME: move somewhere else
-		db.execSQL(SQL_INSERT_EVENTS);
-		try {
-			insertEvents(db, TBAFetcher.fetchEvents());
-		}
-		catch (Exception e) {
-			Log.e("OurDbHelper", "exception " + e);
-		}
-	}
-
-	static private void insertEvents(SQLiteDatabase db,
-		String js) throws JSONException
-	{
-//		ContentResolver cr = ctx.getContentResolver();
-		JSONArray ar = new JSONArray(js);
-		for (int i = 0; i < ar.length(); i++) {
-			ContentValues cv = FRCEvent.parse(ar.getJSONObject(i));
-			if (cv != null) {
-				db.insert(FRCEvent.TABLE_NAME, null, cv);
-//				cr.insert(FRCEvent.CONTENT_URI, cv);
-			}
-		}
+		db.execSQL(SQL_CREATE_EVENT_TEAMS);
+		db.execSQL(SQL_CREATE_ET_VIEW);
+		db.execSQL(SQL_CREATE_MATCHES);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion,
 		int newVersion)
 	{
+		db.execSQL(SQL_DROP_MATCHES);
+		db.execSQL(SQL_DROP_ET_VIEW);
+		db.execSQL(SQL_DROP_EVENT_TEAMS);
 		db.execSQL(SQL_DROP_TEAMS);
 		db.execSQL(SQL_DROP_EVENTS);
 		onCreate(db);
