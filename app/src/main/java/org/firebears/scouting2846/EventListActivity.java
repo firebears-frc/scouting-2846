@@ -53,11 +53,12 @@ public class EventListActivity extends AppCompatActivity {
 		FRCEvent.COL_ID,
 		FRCEvent.COL_KEY,
 		FRCEvent.COL_SHORT,
+		FRCEvent.COL_START_DATE,
 	};
 
 	/** Sort for loader */
 	static private final String SORT =
-		FRCEvent.COL_WEEK + "," + FRCEvent.COL_NAME;
+		FRCEvent.COL_START_DATE + "," + FRCEvent.COL_NAME;
 
 	/** Cursor adapter */
 	private SimpleCursorAdapter adapter;
@@ -90,7 +91,7 @@ public class EventListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_list_activity);
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-		int[] cols = new int[] { R.id.event_id, R.id.event_content };
+		int[] cols = new int[] { R.id.event_week, R.id.event_name };
 		adapter = new SimpleCursorAdapter(this,
 			R.layout.event_list_entry, null, COLS, cols, 0);
 		ListView lv = (ListView) findViewById(R.id.event_list);
