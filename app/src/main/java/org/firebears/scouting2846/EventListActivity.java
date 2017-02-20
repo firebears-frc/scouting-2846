@@ -107,6 +107,7 @@ public class EventListActivity extends AppCompatActivity {
 			}
 		});
 		getLoaderManager().initLoader(EVENT_LOADER_ID, null, cb);
+		startService(new Intent(this, BluetoothSyncService.class));
 	}
 
 	public void restartLoader() {

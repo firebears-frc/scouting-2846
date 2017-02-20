@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.firebears.scouting2846">
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -69,8 +70,10 @@
         <activity
             android:name=".Scouting2017Activity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"/>
+        <service
+            android:name=".BluetoothSyncService"
+            android:exported="false"/>
     </application>
 
 </manifest>
