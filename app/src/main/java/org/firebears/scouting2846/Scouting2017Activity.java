@@ -90,6 +90,9 @@ public class Scouting2017Activity extends AppCompatActivity {
 	/** Content values */
 	private final ContentValues content = new ContentValues();
 
+	/** Loaded content values */
+	private ContentValues content_loaded;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -208,6 +211,7 @@ public class Scouting2017Activity extends AppCompatActivity {
 			if (c.getCount() == 1) {
 				c.moveToFirst();
 				Scouting2017.updateContent(content, c);
+				content_loaded = new ContentValues(content);
 			}
 			initView();
 		}
@@ -348,7 +352,8 @@ public class Scouting2017Activity extends AppCompatActivity {
 		updateBoolean(R.id.release_rope,Scouting2017.COL_RELEASE_ROPE);
 		updateBoolean(R.id.lose_gear, Scouting2017.COL_LOSE_GEAR);
 		updateString(R.id.notes, Scouting2017.COL_NOTES);
-		new StoreObservation(this, content).execute();
+		if (!content.equals(content_loaded))
+			new StoreObservation(this, content).execute();
 		super.onPause();
 	}
 
