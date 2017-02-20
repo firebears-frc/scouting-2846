@@ -60,7 +60,9 @@ public class OurContentProvider extends ContentProvider {
 
 	private String getTableName(Uri uri, String sel) {
 		String suri = uri.toString();
-		if (suri.startsWith(EventTeam.CONTENT_URI.toString()))
+		if (suri.startsWith(Param.CONTENT_URI.toString()))
+			return Param.TABLE_NAME;
+		else if (suri.startsWith(EventTeam.CONTENT_URI.toString()))
 			return EventTeam.TABLE_NAME;
 		else if (suri.startsWith(FRCEvent.CONTENT_URI.toString()))
 			return FRCEvent.TABLE_NAME;

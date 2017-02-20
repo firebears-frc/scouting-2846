@@ -33,8 +33,8 @@ public class Scouting2017 implements BaseColumns {
 
 	static public final String TABLE_NAME = "scouting_2017";
 	static public final String COL_ID = "_id";
-	static public final String COL_SCOUTER = "scouter";
-	static public final String COL_OBSERVATION = "observation";
+	static public final String COL_SCOUTER = Param.ROW_SCOUTER;
+	static public final String COL_OBSERVATION = Param.ROW_OBSERVATION;
 	static public final String COL_MATCH = "match_key";
 	static public final String COL_TEAM_KEY = "tm_key";
 	static public final String COL_AUTO_HIGH_GOAL = "auto_high_goal";
@@ -60,7 +60,7 @@ public class Scouting2017 implements BaseColumns {
 	static public void initContent(ContentValues cv, String team_key,
 		String match_key)
 	{
-		cv.put(COL_SCOUTER, 1);
+		cv.put(COL_SCOUTER, 0);
 		cv.put(COL_OBSERVATION, 0);
 		cv.put(COL_MATCH, match_key);
 		cv.put(COL_TEAM_KEY, team_key);
@@ -83,8 +83,6 @@ public class Scouting2017 implements BaseColumns {
 	}
 
 	static public void updateContent(ContentValues cv, Cursor c) {
-		updateInt(cv, c, COL_SCOUTER);
-		updateInt(cv, c, COL_OBSERVATION);
 		updateInt(cv, c, COL_AUTO_HIGH_GOAL);
 		updateInt(cv, c, COL_AUTO_LOW_GOAL);
 		updateInt(cv, c, COL_AUTO_GEAR);

@@ -21,46 +21,22 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.os.AsyncTask;
+import android.net.Uri;
+import android.provider.BaseColumns;
 
 /**
- * Task to store scouting observation.
+ * DB stuff for params.
  */
-public class StoreObservation extends AsyncTask<Void, Void, Void> {
+public class Param implements BaseColumns {
 
-	/** WHERE clause for updating observation number */
-	static private final String WHERE_OBS =
-		Param.COL_NAME + "='" + Param.ROW_OBSERVATION + "'";
+	static public final String TABLE_NAME = "param";
+	static public final String COL_ID = "_id";
+	static public final String COL_NAME = "name";
+	static public final String COL_VALUE = "value";
 
-	private final Scouting2017Activity context;
+	static public final String ROW_SCOUTER = "scouter";
+	static public final String ROW_OBSERVATION = "observation";
 
-	private final ContentValues content;
-
-	public StoreObservation(Scouting2017Activity ctx, ContentValues cv) {
-		context = ctx;
-		content = cv;
-	}
-
-	@Override
-	protected Void doInBackground(Void... v) {
-		insert(context.getContentResolver());
-		return null;
-	}
-
-	private void insert(ContentResolver cr) {
-		updateObservation(cr, content.getAsInteger(
-			Param.ROW_OBSERVATION));
-		cr.insert(Scouting2017.CONTENT_URI, content);
-	}
-
-	private void updateObservation(ContentResolver cr, Integer obs) {
-		ContentValues pv = new ContentValues();
-		pv.put(Param.COL_VALUE, obs);
-		cr.update(Param.CONTENT_URI, pv, WHERE_OBS, null);
-	}
-
-	@Override
-	protected void onPostExecute(Void v) { }
+	static public final Uri CONTENT_URI = OurContentProvider.buildUri(
+		TABLE_NAME);
 }

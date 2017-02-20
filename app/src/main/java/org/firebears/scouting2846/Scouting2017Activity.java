@@ -32,6 +32,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -49,6 +50,13 @@ public class Scouting2017Activity extends AppCompatActivity {
 	/** Scouting loader ID */
 	static private final int SCOUTING_2017_LOADER_ID = 44;
 	static private final int TEAM_LOADER_ID = 45;
+	static private final int PARAM_LOADER_ID = 46;
+
+	/** Columns to retrieve from the loader */
+	static private final String[] PARAM_COLS = {
+		Param.COL_NAME,
+		Param.COL_VALUE,
+	};
 
 	/** Columns to retrieve from the loader */
 	static private final String[] TEAM_COLS = {
@@ -95,8 +103,8 @@ public class Scouting2017Activity extends AppCompatActivity {
 			ab.setTitle(R.string.scouting_2017);
 		}
 		LoaderManager lm = getSupportLoaderManager();
+		lm.initLoader(PARAM_LOADER_ID, null, param_cb);
 		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
-		lm.initLoader(SCOUTING_2017_LOADER_ID, null, cb);
 	}
 
 	@Override
@@ -106,6 +114,46 @@ public class Scouting2017Activity extends AppCompatActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/** Callbacks for param loader */
+	private final LoaderCallbacks<Cursor> param_cb =
+		new LoaderCallbacks<Cursor>()
+	{
+		@Override
+		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
+			return (PARAM_LOADER_ID == id)
+			      ? createParamLoader()
+			      : null;
+		}
+		@Override
+		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+			int ni = c.getColumnIndex(Param.COL_NAME);
+			int vi = c.getColumnIndex(Param.COL_VALUE);
+			while (c.moveToNext()) {
+				String n = c.getString(ni);
+				int v = c.getInt(vi);
+				Log.e("onLoadFinished", n + ": " + v);
+				if (Param.ROW_SCOUTER.equals(n)) {
+					content.put(Scouting2017.COL_SCOUTER,
+						v);
+				}
+				if (Param.ROW_OBSERVATION.equals(n)) {
+					content.put(Scouting2017.COL_OBSERVATION,
+						v + 1);
+				}
+			}
+			LoaderManager lm = getSupportLoaderManager();
+			lm.initLoader(SCOUTING_2017_LOADER_ID, null, cb);
+		}
+		@Override
+		public void onLoaderReset(Loader<Cursor> loader) { }
+	};
+
+	/** Create a loader for parameters */
+	private Loader<Cursor> createParamLoader() {
+		return new CursorLoader(this, Param.CONTENT_URI, PARAM_COLS,
+			null, null, null);
 	}
 
 	/** Callbacks for team loader */
@@ -181,7 +229,8 @@ public class Scouting2017Activity extends AppCompatActivity {
 	}
 
 	private int getScouter() {
-		return 1;
+		Integer i = content.getAsInteger(Scouting2017.COL_SCOUTER);
+		return (i != null) ? i : 0;
 	}
 
 	private void initView() {
