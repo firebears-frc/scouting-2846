@@ -40,7 +40,7 @@ import android.widget.TextView;
 public class TeamDetailFragment extends Fragment {
 
 	/** Argument for team id */
-	static public final String ARG_TEAM_ID = "team_id";
+	static public final String ARG_TEAM_KEY = "team_key";
 
 	/** Team detail loader ID */
 	static private final int TEAM_DETAIL_LOADER_ID = 40;
@@ -100,9 +100,7 @@ public class TeamDetailFragment extends Fragment {
 			setViewText(R.id.team_name, c, Team.COL_NAME);
 		}
 		@Override
-		public void onLoaderReset(Loader<Cursor> loader) {
-			// FIXME
-		}
+		public void onLoaderReset(Loader<Cursor> loader) { }
 	};
 
 	/** Set text for a TextView from a Cursor column */
@@ -116,11 +114,11 @@ public class TeamDetailFragment extends Fragment {
 
 	/** Create a loader for Team details */
 	private Loader<Cursor> createLoader(Bundle b) {
-		if (b.containsKey(ARG_TEAM_ID)) {
-			int _id = b.getInt(ARG_TEAM_ID);
+		if (b.containsKey(ARG_TEAM_KEY)) {
+			String key = b.getString(ARG_TEAM_KEY);
 			return new CursorLoader(getContext(),
-				Team.CONTENT_URI, COLS, "_id=" + _id,
-				null, null);
+				Team.CONTENT_URI, COLS, Team.COL_KEY + "='" +
+				key + "'", null, null);
 		} else
 			return null;
 	}

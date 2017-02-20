@@ -56,6 +56,7 @@ public class TeamListActivity extends AppCompatActivity {
 	static private final String[] COLS = {
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
+		Team.COL_KEY,
 		Team.COL_ID,
 	};
 
@@ -131,8 +132,8 @@ public class TeamListActivity extends AppCompatActivity {
 			{
 				Cursor c = (Cursor) parent.getAdapter()
 					.getItem(position);
-				startDetailActivity(c.getInt(c.getColumnIndex(
-					"_id")));
+				startDetailActivity(c.getString(
+					c.getColumnIndex(Team.COL_KEY)));
 			}
 		});
 		getLoaderManager().initLoader(TEAM_LOADER_ID, null, cb);
@@ -143,9 +144,9 @@ public class TeamListActivity extends AppCompatActivity {
 	}
 
 	/** Start team detail activity */
-	private void startDetailActivity(int _id) {
+	private void startDetailActivity(String key) {
 		Intent intent = new Intent(this, TeamDetailActivity.class);
-		intent.putExtra(TeamDetailFragment.ARG_TEAM_ID, _id);
+		intent.putExtra(TeamDetailFragment.ARG_TEAM_KEY, key);
 		startActivity(intent);
 	}
 
