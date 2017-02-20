@@ -66,6 +66,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.firebears.scouting2846.MatchListActivity"/>
         </activity>
+        <activity
+            android:name=".Scouting2017Activity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+        </activity>
     </application>
 
 </manifest>

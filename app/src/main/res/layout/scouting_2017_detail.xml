@@ -1,0 +1,360 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/team_lbl"
+        android:gravity="center"
+	android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/text_margin" />
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider0"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/team_lbl"/>
+
+    <TextView
+        android:id="@+id/autonomous"
+        android:text="@string/autonomous"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_below="@id/divider0"/>
+
+    <TextView
+        android:id="@+id/auto_high"
+        android:text="@string/high_goal"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autonomous"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/ah_minus"
+        android:text="@string/minus"
+        android:padding="0dp"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autonomous"
+        android:layout_toRightOf="@id/auto_high"
+        android:onClick="minusAutoHigh"/>
+
+    <TextView
+        android:id="@+id/ah_txt"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autonomous"
+        android:layout_toRightOf="@id/ah_minus"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/ah_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autonomous"
+        android:layout_toRightOf="@id/ah_txt"
+        android:onClick="plusAutoHigh"/>
+
+    <TextView
+        android:id="@+id/auto_low"
+        android:text="@string/low_goal"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_high"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/al_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ah_minus"
+        android:layout_toRightOf="@id/auto_low"
+        android:onClick="minusAutoLow"/>
+
+    <TextView
+        android:id="@+id/al_txt"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ah_txt"
+        android:layout_toRightOf="@id/al_minus"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/al_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ah_plus"
+        android:layout_toRightOf="@id/al_txt"
+        android:onClick="plusAutoLow"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_gear"
+        android:text="@string/gear"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_low"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/baseline"
+        android:text="@string/baseline"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_gear"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider1"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"/>
+
+    <TextView
+        android:id="@+id/teleop"
+        android:text="@string/teleop"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider1"
+        android:layout_margin="@dimen/text_margin" />
+
+    <TextView
+        android:id="@+id/tele_high"
+        android:text="@string/high_goal"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/th_minus"
+        android:text="@string/minus"
+        android:padding="0dp"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_toRightOf="@id/tele_high"
+        android:onClick="minusTeleHigh"/>
+
+    <TextView
+        android:id="@+id/th_txt"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_toRightOf="@id/th_minus"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/th_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_toRightOf="@id/th_txt"
+        android:onClick="plusTeleHigh"/>
+
+    <TextView
+        android:id="@+id/tele_low"
+        android:text="@string/low_goal"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_high"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tl_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/th_minus"
+        android:layout_toRightOf="@id/tele_low"
+        android:onClick="minusTeleLow"/>
+
+    <TextView
+        android:id="@+id/tl_txt"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/th_txt"
+        android:layout_toRightOf="@id/tl_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tl_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/th_plus"
+        android:layout_toRightOf="@id/tl_txt"
+        android:onClick="plusTeleLow"/>
+
+    <TextView
+        android:id="@+id/tele_gear"
+        android:text="@string/gear"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_low"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tg_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tl_minus"
+        android:layout_toRightOf="@id/tele_gear"
+        android:onClick="minusTeleGear"/>
+
+    <TextView
+        android:id="@+id/tg_txt"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tl_txt"
+        android:layout_toRightOf="@id/tg_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tg_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tl_plus"
+        android:layout_toRightOf="@id/tg_txt"
+        android:onClick="plusTeleGear"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/climb"
+        android:text="@string/climb"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_gear"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/touchpad"
+        android:text="@string/touchpad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/climb"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider2"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/touchpad"/>
+
+    <TextView
+        android:id="@+id/ball_acquisition"
+        android:text="@string/ball_acquisition"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider2"
+        android:layout_margin="@dimen/text_margin" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/ball_human"
+        android:text="@string/ball_human"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_acquisition"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/ball_floor"
+        android:text="@string/ball_floor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_human"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/ball_hopper"
+        android:text="@string/ball_hopper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_floor"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider3"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_hopper" />
+
+    <TextView
+        android:id="@+id/pilot"
+        android:text="@string/pilot"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider3"
+        android:layout_margin="@dimen/text_margin" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/effective"
+        android:text="@string/effective"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pilot"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/release_rope"
+        android:text="@string/release_rope"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/effective"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/lose_gear"
+        android:text="@string/lose_gear"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/release_rope"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider4"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lose_gear" />
+
+    <EditText
+        android:id="@+id/notes"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider4" />
+
+</RelativeLayout>

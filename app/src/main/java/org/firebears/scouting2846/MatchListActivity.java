@@ -59,6 +59,7 @@ public class MatchListActivity extends AppCompatActivity {
 		Match.COL_SET_NUMBER,
 		Match.COL_MATCH_NUMBER,
 		Match.COL_ID,
+		Match.COL_KEY,
 	};
 
 	/** Sort for loader */
@@ -145,8 +146,8 @@ public class MatchListActivity extends AppCompatActivity {
 			{
 				Cursor c = (Cursor) parent.getAdapter()
 					.getItem(position);
-				startDetailActivity(c.getInt(c.getColumnIndex(
-					"_id")));
+				startDetailActivity(c.getString(
+					c.getColumnIndex(Match.COL_KEY)));
 			}
 		});
 		getLoaderManager().initLoader(MATCH_LOADER_ID, null, cb);
@@ -157,9 +158,9 @@ public class MatchListActivity extends AppCompatActivity {
 	}
 
 	/** Start match detail activity */
-	private void startDetailActivity(int _id) {
+	private void startDetailActivity(String key) {
 		Intent intent = new Intent(this, MatchDetailActivity.class);
-		intent.putExtra(MatchDetailFragment.ARG_MATCH_ID, _id);
+		intent.putExtra(MatchDetailFragment.ARG_MATCH_KEY, key);
 		startActivity(intent);
 	}
 

@@ -21,11 +21,14 @@
  */
 package org.firebears.scouting2846;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 /**
  * An activity representing the details of an FRC match.
@@ -57,10 +60,13 @@ public class MatchDetailActivity extends AppCompatActivity {
 	/** Create arguments for fragment */
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
-		b.putInt(MatchDetailFragment.ARG_MATCH_ID,
-			getIntent().getIntExtra(
-			MatchDetailFragment.ARG_MATCH_ID, 0));
+		b.putString(MatchDetailFragment.ARG_MATCH_KEY, getMatchKey());
 		return b;
+	}
+
+	private String getMatchKey() {
+		return getIntent().getStringExtra(
+			MatchDetailFragment.ARG_MATCH_KEY);
 	}
 
 	@Override
@@ -72,8 +78,13 @@ public class MatchDetailActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private int getMatchId() {
-		return getIntent().getIntExtra(
-			MatchDetailFragment.ARG_MATCH_ID, 0);
+	public void startScouting(View v) {
+		Button b = (Button) v;
+		String team_key = b.getText().toString();
+		Intent intent = new Intent(this, Scouting2017Activity.class);
+		intent.putExtra(Scouting2017Activity.ARG_MATCH_KEY,
+			getMatchKey());
+		intent.putExtra(Scouting2017Activity.ARG_TEAM_KEY, team_key);
+		startActivity(intent);
 	}
 }
