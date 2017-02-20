@@ -12,4 +12,23 @@
     <string name="rookie_year">Rookie year</string>
     <string name="red_alliance">Red Alliance</string>
     <string name="blue_alliance">Blue Alliance</string>
+    <string name="scouting_2017">Steamworks Scouting</string>
+    <string name="autonomous">Autonomous</string>
+    <string name="teleop">Teleop</string>
+    <string name="high_goal">High Goal</string>
+    <string name="low_goal">Low Goal</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="baseline">Cross baseline</string>
+    <string name="gear">Place gear</string>
+    <string name="climb">Climb rope</string>
+    <string name="touchpad">Activate touch pad</string>
+    <string name="ball_acquisition">Ball Acquisition</string>
+    <string name="ball_human">Human player</string>
+    <string name="ball_floor">Floor</string>
+    <string name="ball_hopper">Hopper</string>
+    <string name="pilot">Pilot</string>
+    <string name="effective">Effective</string>
+    <string name="release_rope">Release rope</string>
+    <string name="lose_gear">Lose gear</string>
 </resources>

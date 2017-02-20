@@ -71,6 +71,8 @@ public class OurContentProvider extends ContentProvider {
 				return Team.TABLE_NAME;
 		} else if (suri.startsWith(Match.CONTENT_URI.toString()))
 			return Match.TABLE_NAME;
+		else if (suri.startsWith(Scouting2017.CONTENT_URI.toString()))
+			return Scouting2017.TABLE_NAME;
 		else
 			return null;
 	}

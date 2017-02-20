@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/DefaultTextViewStyle</item>
+        <item name="switchStyle">@style/DefaultSwitchStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -20,6 +21,17 @@
 
     <style name="DefaultTextViewStyle" parent="@android:style/TextAppearance">
         <item name="android:textSize">18sp</item> 
+    </style>
+
+    <style name="DefaultSwitchStyle"
+           parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
 </resources>

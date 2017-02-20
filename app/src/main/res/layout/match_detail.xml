@@ -21,19 +21,19 @@
             android:id="@+id/red_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="startRed0" />
+            android:onClick="startScouting" />
 
         <Button
             android:id="@+id/red_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="startRed1" />
+            android:onClick="startScouting" />
 
         <Button
             android:id="@+id/red_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="startRed2" />
+            android:onClick="startScouting" />
 
     </LinearLayout>
 
@@ -53,19 +53,19 @@
             android:id="@+id/blue_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="startBlue0" />
+            android:onClick="startScouting" />
 
         <Button
             android:id="@+id/blue_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="startBlue1" />
+            android:onClick="startScouting" />
 
         <Button
             android:id="@+id/blue_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="startBlue2" />
+            android:onClick="startScouting" />
 
     </LinearLayout>
 

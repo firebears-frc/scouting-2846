@@ -100,9 +100,7 @@ public class TeamDetailFragment extends Fragment {
 			setViewText(R.id.team_name, c, Team.COL_NAME);
 		}
 		@Override
-		public void onLoaderReset(Loader<Cursor> loader) {
-			// FIXME
-		}
+		public void onLoaderReset(Loader<Cursor> loader) { }
 	};
 
 	/** Set text for a TextView from a Cursor column */

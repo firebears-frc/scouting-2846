@@ -38,8 +38,8 @@ import android.widget.Button;
  */
 public class MatchDetailFragment extends Fragment {
 
-	/** Argument for match id */
-	static public final String ARG_MATCH_ID = "match_id";
+	/** Argument for match key */
+	static public final String ARG_MATCH_KEY = "match_key";
 
 	/** Match detail loader ID */
 	static private final int MATCH_DETAIL_LOADER_ID = 43;
@@ -91,9 +91,7 @@ public class MatchDetailFragment extends Fragment {
 			setButtonText(R.id.blue_2, c, Match.COL_BLUE_2);
 		}
 		@Override
-		public void onLoaderReset(Loader<Cursor> loader) {
-			// FIXME
-		}
+		public void onLoaderReset(Loader<Cursor> loader) { }
 	};
 
 	/** Set text for a Button from a Cursor column */
@@ -106,11 +104,11 @@ public class MatchDetailFragment extends Fragment {
 
 	/** Create a loader for Match details */
 	private Loader<Cursor> createLoader(Bundle b) {
-		if (b.containsKey(ARG_MATCH_ID)) {
-			int _id = b.getInt(ARG_MATCH_ID);
+		if (b.containsKey(ARG_MATCH_KEY)) {
+			String key = b.getString(ARG_MATCH_KEY);
 			return new CursorLoader(getContext(),
-				Match.CONTENT_URI, COLS, "_id=" + _id,
-				null, null);
+				Match.CONTENT_URI, COLS, Match.COL_KEY + "='"
+				+ key + "'", null, null);
 		} else
 			return null;
 	}
