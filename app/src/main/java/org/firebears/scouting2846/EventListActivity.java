@@ -139,6 +139,8 @@ public class EventListActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (R.id.action_refresh == item.getItemId())
 			return onRefreshSelected();
+		else if (R.id.action_bt_sync == item.getItemId())
+			return onBluetoothSyncSelected();
 		else
 			return super.onOptionsItemSelected(item);
 	}
@@ -149,5 +151,30 @@ public class EventListActivity extends AppCompatActivity {
 		        .show();
 		new FetchEvents(this).execute();
 		return true;
+	}
+
+	private boolean onBluetoothSyncSelected() {
+		Intent intent = new Intent(this, SelectDeviceActivity.class);
+		startActivityForResult(intent, 1);
+		return true;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+		Intent data)
+	{
+		switch (resultCode) {
+		case RESULT_OK:
+			String address = data.getStringExtra(
+				SelectDeviceActivity.DEVICE_ADDRESS);
+			new BluetoothSyncTask(this, address).execute();
+			break;
+		case RESULT_CANCELED:
+			int res = data.getIntExtra(
+				SelectDeviceActivity.ERROR_CODE, 0);
+			View v = findViewById(R.id.event_list);
+			Snackbar.make(v, res, Snackbar.LENGTH_LONG).show();
+			break;
+		}
 	}
 }

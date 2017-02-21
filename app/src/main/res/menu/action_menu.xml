@@ -9,4 +9,7 @@
         android:title="@string/action_refresh"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_bt_sync"
+        android:title="@string/action_bt_sync"/>
 </menu>

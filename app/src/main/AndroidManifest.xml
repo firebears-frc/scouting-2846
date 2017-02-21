@@ -71,6 +71,10 @@
             android:name=".Scouting2017Activity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"/>
+        <activity
+            android:name=".SelectDeviceActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <service
             android:name=".BluetoothSyncService"
             android:exported="false"/>

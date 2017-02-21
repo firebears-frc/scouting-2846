@@ -150,15 +150,17 @@ public class BluetoothSyncService extends Service {
 		Log.d(TAG, "created");
 		registerReceiver(receiver, new IntentFilter(
 			BluetoothAdapter.ACTION_STATE_CHANGED));
+		if (adapter != null)
+			thread.start();
+		else {
+			Log.e(TAG, "bluetooth adapter not found!");
+			stopSelf();
+		}
 	}
 
 	@Override
 	public int onStartCommand(Intent i, int flags, int startId) {
 		Log.d(TAG, "start command");
-		if (adapter != null)
-			thread.start();
-		else
-			Log.e(TAG, "bluetooth adapter not found!");
 		return Service.START_NOT_STICKY;
 	}
 
