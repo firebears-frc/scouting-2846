@@ -21,6 +21,8 @@
  */
 package org.firebears.scouting2846;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,6 +31,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.HashMap;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Helper to marshall JSON messages.
@@ -86,5 +92,58 @@ public class Marshaller {
 		gzout.write(msg.getBytes("UTF-8"));
 		gzout.close();
 		os.write(out.toByteArray());
+	}
+
+	static private final String[] COLS = {
+		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
+	};
+
+	static public JSONArray lookupFinalObservations(ContentResolver cr)
+		throws IOException, JSONException
+	{
+		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS, null, null,
+			null);
+		try {
+			if (c != null)
+				return lookupFinalObservations(c);
+			else
+				throw new IOException("No cursor");
+		}
+		finally {
+			if (c != null)
+				c.close();
+		}
+	}
+
+	static private JSONArray lookupFinalObservations(Cursor c)
+		throws JSONException
+	{
+		HashMap<Integer, Integer> map =
+			new HashMap<Integer, Integer>();
+		int cs = c.getColumnIndex(Scouting2017.COL_SCOUTER);
+		int co = c.getColumnIndex(Scouting2017.COL_OBSERVATION);
+		while (c.moveToNext()) {
+			int s = c.getInt(cs);
+			int o = c.getInt(co);
+			Integer v = map.get(s);
+			if (null == v || v < o)
+				map.put(s, o);
+		}
+		return buildArray(map);
+	}
+
+	static private JSONArray buildArray(HashMap<Integer, Integer> map)
+		throws JSONException
+	{
+		JSONArray ja = new JSONArray();
+		for (Integer s : map.keySet()) {
+			JSONObject jo = new JSONObject();
+			Integer o = map.get(s);
+			jo.put(Scouting2017.COL_SCOUTER, s);
+			jo.put(Scouting2017.COL_OBSERVATION, o);
+			Log.e(TAG, "jo: " + jo);
+			ja.put(jo);
+		}
+		return ja;
 	}
 }
