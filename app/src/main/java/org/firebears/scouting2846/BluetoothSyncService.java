@@ -31,7 +31,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -42,11 +41,11 @@ import java.util.UUID;
  */
 public class BluetoothSyncService extends Service {
 
-	static private final String TAG = "BluetoothSync";
+	static private final String TAG = "BluetoothSyncService";
 
 	static private final String SDP_NAME = "BluetoothSync";
 
-	static private final UUID OUR_UUID =
+	static public final UUID OUR_UUID =
 		UUID.fromString("b9a8fc97-8a4b-4481-b634-856140ed1b7d");
 
 	private final BluetoothAdapter adapter =
@@ -130,19 +129,7 @@ public class BluetoothSyncService extends Service {
 	private void doHandleConnection(BluetoothSocket s) throws IOException {
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
-		Log.d(TAG, readMsg(is));
-	}
-
-	private String readMsg(InputStream is) throws IOException {
-		byte[] buf = new byte[1024];
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		while (true) {
-			int n = is.read(buf);
-			if (n <= 0)
-				break;
-			out.write(buf, 0, n);
-		}
-		return out.toString("UTF-8");
+		Log.d(TAG, "recv: " + Marshaller.readMsg(is));
 	}
 
 	@Override

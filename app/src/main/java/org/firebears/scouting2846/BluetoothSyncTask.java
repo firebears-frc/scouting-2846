@@ -21,14 +21,25 @@
  */
 package org.firebears.scouting2846;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.ContentResolver;
 import android.os.AsyncTask;
 import android.util.Log;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Task to sync via bluetooth.
  */
 public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
+
+	static private final String TAG = "BluetoothSyncTask";
+
+	private final BluetoothAdapter adapter =
+		BluetoothAdapter.getDefaultAdapter();
 
 	private final EventListActivity context;
 
@@ -41,12 +52,36 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected Void doInBackground(Void... v) {
-		syncWithPeer(context.getContentResolver());
+		if (adapter != null) {
+			try {
+				syncWithPeer(context.getContentResolver());
+			}
+			catch (IOException e) {
+				Log.e(TAG, "exception: " + e.getMessage());
+			}
+		}
 		return null;
 	}
 
-	private void syncWithPeer(ContentResolver cr) {
-		Log.e("syncWithPeer", address);
+	private void syncWithPeer(ContentResolver cr) throws IOException {
+		BluetoothDevice d = adapter.getRemoteDevice(address);
+		BluetoothSocket s = d.createRfcommSocketToServiceRecord(
+			BluetoothSyncService.OUR_UUID);
+		try {
+			Log.e(TAG, "connect: " + address);
+			s.connect();
+			sendRequest(s);
+		}
+		finally {
+			s.close();
+		}
+	}
+
+	private void sendRequest(BluetoothSocket s) throws IOException {
+		String msg = "this is a test message";
+		InputStream is = s.getInputStream();
+		OutputStream os = s.getOutputStream();
+		Marshaller.writeMsg(os, msg);
 	}
 
 	@Override
