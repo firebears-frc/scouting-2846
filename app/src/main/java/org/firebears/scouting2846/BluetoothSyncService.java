@@ -129,7 +129,8 @@ public class BluetoothSyncService extends Service {
 	private void doHandleConnection(BluetoothSocket s) throws IOException {
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
-		Log.d(TAG, "recv: " + Marshaller.readMsg(is));
+		String msg = Marshaller.readMsg(is);
+		Log.d(TAG, "recv: (" + msg.length() + ") " + msg);
 	}
 
 	@Override
