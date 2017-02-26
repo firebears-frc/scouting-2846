@@ -25,6 +25,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * DB stuff for scouting data.
@@ -115,5 +117,27 @@ public class Scouting2017 implements BaseColumns {
 			String v = c.getString(i);
 			cv.put(col, v);
 		}
+	}
+
+	static private final String[] COLS_ALL = {
+		COL_SCOUTER, COL_OBSERVATION, COL_MATCH, COL_TEAM_KEY,
+		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
+		COL_AUTO_BASELINE, COL_HIGH_GOAL, COL_LOW_GOAL, COL_PLACE_GEAR,
+		COL_CLIMB_ROPE, COL_TOUCH_PAD, COL_BALL_HUMAN, COL_BALL_FLOOR,
+		COL_BALL_HOPPER, COL_PILOT_EFFECTIVE, COL_RELEASE_ROPE,
+		COL_LOSE_GEAR, COL_NOTES,
+	};
+
+	/** Parse a JSON scouting object */
+	static public ContentValues parse(JSONObject jo) throws JSONException {
+		ContentValues cv = new ContentValues();
+		for (String v : COLS_ALL) {
+			Object o = jo.get(v);
+			if (o instanceof Integer)
+				cv.put(v, (Integer) o);
+			else
+				cv.put(v, o.toString());
+		}
+		return cv;
 	}
 }

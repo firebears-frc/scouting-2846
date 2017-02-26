@@ -22,6 +22,7 @@
 package org.firebears.scouting2846;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 import java.io.ByteArrayInputStream;
@@ -261,5 +262,17 @@ public class Marshaller {
 			jo.put(i, v);
 		}
 		return jo;
+	}
+
+	static public void parseExtraObservations(ContentResolver cr,
+		String obs) throws JSONException
+	{
+		JSONArray ja = new JSONArray(obs);
+		for (int i = 0; i < ja.length(); i++) {
+			JSONObject jo = ja.getJSONObject(i);
+			Log.e(TAG, "jo: " + jo);
+			ContentValues cv = Scouting2017.parse(jo);
+			cr.insert(Scouting2017.CONTENT_URI, cv);
+		}
 	}
 }
