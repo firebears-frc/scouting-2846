@@ -50,7 +50,7 @@ public class SelectDeviceActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setResult(Activity.RESULT_CANCELED);
+		cancelResult(R.string.sync_canceled);
 		setContentView(R.layout.activity_select_device);
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -79,10 +79,14 @@ public class SelectDeviceActivity extends Activity {
 			cancelActivity(R.string.bt_disabled);
 	}
 
-	private void cancelActivity(int res) {
+	private void cancelResult(int res) {
 		Intent intent = new Intent();
 		intent.putExtra(ERROR_CODE, res);
 		setResult(RESULT_CANCELED, intent);
+	}
+
+	private void cancelActivity(int res) {
+		cancelResult(res);
 		finish();
 	}
 

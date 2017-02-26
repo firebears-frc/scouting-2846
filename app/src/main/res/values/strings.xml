@@ -7,6 +7,7 @@
     <string name="action_bt_sync">Bluetooth Sync</string>
     <string name="sync_complete">Sync Complete</string>
     <string name="sync_failed">Sync Failed</string>
+    <string name="sync_canceled">Sync Canceled</string>
     <string name="fetch_events">Fetching event list</string>
     <string name="fetch_teams">Fetching team list</string>
     <string name="fetch_matches">Fetching match list</string>
