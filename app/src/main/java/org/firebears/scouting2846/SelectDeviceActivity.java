@@ -26,7 +26,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
