@@ -70,28 +70,27 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 	private void syncWithPeer(ContentResolver cr) throws IOException,
 		JSONException
 	{
-		String msg = Marshaller.lookupFinalObservations(cr);
 		BluetoothDevice d = adapter.getRemoteDevice(address);
 		BluetoothSocket s = d.createRfcommSocketToServiceRecord(
 			BluetoothSyncService.OUR_UUID);
 		try {
-			Log.e(TAG, "connect: " + address);
+			Log.d(TAG, "connect: " + address);
 			s.connect();
-			doSync(cr, s, msg);
+			doSync(cr, s);
 		}
 		finally {
 			s.close();
 		}
 	}
 
-	private void doSync(ContentResolver cr, BluetoothSocket s, String msg)
+	private void doSync(ContentResolver cr, BluetoothSocket s)
 		throws IOException, JSONException
 	{
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
-		Marshaller.writeMsg(os, msg);
-		String obs = Marshaller.readMsg(is, 10000);
-		Marshaller.parseExtraObservations(cr, obs);
+		Marshaller.recvObservations(cr, is, os);
+		Marshaller.sendObservations(cr, is, os);
+		Log.d(TAG, "complete!");
 	}
 
 	@Override

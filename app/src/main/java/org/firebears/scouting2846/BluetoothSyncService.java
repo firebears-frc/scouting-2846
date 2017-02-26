@@ -26,6 +26,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -113,17 +114,26 @@ public class BluetoothSyncService extends Service {
 			SDP_NAME, OUR_UUID);
 		Log.d(TAG, "got bluetooth server socket");
 		try {
-			BluetoothSocket s = server_sock.accept();
-			Log.d(TAG, "accepted bluetooth connection");
-			try {
-				doHandleConnection(s);
-			}
-			finally {
-				s.close();
+			while (true) {
+				doAccept(server_sock);
 			}
 		}
 		finally {
 			server_sock.close();
+		}
+	}
+
+	private void doAccept(BluetoothServerSocket server_sock)
+		throws IOException, JSONException
+	{
+		ContentResolver cr = getContentResolver();
+		BluetoothSocket s = server_sock.accept();
+		Log.d(TAG, "accepted bluetooth connection");
+		try {
+			doHandleConnection(s);
+		}
+		finally {
+			s.close();
 		}
 	}
 
@@ -132,10 +142,12 @@ public class BluetoothSyncService extends Service {
 	{
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
-		String msg = Marshaller.readMsg(is, 1000);
-		String obs = Marshaller.lookupExtraObservations(
-			getContentResolver(), msg);
-		Marshaller.writeMsg(os, obs);
+		ContentResolver cr = getContentResolver();
+		Marshaller.sendObservations(cr, is, os);
+		try { Thread.sleep(1000); }
+		catch (InterruptedException e) { }
+		Marshaller.recvObservations(cr, is, os);
+		Log.d(TAG, "complete!");
 	}
 
 	@Override

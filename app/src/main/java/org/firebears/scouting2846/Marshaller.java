@@ -44,30 +44,30 @@ public class Marshaller {
 
 	static private final String TAG = "Marshaller";
 
-	static public String readMsg(InputStream is, int rto)
-		throws IOException
-	{
+	static private String readMsg(InputStream is) throws IOException {
 		byte[] buf = new byte[1024];
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		while (true) {
-			if (!pollStream(is, rto))
-				break;
 			int n = is.read(buf);
 			if (n <= 0)
 				break;
 			Log.d(TAG, "recv: " + n);
 			out.write(buf, 0, n);
+			// Check for end of message (gap of 500 ms)
+			if (!pollStream(is))
+				break;
 		}
+		if (out.size() == 0)
+			throw new IOException("Read timed out");
 		String data = inflateData(out.toByteArray());
 		Log.d(TAG, "recv uncompressed: " + data.length());
 		return data;
 	}
 
-	static private boolean pollStream(InputStream is, int rto)
+	static private boolean pollStream(InputStream is)
 		throws IOException
 	{
-		int it = rto / 100;
-		for (int i = 0; i <= it; i++) {
+		for (int i = 0; i < 5; i++) {
 			if (is.available() > 0)
 				return true;
 			try {
@@ -92,7 +92,7 @@ public class Marshaller {
 		return out.toString("UTF-8");
 	}
 
-	static public void writeMsg(OutputStream os, String msg)
+	static private void writeMsg(OutputStream os, String msg)
 		throws IOException
 	{
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -110,7 +110,7 @@ public class Marshaller {
 		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
 	};
 
-	static public String lookupFinalObservations(ContentResolver cr)
+	static private String lookupFinalObservations(ContentResolver cr)
 		throws IOException, JSONException
 	{
 		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS, null, null,
@@ -153,9 +153,9 @@ public class Marshaller {
 			Integer o = map.get(s);
 			jo.put(Scouting2017.COL_SCOUTER, s);
 			jo.put(Scouting2017.COL_OBSERVATION, o);
-			Log.e(TAG, "jo: " + jo);
 			ja.put(jo);
 		}
+		Log.d(TAG, "final observations: " + ja.length());
 		return ja;
 	}
 
@@ -176,7 +176,6 @@ public class Marshaller {
 			JSONObject jo = ja.getJSONObject(i);
 			int s = jo.getInt(Scouting2017.COL_SCOUTER);
 			int o = jo.getInt(Scouting2017.COL_OBSERVATION);
-			Log.e(TAG, "scouter: " + s + "  obs: " + o);
 			map.put(s, o);
 		}
 		return map;
@@ -225,10 +224,10 @@ public class Marshaller {
 			Integer v = map.get(s);
 			if (null == v || v < o) {
 				JSONObject jo = buildObservation(c);
-				Log.e(TAG, "jo: " + jo);
 				ja.put(jo);
 			}
 		}
+		Log.d(TAG, "sending " + ja.length() + " observations");
 		return ja;
 	}
 
@@ -270,9 +269,30 @@ public class Marshaller {
 		JSONArray ja = new JSONArray(obs);
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject jo = ja.getJSONObject(i);
-			Log.e(TAG, "jo: " + jo);
 			ContentValues cv = Scouting2017.parse(jo);
 			cr.insert(Scouting2017.CONTENT_URI, cv);
 		}
+		Log.d(TAG, "received " + ja.length() + " observations");
+	}
+
+	static public void sendObservations(ContentResolver cr, InputStream is,
+		OutputStream os) throws IOException, JSONException
+	{
+		Log.d(TAG, "sending...");
+		String msg = readMsg(is);
+		String obs = lookupExtraObservations(cr, msg);
+		writeMsg(os, obs);
+		Log.d(TAG, "send done");
+	}
+
+	static public void recvObservations(ContentResolver cr, InputStream is,
+		OutputStream os) throws IOException, JSONException
+	{
+		String msg = lookupFinalObservations(cr);
+		Log.d(TAG, "receiving...");
+		writeMsg(os, msg);
+		String obs = readMsg(is);
+		parseExtraObservations(cr, obs);
+		Log.d(TAG, "receive done");
 	}
 }
