@@ -57,7 +57,9 @@ public class Marshaller {
 			Log.d(TAG, "recv: " + n);
 			out.write(buf, 0, n);
 		}
-		return inflateData(out.toByteArray());
+		String data = inflateData(out.toByteArray());
+		Log.d(TAG, "recv uncompressed: " + data.length());
+		return data;
 	}
 
 	static private boolean pollStream(InputStream is, int rto)
@@ -94,10 +96,12 @@ public class Marshaller {
 	{
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		GZIPOutputStream gzout = new GZIPOutputStream(out);
-		gzout.write(msg.getBytes("UTF-8"));
+		byte[] data = msg.getBytes("UTF-8");
+		Log.d(TAG, "write: " + data.length);
+		gzout.write(data);
 		gzout.close();
 		byte[] buffer = out.toByteArray();
-		Log.d(TAG, "write: " + buffer.length);
+		Log.d(TAG, "write compressed: " + buffer.length);
 		os.write(buffer);
 	}
 

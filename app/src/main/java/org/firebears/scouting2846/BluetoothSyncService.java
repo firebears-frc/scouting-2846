@@ -133,10 +133,8 @@ public class BluetoothSyncService extends Service {
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
 		String msg = Marshaller.readMsg(is, 1000);
-		Log.d(TAG, "recv: (" + msg.length() + ") " + msg);
 		String obs = Marshaller.lookupExtraObservations(
 			getContentResolver(), msg);
-		Log.d(TAG, "send: (" + obs.length() + ") " + obs);
 		Marshaller.writeMsg(os, obs);
 	}
 

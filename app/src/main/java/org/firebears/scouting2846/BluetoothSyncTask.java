@@ -77,21 +77,18 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 		try {
 			Log.e(TAG, "connect: " + address);
 			s.connect();
-			sendRequest(s, msg);
+			doSync(s, msg);
 		}
 		finally {
 			s.close();
 		}
 	}
 
-	private void sendRequest(BluetoothSocket s, String msg)
-		throws IOException
-	{
+	private void doSync(BluetoothSocket s, String msg) throws IOException {
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
 		Marshaller.writeMsg(os, msg);
 		String obs = Marshaller.readMsg(is, 10000);
-		Log.d(TAG, "recv: (" + obs.length() + ") " + obs);
 	}
 
 	@Override
