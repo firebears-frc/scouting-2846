@@ -46,6 +46,8 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 
 	private final String address;
 
+	private boolean failed = false;
+
 	public BluetoothSyncTask(EventListActivity ctx, String a) {
 		context = ctx;
 		address = a;
@@ -59,6 +61,7 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 			}
 			catch (Exception e) {
 				Log.e(TAG, "exception: " + e.getMessage());
+				failed = true;
 			}
 		}
 		return null;
@@ -92,5 +95,10 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 	}
 
 	@Override
-	protected void onPostExecute(Void v) { }
+	protected void onPostExecute(Void v) {
+		if (failed)
+			context.showSnack(R.string.sync_failed);
+		else
+			context.showSnack(R.string.sync_complete);
+	}
 }

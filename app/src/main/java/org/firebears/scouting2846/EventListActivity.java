@@ -146,9 +146,7 @@ public class EventListActivity extends AppCompatActivity {
 	}
 
 	private boolean onRefreshSelected() {
-		View v = findViewById(R.id.event_list);
-		Snackbar.make(v, R.string.fetch_events, Snackbar.LENGTH_LONG)
-		        .show();
+		showSnack(R.string.fetch_events);
 		new FetchEvents(this).execute();
 		return true;
 	}
@@ -172,9 +170,14 @@ public class EventListActivity extends AppCompatActivity {
 		case RESULT_CANCELED:
 			int res = data.getIntExtra(
 				SelectDeviceActivity.ERROR_CODE, 0);
-			View v = findViewById(R.id.event_list);
-			Snackbar.make(v, res, Snackbar.LENGTH_LONG).show();
+			showSnack(res);
 			break;
 		}
+	}
+
+	/** Show a snackbar */
+	public void showSnack(int res) {
+		View v = findViewById(R.id.event_list);
+		Snackbar.make(v, res, Snackbar.LENGTH_LONG).show();
 	}
 }
