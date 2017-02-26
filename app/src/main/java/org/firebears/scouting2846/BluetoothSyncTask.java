@@ -30,7 +30,6 @@ import android.util.Log;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import org.json.JSONArray;
 import org.json.JSONException;
 
 /**
@@ -68,14 +67,14 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 	private void syncWithPeer(ContentResolver cr) throws IOException,
 		JSONException
 	{
-		JSONArray ja = Marshaller.lookupFinalObservations(cr);
+		String msg = Marshaller.lookupFinalObservations(cr);
 		BluetoothDevice d = adapter.getRemoteDevice(address);
 		BluetoothSocket s = d.createRfcommSocketToServiceRecord(
 			BluetoothSyncService.OUR_UUID);
 		try {
 			Log.e(TAG, "connect: " + address);
 			s.connect();
-			sendRequest(s, ja.toString());
+			sendRequest(s, msg);
 		}
 		finally {
 			s.close();
@@ -88,6 +87,8 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
 		Marshaller.writeMsg(os, msg);
+		String obs = Marshaller.readMsg(is, 10000);
+		Log.d(TAG, "recv: (" + obs.length() + ") " + obs);
 	}
 
 	@Override

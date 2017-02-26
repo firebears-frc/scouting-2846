@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
+import org.json.JSONException;
 
 /**
  * Service for accepting bluetooth connections to sync data.
@@ -101,12 +102,12 @@ public class BluetoothSyncService extends Service {
 		try {
 			doCreateAndAccept();
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			Log.e(TAG, "exception: " + e.getMessage());
 		}
 	}
 
-	private void doCreateAndAccept() throws IOException {
+	private void doCreateAndAccept() throws IOException, JSONException {
 		BluetoothServerSocket server_sock =
 			adapter.listenUsingRfcommWithServiceRecord(
 			SDP_NAME, OUR_UUID);
@@ -126,11 +127,17 @@ public class BluetoothSyncService extends Service {
 		}
 	}
 
-	private void doHandleConnection(BluetoothSocket s) throws IOException {
+	private void doHandleConnection(BluetoothSocket s)
+		throws IOException, JSONException
+	{
 		InputStream is = s.getInputStream();
 		OutputStream os = s.getOutputStream();
-		String msg = Marshaller.readMsg(is);
+		String msg = Marshaller.readMsg(is, 1000);
 		Log.d(TAG, "recv: (" + msg.length() + ") " + msg);
+		String obs = Marshaller.lookupExtraObservations(
+			getContentResolver(), msg);
+		Log.d(TAG, "send: (" + obs.length() + ") " + obs);
+		Marshaller.writeMsg(os, obs);
 	}
 
 	@Override

@@ -43,11 +43,13 @@ public class Marshaller {
 
 	static private final String TAG = "Marshaller";
 
-	static public String readMsg(InputStream is) throws IOException {
+	static public String readMsg(InputStream is, int rto)
+		throws IOException
+	{
 		byte[] buf = new byte[1024];
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		while (true) {
-			if (!pollStream(is))
+			if (!pollStream(is, rto))
 				break;
 			int n = is.read(buf);
 			if (n <= 0)
@@ -58,8 +60,11 @@ public class Marshaller {
 		return inflateData(out.toByteArray());
 	}
 
-	static private boolean pollStream(InputStream is) throws IOException {
-		for (int i = 0; i < 5; i++) {
+	static private boolean pollStream(InputStream is, int rto)
+		throws IOException
+	{
+		int it = rto / 100;
+		for (int i = 0; i <= it; i++) {
 			if (is.available() > 0)
 				return true;
 			try {
@@ -91,14 +96,16 @@ public class Marshaller {
 		GZIPOutputStream gzout = new GZIPOutputStream(out);
 		gzout.write(msg.getBytes("UTF-8"));
 		gzout.close();
-		os.write(out.toByteArray());
+		byte[] buffer = out.toByteArray();
+		Log.d(TAG, "write: " + buffer.length);
+		os.write(buffer);
 	}
 
 	static private final String[] COLS = {
 		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
 	};
 
-	static public JSONArray lookupFinalObservations(ContentResolver cr)
+	static public String lookupFinalObservations(ContentResolver cr)
 		throws IOException, JSONException
 	{
 		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS, null, null,
@@ -115,7 +122,7 @@ public class Marshaller {
 		}
 	}
 
-	static private JSONArray lookupFinalObservations(Cursor c)
+	static private String lookupFinalObservations(Cursor c)
 		throws JSONException
 	{
 		HashMap<Integer, Integer> map =
@@ -129,7 +136,7 @@ public class Marshaller {
 			if (null == v || v < o)
 				map.put(s, o);
 		}
-		return buildArray(map);
+		return buildArray(map).toString();
 	}
 
 	static private JSONArray buildArray(HashMap<Integer, Integer> map)
@@ -145,5 +152,110 @@ public class Marshaller {
 			ja.put(jo);
 		}
 		return ja;
+	}
+
+	static public String lookupExtraObservations(ContentResolver cr,
+		String msg) throws IOException, JSONException
+	{
+		HashMap<Integer, Integer> map = parseFinalObservations(msg);
+		return lookupExtraObservations(cr, map).toString();
+	}
+
+	static private HashMap<Integer, Integer> parseFinalObservations(
+		String msg) throws JSONException
+	{
+		HashMap<Integer, Integer> map =
+			new HashMap<Integer, Integer>();
+		JSONArray ja = new JSONArray(msg);
+		for (int i = 0; i < ja.length(); i++) {
+			JSONObject jo = ja.getJSONObject(i);
+			int s = jo.getInt(Scouting2017.COL_SCOUTER);
+			int o = jo.getInt(Scouting2017.COL_OBSERVATION);
+			Log.e(TAG, "scouter: " + s + "  obs: " + o);
+			map.put(s, o);
+		}
+		return map;
+	}
+
+	static private final String[] COLS_ALL = {
+		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
+		Scouting2017.COL_MATCH, Scouting2017.COL_TEAM_KEY,
+		Scouting2017.COL_AUTO_HIGH_GOAL,Scouting2017.COL_AUTO_LOW_GOAL,
+		Scouting2017.COL_AUTO_GEAR, Scouting2017.COL_AUTO_BASELINE,
+		Scouting2017.COL_HIGH_GOAL, Scouting2017.COL_LOW_GOAL,
+		Scouting2017.COL_PLACE_GEAR, Scouting2017.COL_CLIMB_ROPE,
+		Scouting2017.COL_TOUCH_PAD, Scouting2017.COL_BALL_HUMAN,
+		Scouting2017.COL_BALL_FLOOR, Scouting2017.COL_BALL_HOPPER,
+		Scouting2017.COL_PILOT_EFFECTIVE,Scouting2017.COL_RELEASE_ROPE,
+		Scouting2017.COL_LOSE_GEAR, Scouting2017.COL_NOTES,
+	};
+
+	static private JSONArray lookupExtraObservations(ContentResolver cr,
+		HashMap<Integer, Integer> map) throws IOException,
+		JSONException
+	{
+		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS_ALL, null,
+			null, null);
+		try {
+			if (c != null)
+				return lookupExtraObservations(c, map);
+			else
+				throw new IOException("No cursor");
+		}
+		finally {
+			if (c != null)
+				c.close();
+		}
+	}
+
+	static private JSONArray lookupExtraObservations(Cursor c,
+		HashMap<Integer, Integer> map) throws JSONException
+	{
+		JSONArray ja = new JSONArray();
+		int cs = c.getColumnIndex(Scouting2017.COL_SCOUTER);
+		int co = c.getColumnIndex(Scouting2017.COL_OBSERVATION);
+		while (c.moveToNext()) {
+			int s = c.getInt(cs);
+			int o = c.getInt(co);
+			Integer v = map.get(s);
+			if (null == v || v < o) {
+				JSONObject jo = buildObservation(c);
+				Log.e(TAG, "jo: " + jo);
+				ja.put(jo);
+			}
+		}
+		return ja;
+	}
+
+	static private final String[] COLS_INT = {
+		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
+		Scouting2017.COL_AUTO_HIGH_GOAL,Scouting2017.COL_AUTO_LOW_GOAL,
+		Scouting2017.COL_AUTO_GEAR, Scouting2017.COL_AUTO_BASELINE,
+		Scouting2017.COL_HIGH_GOAL, Scouting2017.COL_LOW_GOAL,
+		Scouting2017.COL_PLACE_GEAR, Scouting2017.COL_CLIMB_ROPE,
+		Scouting2017.COL_TOUCH_PAD, Scouting2017.COL_BALL_HUMAN,
+		Scouting2017.COL_BALL_FLOOR, Scouting2017.COL_BALL_HOPPER,
+		Scouting2017.COL_PILOT_EFFECTIVE,Scouting2017.COL_RELEASE_ROPE,
+		Scouting2017.COL_LOSE_GEAR,
+	};
+
+	static private final String[] COLS_STR = {
+		Scouting2017.COL_MATCH, Scouting2017.COL_TEAM_KEY,
+		Scouting2017.COL_NOTES,
+	};
+
+	static private JSONObject buildObservation(Cursor c)
+		throws JSONException
+	{
+		JSONObject jo = new JSONObject();
+		for (String i : COLS_INT) {
+			int v = c.getInt(c.getColumnIndex(i));
+			jo.put(i, v);
+		}
+		for (String i : COLS_STR) {
+			String v = c.getString(c.getColumnIndex(i));
+			jo.put(i, v);
+		}
+		return jo;
 	}
 }
