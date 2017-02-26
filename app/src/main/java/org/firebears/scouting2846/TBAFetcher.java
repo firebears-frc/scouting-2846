@@ -35,6 +35,8 @@ import java.nio.CharBuffer;
  */
 public class TBAFetcher {
 
+	static private final String TAG = "TBAFetcher";
+
 	/** Timeout for fetching data */
 	static private final int TIMEOUT_MS = 5000;
 
@@ -66,11 +68,11 @@ public class TBAFetcher {
 	/** Fetch data from TBA site */
 	static private String fetchData(String u) {
 		try {
-			Log.e("TBAFetcher", "reading " + u);
+			Log.d(TAG, "reading " + u);
 			return readUrl(u);
 		}
 		catch (Exception e) {
-			Log.e("TBAFetcher", "exception " + e);
+			Log.e(TAG, "exception " + e);
 			return "";
 		}
 	}

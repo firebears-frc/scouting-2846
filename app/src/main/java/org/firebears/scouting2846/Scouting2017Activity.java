@@ -43,6 +43,8 @@ import android.widget.TextView;
  */
 public class Scouting2017Activity extends AppCompatActivity {
 
+	static private final String TAG = "Scouting2017Activity";
+
 	/** Activity Arguments */
 	static public final String ARG_MATCH_KEY = "match_key";
 	static public final String ARG_TEAM_KEY = "team_key";
@@ -136,7 +138,7 @@ public class Scouting2017Activity extends AppCompatActivity {
 			while (c.moveToNext()) {
 				String n = c.getString(ni);
 				int v = c.getInt(vi);
-				Log.e("onLoadFinished", n + ": " + v);
+				Log.d(TAG, n + ": " + v);
 				if (Param.ROW_SCOUTER.equals(n)) {
 					content.put(Scouting2017.COL_SCOUTER,
 						v);

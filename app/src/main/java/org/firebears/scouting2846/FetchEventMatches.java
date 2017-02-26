@@ -35,6 +35,8 @@ import org.json.JSONObject;
  */
 public class FetchEventMatches extends AsyncTask<Void, Void, Void> {
 
+	static private final String TAG = "FetchEventMatches";
+
 	private final MatchListActivity context;
 
 	private final int event_id;
@@ -54,7 +56,7 @@ public class FetchEventMatches extends AsyncTask<Void, Void, Void> {
 				event_key));
 		}
 		catch (JSONException e) {
-			Log.e("FetchEventMatches", e.getMessage());
+			Log.e(TAG, "exception " + e.getMessage());
 		}
 		return null;
 	}
@@ -72,7 +74,7 @@ public class FetchEventMatches extends AsyncTask<Void, Void, Void> {
 			if (cv != null)
 				insertOrUpdate(cr, cv);
 			else
-				Log.e("insertEventMatches", "parse " + jo);
+				Log.e(TAG, "parse error " + jo);
 		}
 	}
 
