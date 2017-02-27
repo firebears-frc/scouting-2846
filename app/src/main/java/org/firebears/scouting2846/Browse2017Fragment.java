@@ -21,7 +21,6 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -39,29 +38,20 @@ public class Browse2017Fragment extends Fragment {
 
 	static private final String TAG = "Browse2017Fragment";
 
-	/** Content values */
-	private final ContentValues content;
-
-	public Browse2017Fragment(ContentValues cv) {
-		content = cv;
-	}
-
-	/** Required no-arg constructor */
-	public Browse2017Fragment() {
-		content = new ContentValues();
-	}
+	private Bundle args;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup vg,
 		Bundle savedInstanceState)
 	{
+		args = getArguments();
 		View rv = inflater.inflate(R.layout.browse_2017_detail,
 			vg, false);
 		Toolbar tb = (Toolbar) rv.findViewById(R.id.detail_toolbar);
 		AppCompatActivity act = (AppCompatActivity) getActivity();
 		act.setSupportActionBar(tb);
-		int num = content.getAsInteger(Team.COL_TEAM_NUMBER);
-		String nick = content.getAsString(Team.COL_NICKNAME);
+		int num = args.getInt(Team.COL_TEAM_NUMBER);
+		String nick = args.getString(Team.COL_NICKNAME);
 		tb.setTitle("" + num + ' ' + nick);
 		Log.d(TAG, "team " + num + " " + nick);
 		initView(rv);
@@ -88,16 +78,16 @@ public class Browse2017Fragment extends Fragment {
 	}
 
 	private void initString(View rv, int res, String col) {
-		String v = (content.containsKey(col))
-		         ? content.getAsString(col)
+		String v = (args.containsKey(col))
+		         ? args.get(col).toString()
 		         : "";
 		TextView tv = (TextView) rv.findViewById(res);
 		tv.setText(v);
 	}
 
 	private void initBool(View rv, int res, String col) {
-		int v = (content.containsKey(col))
-		      ? content.getAsInteger(col) 
+		int v = (args.containsKey(col))
+		      ? args.getInt(col)
 		      : 0;
 		TextView tv = (TextView) rv.findViewById(res);
 		tv.setText(v != 0 ? "Yes" : "No");

@@ -21,7 +21,6 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -79,12 +78,11 @@ public class Browse2017Activity extends AppCompatActivity {
 		Scouting2017.COL_NOTES,
 	};
 
-	/** Content values for team info */
-	private final ContentValues team_content = new ContentValues();
+	/** Arguments for team info */
+	private final Bundle team_args = new Bundle();
 
-	/** Content values for observations */
-	private final ArrayList<ContentValues> observations =
-		new ArrayList<ContentValues>();
+	/** Arguments for observations */
+	private final ArrayList<Bundle> observations = new ArrayList<Bundle>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +136,8 @@ public class Browse2017Activity extends AppCompatActivity {
 		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
 		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
 		Log.d(TAG, "team " + num + " " + nick);
-		team_content.put(Team.COL_TEAM_NUMBER, num);
-		team_content.put(Team.COL_NICKNAME, nick);
+		team_args.putInt(Team.COL_TEAM_NUMBER, num);
+		team_args.putString(Team.COL_NICKNAME, nick);
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(SCOUTING_2017_LOADER_ID, null, cb);
 	}
@@ -157,12 +155,11 @@ public class Browse2017Activity extends AppCompatActivity {
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
 			while (c.moveToNext()) {
-				ContentValues cv = new ContentValues(
-					team_content);
-				Scouting2017.updateContent(cv, c);
-				Log.d(TAG, "match " + cv.getAsString(
+				Bundle b = new Bundle(team_args);
+				Scouting2017.updateBundle(b, c);
+				Log.d(TAG, "match " + b.getString(
 					Scouting2017.COL_MATCH));
-				observations.add(cv);
+				observations.add(b);
 			}
 			ViewPager vp = (ViewPager) findViewById(R.id.pager);
 			vp.setAdapter(new ScoutingPagerAdapter());
@@ -191,7 +188,9 @@ public class Browse2017Activity extends AppCompatActivity {
 
 		@Override
 		public Fragment getItem(int pos) {
-			return new Browse2017Fragment(observations.get(pos));
+			Fragment f = new Browse2017Fragment();
+			f.setArguments(observations.get(pos));
+			return f;
 		}
 
 		@Override
@@ -201,8 +200,8 @@ public class Browse2017Activity extends AppCompatActivity {
 
 		@Override
 		public CharSequence getPageTitle(int pos) {
-			ContentValues cv = observations.get(pos);
-			String m = cv.getAsString(Scouting2017.COL_MATCH);
+			Bundle b = observations.get(pos);
+			String m = b.getString(Scouting2017.COL_MATCH);
 			if ("".equals(m))
 				return getString(R.string.pit_scouting);
 			else

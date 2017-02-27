@@ -24,6 +24,7 @@ package org.firebears.scouting2846;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.BaseColumns;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -141,5 +142,42 @@ public class Scouting2017 implements BaseColumns {
 				cv.put(v, o.toString());
 		}
 		return cv;
+	}
+
+	static public void updateBundle(Bundle b, Cursor c) {
+		updateInt(b, c, COL_SCOUTER);
+		updateStr(b, c, COL_MATCH);
+		updateInt(b, c, COL_AUTO_HIGH_GOAL);
+		updateInt(b, c, COL_AUTO_LOW_GOAL);
+		updateInt(b, c, COL_AUTO_GEAR);
+		updateInt(b, c, COL_AUTO_BASELINE);
+		updateInt(b, c, COL_HIGH_GOAL);
+		updateInt(b, c, COL_LOW_GOAL);
+		updateInt(b, c, COL_PLACE_GEAR);
+		updateInt(b, c, COL_CLIMB_ROPE);
+		updateInt(b, c, COL_TOUCH_PAD);
+		updateInt(b, c, COL_BALL_HUMAN);
+		updateInt(b, c, COL_BALL_FLOOR);
+		updateInt(b, c, COL_BALL_HOPPER);
+		updateInt(b, c, COL_PILOT_EFFECTIVE);
+		updateInt(b, c, COL_RELEASE_ROPE);
+		updateInt(b, c, COL_LOSE_GEAR);
+		updateStr(b, c, COL_NOTES);
+	}
+
+	static private void updateInt(Bundle b, Cursor c, String col) {
+		int i = c.getColumnIndex(col);
+		if (i >= 0) {
+			int v = c.getInt(i);
+			b.putInt(col, v);
+		}
+	}
+
+	static private void updateStr(Bundle b, Cursor c, String col) {
+		int i = c.getColumnIndex(col);
+		if (i >= 0) {
+			String v = c.getString(i);
+			b.putString(col, v);
+		}
 	}
 }
