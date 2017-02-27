@@ -24,6 +24,7 @@ package org.firebears.scouting2846;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.security.SecureRandom;
 
 /**
  * Our DB helper.
@@ -31,6 +32,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class OurDbHelper extends SQLiteOpenHelper {
 	static public final int DATABASE_VERSION = 1;
 	static public final String DATABASE_NAME = "Scouting.db";
+
+	/** SQL statement to create parameter table */
+	static private final String SQL_CREATE_PARAMS =
+		"CREATE TABLE " + Param.TABLE_NAME + " (" +
+		Param.COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
+		Param.COL_NAME + " TEXT UNIQUE NOT NULL, " +
+		Param.COL_VALUE + " INTEGER UNIQUE NOT NULL)";
+
+	/** SQL statement to drop parameter table */
+	static private final String SQL_DROP_PARAMS =
+		"DROP TABLE IF EXISTS " + Param.TABLE_NAME;
 
 	/** SQL statement to create event table */
 	static private final String SQL_CREATE_EVENTS =
@@ -190,12 +202,14 @@ public class OurDbHelper extends SQLiteOpenHelper {
 
 	@Override
        	public void onCreate(SQLiteDatabase db) {
+		db.execSQL(SQL_CREATE_PARAMS);
 		db.execSQL(SQL_CREATE_EVENTS);
 		db.execSQL(SQL_CREATE_TEAMS);
 		db.execSQL(SQL_CREATE_EVENT_TEAMS);
 		db.execSQL(SQL_CREATE_ET_VIEW);
 		db.execSQL(SQL_CREATE_MATCHES);
 		db.execSQL(SQL_CREATE_SCOUTING);
+		initParams(db);
 	}
 
 	@Override
@@ -208,6 +222,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_DROP_EVENT_TEAMS);
 		db.execSQL(SQL_DROP_TEAMS);
 		db.execSQL(SQL_DROP_EVENTS);
+		db.execSQL(SQL_DROP_PARAMS);
 		onCreate(db);
 	}
 
@@ -216,5 +231,14 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		int newVersion)
 	{
 		onUpgrade(db, oldVersion, newVersion);
+	}
+
+	private void initParams(SQLiteDatabase db) {
+		int scouter = new SecureRandom().nextInt();
+		db.execSQL("INSERT INTO " + Param.TABLE_NAME +" (name, value)"+
+			" VALUES ('" + Param.ROW_SCOUTER + "', " + scouter +
+			")");
+		db.execSQL("INSERT INTO " + Param.TABLE_NAME +" (name, value)"+
+			" VALUES ('" + Param.ROW_OBSERVATION + "', 0)");
 	}
 }

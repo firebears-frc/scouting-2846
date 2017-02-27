@@ -1,0 +1,340 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 tools:context="org.firebears.scouting2846.Browse2017Activity"
+                                                 tools:ignore="MergeRootFrame">
+
+<android.support.design.widget.AppBarLayout
+    android:id="@+id/app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="?homeAsUpIndicator"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+</android.support.design.widget.AppBarLayout>
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+  <RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="36dp"
+    android:layout_marginRight="36dp">
+
+    <TextView
+        android:id="@+id/autonomous"
+        android:text="@string/autonomous"
+	android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/auto_high"
+        android:text="@string/high_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autonomous"/>
+
+    <TextView
+        android:id="@+id/ah_txt"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autonomous"
+        android:layout_toRightOf="@id/auto_high"/>
+
+    <TextView
+        android:id="@+id/auto_low"
+        android:text="@string/low_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_high"/>
+
+    <TextView
+        android:id="@+id/al_txt"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ah_txt"
+        android:layout_toRightOf="@id/auto_low"/>
+
+    <TextView
+        android:id="@+id/auto_gear"
+        android:text="@string/gear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_low"/>
+
+    <TextView
+        android:id="@+id/ag_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/al_txt"
+        android:layout_toRightOf="@id/auto_gear"/>
+
+    <TextView
+        android:id="@+id/baseline"
+        android:text="@string/baseline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_gear"/>
+
+    <TextView
+        android:id="@+id/bl_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ag_txt"
+        android:layout_toRightOf="@id/baseline"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"/>
+
+    <TextView
+        android:id="@+id/teleop"
+        android:text="@string/teleop"
+	android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider1"/>
+
+    <TextView
+        android:id="@+id/tele_high"
+        android:text="@string/high_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"/>
+
+    <TextView
+        android:id="@+id/th_txt"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_toRightOf="@id/tele_high"/>
+
+    <TextView
+        android:id="@+id/tele_low"
+        android:text="@string/low_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_high"/>
+
+    <TextView
+        android:id="@+id/tl_txt"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/th_txt"
+        android:layout_toRightOf="@id/tele_low"/>
+
+    <TextView
+        android:id="@+id/tele_gear"
+        android:text="@string/gear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_low"/>
+
+    <TextView
+        android:id="@+id/tg_txt"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tl_txt"
+        android:layout_toRightOf="@id/tele_gear"/>
+
+    <TextView
+        android:id="@+id/climb"
+        android:text="@string/climb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_gear"/>
+
+    <TextView
+        android:id="@+id/cl_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tg_txt"
+        android:layout_toRightOf="@id/climb"/>
+
+    <TextView
+        android:id="@+id/touchpad"
+        android:text="@string/touchpad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/climb"/>
+
+    <TextView
+        android:id="@+id/tp_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cl_txt"
+        android:layout_toRightOf="@id/touchpad"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/touchpad"/>
+
+    <TextView
+        android:id="@+id/ball_acquisition"
+        android:text="@string/ball_acquisition"
+	android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider2"/>
+
+    <TextView
+        android:id="@+id/ball_human"
+        android:text="@string/ball_human"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_acquisition"/>
+
+    <TextView
+        android:id="@+id/bh_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_acquisition"
+        android:layout_toRightOf="@id/ball_human"/>
+
+    <TextView
+        android:id="@+id/ball_floor"
+        android:text="@string/ball_floor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_human"/>
+
+    <TextView
+        android:id="@+id/bf_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bh_txt"
+        android:layout_toRightOf="@id/ball_floor"/>
+
+    <TextView
+        android:id="@+id/ball_hopper"
+        android:text="@string/ball_hopper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_floor"/>
+
+    <TextView
+        android:id="@+id/bp_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bf_txt"
+        android:layout_toRightOf="@id/ball_hopper"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ball_hopper"/>
+
+    <TextView
+        android:id="@+id/pilot"
+        android:text="@string/pilot"
+	android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider3"/>
+
+    <TextView
+        android:id="@+id/effective"
+        android:text="@string/effective"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pilot"/>
+
+    <TextView
+        android:id="@+id/pe_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pilot"
+        android:layout_toRightOf="@id/effective"/>
+
+    <TextView
+        android:id="@+id/release_rope"
+        android:text="@string/release_rope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/effective"/>
+
+    <TextView
+        android:id="@+id/rr_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pe_txt"
+        android:layout_toRightOf="@id/release_rope"/>
+
+    <TextView
+        android:id="@+id/lose_gear"
+        android:text="@string/lose_gear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/release_rope"/>
+
+    <TextView
+        android:id="@+id/lg_txt"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rr_txt"
+        android:layout_toRightOf="@id/lose_gear"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lose_gear"/>
+
+    <TextView
+        android:id="@+id/notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider4"/>
+
+  </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

@@ -33,6 +33,8 @@ import org.json.JSONObject;
  */
 public class FRCEvent implements BaseColumns {
 
+	static private final String TAG = "FRCEvent";
+
 	static public final String TABLE_NAME = "event";
 	static public final String COL_ID = "_id";
 	static public final String COL_KEY = "ev_key";
@@ -70,7 +72,7 @@ public class FRCEvent implements BaseColumns {
 	static public ContentValues parse(JSONObject ev) {
 		for (String col: EVENT_REQ) {
 			if (ev.isNull(col)) {
-				Log.e("FRCEvent.parse", col + " is null");
+				Log.e(TAG, col + " is null");
 				return null;
 			}
 		}

@@ -32,6 +32,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -42,6 +43,8 @@ import android.widget.TextView;
  */
 public class Scouting2017Activity extends AppCompatActivity {
 
+	static private final String TAG = "Scouting2017Activity";
+
 	/** Activity Arguments */
 	static public final String ARG_MATCH_KEY = "match_key";
 	static public final String ARG_TEAM_KEY = "team_key";
@@ -49,6 +52,13 @@ public class Scouting2017Activity extends AppCompatActivity {
 	/** Scouting loader ID */
 	static private final int SCOUTING_2017_LOADER_ID = 44;
 	static private final int TEAM_LOADER_ID = 45;
+	static private final int PARAM_LOADER_ID = 46;
+
+	/** Columns to retrieve from the loader */
+	static private final String[] PARAM_COLS = {
+		Param.COL_NAME,
+		Param.COL_VALUE,
+	};
 
 	/** Columns to retrieve from the loader */
 	static private final String[] TEAM_COLS = {
@@ -82,6 +92,9 @@ public class Scouting2017Activity extends AppCompatActivity {
 	/** Content values */
 	private final ContentValues content = new ContentValues();
 
+	/** Loaded content values */
+	private ContentValues content_loaded;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,8 +108,8 @@ public class Scouting2017Activity extends AppCompatActivity {
 			ab.setTitle(R.string.scouting_2017);
 		}
 		LoaderManager lm = getSupportLoaderManager();
+		lm.initLoader(PARAM_LOADER_ID, null, param_cb);
 		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
-		lm.initLoader(SCOUTING_2017_LOADER_ID, null, cb);
 	}
 
 	@Override
@@ -106,6 +119,46 @@ public class Scouting2017Activity extends AppCompatActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/** Callbacks for param loader */
+	private final LoaderCallbacks<Cursor> param_cb =
+		new LoaderCallbacks<Cursor>()
+	{
+		@Override
+		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
+			return (PARAM_LOADER_ID == id)
+			      ? createParamLoader()
+			      : null;
+		}
+		@Override
+		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+			int ni = c.getColumnIndex(Param.COL_NAME);
+			int vi = c.getColumnIndex(Param.COL_VALUE);
+			while (c.moveToNext()) {
+				String n = c.getString(ni);
+				int v = c.getInt(vi);
+				Log.d(TAG, n + ": " + v);
+				if (Param.ROW_SCOUTER.equals(n)) {
+					content.put(Scouting2017.COL_SCOUTER,
+						v);
+				}
+				if (Param.ROW_OBSERVATION.equals(n)) {
+					content.put(Scouting2017.COL_OBSERVATION,
+						v + 1);
+				}
+			}
+			LoaderManager lm = getSupportLoaderManager();
+			lm.initLoader(SCOUTING_2017_LOADER_ID, null, cb);
+		}
+		@Override
+		public void onLoaderReset(Loader<Cursor> loader) { }
+	};
+
+	/** Create a loader for parameters */
+	private Loader<Cursor> createParamLoader() {
+		return new CursorLoader(this, Param.CONTENT_URI, PARAM_COLS,
+			null, null, null);
 	}
 
 	/** Callbacks for team loader */
@@ -160,6 +213,7 @@ public class Scouting2017Activity extends AppCompatActivity {
 			if (c.getCount() == 1) {
 				c.moveToFirst();
 				Scouting2017.updateContent(content, c);
+				content_loaded = new ContentValues(content);
 			}
 			initView();
 		}
@@ -181,7 +235,8 @@ public class Scouting2017Activity extends AppCompatActivity {
 	}
 
 	private int getScouter() {
-		return 1;
+		Integer i = content.getAsInteger(Scouting2017.COL_SCOUTER);
+		return (i != null) ? i : 0;
 	}
 
 	private void initView() {
@@ -299,7 +354,8 @@ public class Scouting2017Activity extends AppCompatActivity {
 		updateBoolean(R.id.release_rope,Scouting2017.COL_RELEASE_ROPE);
 		updateBoolean(R.id.lose_gear, Scouting2017.COL_LOSE_GEAR);
 		updateString(R.id.notes, Scouting2017.COL_NOTES);
-		new StoreObservation(this, content).execute();
+		if (!content.equals(content_loaded))
+			new StoreObservation(this, content).execute();
 		super.onPause();
 	}
 
