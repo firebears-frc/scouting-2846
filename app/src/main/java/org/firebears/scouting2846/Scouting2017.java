@@ -85,6 +85,8 @@ public class Scouting2017 implements BaseColumns {
 	}
 
 	static public void updateContent(ContentValues cv, Cursor c) {
+		updateInt(cv, c, COL_SCOUTER);
+		updateStr(cv, c, COL_MATCH);
 		updateInt(cv, c, COL_AUTO_HIGH_GOAL);
 		updateInt(cv, c, COL_AUTO_LOW_GOAL);
 		updateInt(cv, c, COL_AUTO_GEAR);

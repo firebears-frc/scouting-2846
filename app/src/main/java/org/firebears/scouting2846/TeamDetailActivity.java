@@ -84,4 +84,11 @@ public class TeamDetailActivity extends AppCompatActivity {
 			getTeamKey());
 		startActivity(intent);
 	}
+
+	public void startBrowse(View v) {
+		Intent intent = new Intent(this, Browse2017Activity.class);
+		intent.putExtra(Browse2017Activity.ARG_TEAM_KEY,
+			getTeamKey());
+		startActivity(intent);
+	}
 }

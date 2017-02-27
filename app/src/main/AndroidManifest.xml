@@ -50,6 +50,10 @@
                 android:value="org.firebears.scouting2846.TeamListActivity"/>
         </activity>
         <activity
+            android:name=".Browse2017Activity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask"/>
+        <activity
             android:name=".MatchListActivity"
             android:parentActivityName=".EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"

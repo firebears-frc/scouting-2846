@@ -30,6 +30,13 @@
         android:layout_height="wrap_content"
         android:onClick="startScouting" />
 
+    <Button
+        android:id="@+id/obs_browse"
+        android:text="@string/obs_browse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startBrowse" />
+
     <TextView
         android:id="@+id/team_name"
         android:layout_width="wrap_content"

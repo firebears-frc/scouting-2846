@@ -20,6 +20,7 @@
     <string name="red_alliance">Red Alliance</string>
     <string name="blue_alliance">Blue Alliance</string>
     <string name="pit_scouting">Pit Scouting</string>
+    <string name="obs_browse">Browse Observations</string>
     <string name="scouting_2017">Steamworks Scouting</string>
     <string name="autonomous">Autonomous</string>
     <string name="teleop">Teleop</string>
