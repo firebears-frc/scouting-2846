@@ -24,7 +24,10 @@ package org.firebears.scouting2846;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.BaseColumns;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * DB stuff for scouting data.
@@ -33,8 +36,8 @@ public class Scouting2017 implements BaseColumns {
 
 	static public final String TABLE_NAME = "scouting_2017";
 	static public final String COL_ID = "_id";
-	static public final String COL_SCOUTER = "scouter";
-	static public final String COL_OBSERVATION = "observation";
+	static public final String COL_SCOUTER = Param.ROW_SCOUTER;
+	static public final String COL_OBSERVATION = Param.ROW_OBSERVATION;
 	static public final String COL_MATCH = "match_key";
 	static public final String COL_TEAM_KEY = "tm_key";
 	static public final String COL_AUTO_HIGH_GOAL = "auto_high_goal";
@@ -60,7 +63,7 @@ public class Scouting2017 implements BaseColumns {
 	static public void initContent(ContentValues cv, String team_key,
 		String match_key)
 	{
-		cv.put(COL_SCOUTER, 1);
+		cv.put(COL_SCOUTER, 0);
 		cv.put(COL_OBSERVATION, 0);
 		cv.put(COL_MATCH, match_key);
 		cv.put(COL_TEAM_KEY, team_key);
@@ -84,7 +87,7 @@ public class Scouting2017 implements BaseColumns {
 
 	static public void updateContent(ContentValues cv, Cursor c) {
 		updateInt(cv, c, COL_SCOUTER);
-		updateInt(cv, c, COL_OBSERVATION);
+		updateStr(cv, c, COL_MATCH);
 		updateInt(cv, c, COL_AUTO_HIGH_GOAL);
 		updateInt(cv, c, COL_AUTO_LOW_GOAL);
 		updateInt(cv, c, COL_AUTO_GEAR);
@@ -116,6 +119,65 @@ public class Scouting2017 implements BaseColumns {
 		if (i >= 0) {
 			String v = c.getString(i);
 			cv.put(col, v);
+		}
+	}
+
+	static private final String[] COLS_ALL = {
+		COL_SCOUTER, COL_OBSERVATION, COL_MATCH, COL_TEAM_KEY,
+		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
+		COL_AUTO_BASELINE, COL_HIGH_GOAL, COL_LOW_GOAL, COL_PLACE_GEAR,
+		COL_CLIMB_ROPE, COL_TOUCH_PAD, COL_BALL_HUMAN, COL_BALL_FLOOR,
+		COL_BALL_HOPPER, COL_PILOT_EFFECTIVE, COL_RELEASE_ROPE,
+		COL_LOSE_GEAR, COL_NOTES,
+	};
+
+	/** Parse a JSON scouting object */
+	static public ContentValues parse(JSONObject jo) throws JSONException {
+		ContentValues cv = new ContentValues();
+		for (String v : COLS_ALL) {
+			Object o = jo.get(v);
+			if (o instanceof Integer)
+				cv.put(v, (Integer) o);
+			else
+				cv.put(v, o.toString());
+		}
+		return cv;
+	}
+
+	static public void updateBundle(Bundle b, Cursor c) {
+		updateInt(b, c, COL_SCOUTER);
+		updateStr(b, c, COL_MATCH);
+		updateInt(b, c, COL_AUTO_HIGH_GOAL);
+		updateInt(b, c, COL_AUTO_LOW_GOAL);
+		updateInt(b, c, COL_AUTO_GEAR);
+		updateInt(b, c, COL_AUTO_BASELINE);
+		updateInt(b, c, COL_HIGH_GOAL);
+		updateInt(b, c, COL_LOW_GOAL);
+		updateInt(b, c, COL_PLACE_GEAR);
+		updateInt(b, c, COL_CLIMB_ROPE);
+		updateInt(b, c, COL_TOUCH_PAD);
+		updateInt(b, c, COL_BALL_HUMAN);
+		updateInt(b, c, COL_BALL_FLOOR);
+		updateInt(b, c, COL_BALL_HOPPER);
+		updateInt(b, c, COL_PILOT_EFFECTIVE);
+		updateInt(b, c, COL_RELEASE_ROPE);
+		updateInt(b, c, COL_LOSE_GEAR);
+		updateStr(b, c, COL_NOTES);
+	}
+
+	static private void updateInt(Bundle b, Cursor c, String col) {
+		int i = c.getColumnIndex(col);
+		if (i >= 0) {
+			int v = c.getInt(i);
+			b.putInt(col, v);
+		}
+	}
+
+	static private void updateStr(Bundle b, Cursor c, String col) {
+		int i = c.getColumnIndex(col);
+		if (i >= 0) {
+			String v = c.getString(i);
+			b.putString(col, v);
 		}
 	}
 }

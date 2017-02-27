@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.firebears.scouting2846">
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -49,6 +50,10 @@
                 android:value="org.firebears.scouting2846.TeamListActivity"/>
         </activity>
         <activity
+            android:name=".Browse2017Activity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask"/>
+        <activity
             android:name=".MatchListActivity"
             android:parentActivityName=".EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -69,8 +74,14 @@
         <activity
             android:name=".Scouting2017Activity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".SelectDeviceActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <service
+            android:name=".BluetoothSyncService"
+            android:exported="false"/>
     </application>
 
 </manifest>

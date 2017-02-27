@@ -35,6 +35,8 @@ import org.json.JSONObject;
  */
 public class FetchEvents extends AsyncTask<Void, Void, Void> {
 
+	static private final String TAG = "FetchEvents";
+
 	static private final String PRACTICE_JSON = "{" +
 		"\"key\": \"practice\"," +
   		"\"name\": \" Practice Event\"," +
@@ -65,7 +67,7 @@ public class FetchEvents extends AsyncTask<Void, Void, Void> {
 			insertEvents(cr, TBAFetcher.fetchEvents());
 		}
 		catch (JSONException e) {
-			Log.e("FetchEvents", e.getMessage());
+			Log.e(TAG, "exception " + e.getMessage());
 		}
 		return null;
 	}
@@ -105,7 +107,7 @@ public class FetchEvents extends AsyncTask<Void, Void, Void> {
 			if (cv != null)
 				insertOrUpdate(cr, cv);
 			else
-				Log.e("insertEvents", "parse " + jo);
+				Log.e(TAG, "parse error " + jo);
 		}
 	}
 

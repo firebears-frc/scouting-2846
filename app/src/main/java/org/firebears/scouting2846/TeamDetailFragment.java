@@ -32,7 +32,10 @@ import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import java.util.ArrayList;
 
 /**
  * A fragment representing a single Team detail screen.
@@ -96,12 +99,32 @@ public class TeamDetailFragment extends Fragment {
 				tv.setText(getText(R.string.rookie_year) +
 					" " + t);
 			}
+			initScoutingSpinner();
 			setViewText(R.id.team_motto, c, Team.COL_MOTTO);
 			setViewText(R.id.team_name, c, Team.COL_NAME);
 		}
 		@Override
 		public void onLoaderReset(Loader<Cursor> loader) { }
 	};
+
+	private void initScoutingSpinner() {
+		ArrayList<String> items = new ArrayList<String>();
+		items.add(getActivity().getString(R.string.pit));
+		for (int i = 1; i <= 100; i++)
+			items.add("Qm" + i);
+		Spinner sp = (Spinner) root_view.findViewById(R.id.scout_spn);
+		ArrayAdapter<String> spad = new ArrayAdapter<String>(
+			getActivity(), android.R.layout.simple_spinner_item,
+			items);
+		spad.setDropDownViewResource(
+			android.R.layout.simple_spinner_dropdown_item);
+		sp.setAdapter(spad);
+	}
+
+	public String getMatch() {
+		Spinner sp = (Spinner) root_view.findViewById(R.id.scout_spn);
+		return sp.getSelectedItem().toString();
+	}
 
 	/** Set text for a TextView from a Cursor column */
 	private TextView setViewText(int id, Cursor c, String col) {

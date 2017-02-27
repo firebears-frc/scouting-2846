@@ -35,6 +35,8 @@ import org.json.JSONObject;
  */
 public class FetchEventTeams extends AsyncTask<Void, Void, Void> {
 
+	static private final String TAG = "FetchEventTeams";
+
 	private final TeamListActivity context;
 
 	private final int event_id;
@@ -53,7 +55,7 @@ public class FetchEventTeams extends AsyncTask<Void, Void, Void> {
 			insertEventTeams(cr, TBAFetcher.fetchTeams(event_key));
 		}
 		catch (JSONException e) {
-			Log.e("FetchEventTeams", e.getMessage());
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
@@ -72,7 +74,7 @@ public class FetchEventTeams extends AsyncTask<Void, Void, Void> {
 				insertOrUpdate(cr, cv);
 				insertRelation(cr, createRelationVals(cr, cv));
 			} else
-				Log.e("insertEventTeams", "parse " + jo);
+				Log.e(TAG, "parse " + jo);
 		}
 	}
 
