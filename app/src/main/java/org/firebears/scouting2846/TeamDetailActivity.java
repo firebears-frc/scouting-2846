@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -79,10 +80,24 @@ public class TeamDetailActivity extends AppCompatActivity {
 
 	public void startScouting(View v) {
 		Intent intent = new Intent(this, Scouting2017Activity.class);
-		intent.putExtra(Scouting2017Activity.ARG_MATCH_KEY, "");
+		intent.putExtra(Scouting2017Activity.ARG_MATCH_KEY,getMatch());
 		intent.putExtra(Scouting2017Activity.ARG_TEAM_KEY,
 			getTeamKey());
 		startActivity(intent);
+	}
+
+	private String getMatch() {
+		TeamDetailFragment f = getFrag();
+		return (f != null) ? f.getMatch() : getString(R.string.pit);
+	}
+
+	private TeamDetailFragment getFrag() {
+		Object f = getSupportFragmentManager().findFragmentById(
+			R.id.team_detail_container);
+		if (f instanceof TeamDetailFragment)
+			return (TeamDetailFragment) f;
+		else
+			return null;
 	}
 
 	public void startBrowse(View v) {

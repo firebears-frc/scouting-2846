@@ -19,7 +19,8 @@
     <string name="rookie_year">Rookie year</string>
     <string name="red_alliance">Red Alliance</string>
     <string name="blue_alliance">Blue Alliance</string>
-    <string name="pit_scouting">Pit Scouting</string>
+    <string name="pit">(Pit)</string>
+    <string name="pit_scouting">Scouting</string>
     <string name="obs_browse">Browse Observations</string>
     <string name="scouting_2017">Steamworks Scouting</string>
     <string name="autonomous">Autonomous</string>

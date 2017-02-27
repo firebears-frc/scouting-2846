@@ -203,7 +203,7 @@ public class Browse2017Activity extends AppCompatActivity {
 			Bundle b = observations.get(pos);
 			String m = b.getString(Scouting2017.COL_MATCH);
 			if ("".equals(m))
-				return getString(R.string.pit_scouting);
+				return getString(R.string.pit);
 			else
 				return m;
 		}
