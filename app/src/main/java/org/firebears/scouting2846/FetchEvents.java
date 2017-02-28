@@ -37,22 +37,6 @@ public class FetchEvents extends AsyncTask<Void, Void, Void> {
 
 	static private final String TAG = "FetchEvents";
 
-	static private final String PRACTICE_JSON = "{" +
-		"\"key\": \"practice\"," +
-  		"\"name\": \" Practice Event\"," +
-		"\"short_name\": \"Practice\"," +
-		"\"official\": false," +
-		"\"event_code\": 1," +
-  		"\"event_type\": 1," +
-  		"\"event_district\": \"DISTRICT\"," +
-  		"\"year\": 2017," +
-  		"\"week\": 0," +
-  		"\"location\": \"LOCATION\"," +
-  		"\"venue_address\": \"VENUE\"," +
-		"\"timezone\": \"TZ\"," +
-		"\"website\": \"WEBSITE\"" +
-	"}";
-
 	private final EventListActivity context;
 
 	public FetchEvents(EventListActivity ctx) {
@@ -63,17 +47,12 @@ public class FetchEvents extends AsyncTask<Void, Void, Void> {
 	protected Void doInBackground(Void... v) {
 		ContentResolver cr = context.getContentResolver();
 		try {
-			insertOrUpdate(cr, createPracticeEvent());
 			insertEvents(cr, TBAFetcher.fetchEvents());
 		}
 		catch (JSONException e) {
 			Log.e(TAG, "exception " + e.getMessage());
 		}
 		return null;
-	}
-
-	private ContentValues createPracticeEvent() throws JSONException {
-		return FRCEvent.parse(new JSONObject(PRACTICE_JSON));
 	}
 
 	static private final String[] COLS_KEY = {
