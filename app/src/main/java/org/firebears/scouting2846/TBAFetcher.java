@@ -45,7 +45,7 @@ public class TBAFetcher {
 		"https://www.thebluealliance.com/api/v2/";
 
 	/** URL for event list */
-	static private final String EVENT_URL = BASE_URL + "events/2016";
+	static private final String EVENT_URL = BASE_URL + "events/2017";
 
 	/** Fetch event list as JSON */
 	static public String fetchEvents() {
