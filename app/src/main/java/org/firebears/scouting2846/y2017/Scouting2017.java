@@ -125,7 +125,7 @@ public class Scouting2017 implements BaseColumns {
 	}
 
 	/** Columns to retrieve from the loader */
-	static public final String[] COLS_LOADER = {
+	static final String[] COLS_LOADER = {
 		COL_ID,
 		COL_MATCH, COL_TEAM_KEY,
 		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
@@ -135,7 +135,7 @@ public class Scouting2017 implements BaseColumns {
 		COL_LOSE_GEAR,COL_NOTES,
 	};
 
-	static public final String[] COLS_ALL = {
+	static final String[] COLS_ALL = {
 		COL_SCOUTER, COL_OBSERVATION,
 		COL_MATCH, COL_TEAM_KEY,
 		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
@@ -143,6 +143,19 @@ public class Scouting2017 implements BaseColumns {
 		COL_CLIMB_ROPE, COL_TOUCH_PAD, COL_BALL_HUMAN, COL_BALL_FLOOR,
 		COL_BALL_HOPPER, COL_PILOT_EFFECTIVE, COL_RELEASE_ROPE,
 		COL_LOSE_GEAR, COL_NOTES,
+	};
+
+	static final String[] COLS_INT = {
+		COL_SCOUTER, COL_OBSERVATION,
+		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
+		COL_AUTO_BASELINE, COL_HIGH_GOAL, COL_LOW_GOAL, COL_PLACE_GEAR,
+		COL_CLIMB_ROPE, COL_TOUCH_PAD, COL_BALL_HUMAN, COL_BALL_FLOOR,
+		COL_BALL_HOPPER, COL_PILOT_EFFECTIVE, COL_RELEASE_ROPE,
+		COL_LOSE_GEAR,
+	};
+
+	static final String[] COLS_STR = {
+		COL_MATCH, COL_TEAM_KEY, COL_NOTES,
 	};
 
 	/** Parse a JSON scouting object */
@@ -194,4 +207,37 @@ public class Scouting2017 implements BaseColumns {
 			b.putString(col, v);
 		}
 	}
+
+	/** SQL statement to create scouting table */
+	static public final String SQL_CREATE =
+		"CREATE TABLE " + TABLE_NAME + " (" +
+		COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
+		COL_SCOUTER + " INTEGER NOT NULL, " +
+		COL_OBSERVATION + " INTEGER NOT NULL, " +
+		COL_MATCH + " TEXT, " +
+		COL_TEAM_KEY + " TEXT NOT NULL, " +
+		COL_AUTO_HIGH_GOAL + " INTEGER NOT NULL, " +
+		COL_AUTO_LOW_GOAL + " INTEGER NOT NULL, " +
+		COL_AUTO_GEAR + " INTEGER NOT NULL, " +
+		COL_AUTO_BASELINE + " INTEGER NOT NULL, " +
+		COL_HIGH_GOAL + " INTEGER NOT NULL, " +
+		COL_LOW_GOAL + " INTEGER NOT NULL, " +
+		COL_PLACE_GEAR + " INTEGER NOT NULL, " +
+		COL_CLIMB_ROPE + " INTEGER NOT NULL, " +
+		COL_TOUCH_PAD + " INTEGER NOT NULL, " +
+		COL_BALL_HUMAN + " INTEGER NOT NULL, " +
+		COL_BALL_FLOOR + " INTEGER NOT NULL, " +
+		COL_BALL_HOPPER + " INTEGER NOT NULL, " +
+		COL_PILOT_EFFECTIVE + " INTEGER NOT NULL, " +
+		COL_RELEASE_ROPE + " INTEGER NOT NULL, " +
+		COL_LOSE_GEAR + " INTEGER NOT NULL, " +
+		COL_NOTES + " TEXT NOT NULL, " +
+		"UNIQUE (" + COL_SCOUTER + ", " +
+		             COL_MATCH + ", " +
+		             COL_TEAM_KEY +
+		        ") ON CONFLICT REPLACE)";
+
+	/** SQL statement to drop scouting table */
+	static public final String SQL_DROP =
+		"DROP TABLE IF EXISTS " + TABLE_NAME;
 }

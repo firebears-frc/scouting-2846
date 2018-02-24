@@ -158,39 +158,6 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_MATCHES =
 		"DROP TABLE IF EXISTS " + Match.TABLE_NAME;
 
-	/** SQL statement to create scouting table */
-	static private final String SQL_CREATE_SCOUTING_2017 =
-		"CREATE TABLE " + Scouting2017.TABLE_NAME + " (" +
-		Scouting2017.COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
-		Scouting2017.COL_SCOUTER + " INTEGER NOT NULL, " +
-		Scouting2017.COL_OBSERVATION + " INTEGER NOT NULL, " +
-		Scouting2017.COL_MATCH + " TEXT, " +
-		Scouting2017.COL_TEAM_KEY + " TEXT NOT NULL, " +
-		Scouting2017.COL_AUTO_HIGH_GOAL + " INTEGER NOT NULL, " +
-		Scouting2017.COL_AUTO_LOW_GOAL + " INTEGER NOT NULL, " +
-		Scouting2017.COL_AUTO_GEAR + " INTEGER NOT NULL, " +
-		Scouting2017.COL_AUTO_BASELINE + " INTEGER NOT NULL, " +
-		Scouting2017.COL_HIGH_GOAL + " INTEGER NOT NULL, " +
-		Scouting2017.COL_LOW_GOAL + " INTEGER NOT NULL, " +
-		Scouting2017.COL_PLACE_GEAR + " INTEGER NOT NULL, " +
-		Scouting2017.COL_CLIMB_ROPE + " INTEGER NOT NULL, " +
-		Scouting2017.COL_TOUCH_PAD + " INTEGER NOT NULL, " +
-		Scouting2017.COL_BALL_HUMAN + " INTEGER NOT NULL, " +
-		Scouting2017.COL_BALL_FLOOR + " INTEGER NOT NULL, " +
-		Scouting2017.COL_BALL_HOPPER + " INTEGER NOT NULL, " +
-		Scouting2017.COL_PILOT_EFFECTIVE + " INTEGER NOT NULL, " +
-		Scouting2017.COL_RELEASE_ROPE + " INTEGER NOT NULL, " +
-		Scouting2017.COL_LOSE_GEAR + " INTEGER NOT NULL, " +
-		Scouting2017.COL_NOTES + " TEXT NOT NULL, " +
-		"UNIQUE (" + Scouting2017.COL_SCOUTER + ", " +
-		             Scouting2017.COL_MATCH + ", " +
-		             Scouting2017.COL_TEAM_KEY +
-		        ") ON CONFLICT REPLACE)";
-
-	/** SQL statement to drop scouting table */
-	static private final String SQL_DROP_SCOUTING_2017 =
-		"DROP TABLE IF EXISTS " + Scouting2017.TABLE_NAME;
-
 	/** Create our DB helper */
 	public OurDbHelper(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -209,7 +176,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_CREATE_EVENT_TEAMS);
 		db.execSQL(SQL_CREATE_ET_VIEW);
 		db.execSQL(SQL_CREATE_MATCHES);
-		db.execSQL(SQL_CREATE_SCOUTING_2017);
+		db.execSQL(Scouting2017.SQL_CREATE);
 		initParams(db);
 	}
 
@@ -217,7 +184,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion,
 		int newVersion)
 	{
-		db.execSQL(SQL_DROP_SCOUTING_2017);
+		db.execSQL(Scouting2017.SQL_DROP);
 		db.execSQL(SQL_DROP_MATCHES);
 		db.execSQL(SQL_DROP_ET_VIEW);
 		db.execSQL(SQL_DROP_EVENT_TEAMS);

@@ -218,32 +218,15 @@ public class Marshaller {
 		return ja;
 	}
 
-	static private final String[] COLS_INT = {
-		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
-		Scouting2017.COL_AUTO_HIGH_GOAL,Scouting2017.COL_AUTO_LOW_GOAL,
-		Scouting2017.COL_AUTO_GEAR, Scouting2017.COL_AUTO_BASELINE,
-		Scouting2017.COL_HIGH_GOAL, Scouting2017.COL_LOW_GOAL,
-		Scouting2017.COL_PLACE_GEAR, Scouting2017.COL_CLIMB_ROPE,
-		Scouting2017.COL_TOUCH_PAD, Scouting2017.COL_BALL_HUMAN,
-		Scouting2017.COL_BALL_FLOOR, Scouting2017.COL_BALL_HOPPER,
-		Scouting2017.COL_PILOT_EFFECTIVE,Scouting2017.COL_RELEASE_ROPE,
-		Scouting2017.COL_LOSE_GEAR,
-	};
-
-	static private final String[] COLS_STR = {
-		Scouting2017.COL_MATCH, Scouting2017.COL_TEAM_KEY,
-		Scouting2017.COL_NOTES,
-	};
-
 	static private JSONObject buildObservation(Cursor c)
 		throws JSONException
 	{
 		JSONObject jo = new JSONObject();
-		for (String i : COLS_INT) {
+		for (String i : Scouting2017.COLS_INT) {
 			int v = c.getInt(c.getColumnIndex(i));
 			jo.put(i, v);
 		}
-		for (String i : COLS_STR) {
+		for (String i : Scouting2017.COLS_STR) {
 			String v = c.getString(c.getColumnIndex(i));
 			jo.put(i, v);
 		}
