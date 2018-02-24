@@ -135,7 +135,7 @@ public class Scouting2017 implements BaseColumns {
 		COL_LOSE_GEAR,COL_NOTES,
 	};
 
-	static private final String[] COLS_ALL = {
+	static public final String[] COLS_ALL = {
 		COL_SCOUTER, COL_OBSERVATION,
 		COL_MATCH, COL_TEAM_KEY,
 		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,

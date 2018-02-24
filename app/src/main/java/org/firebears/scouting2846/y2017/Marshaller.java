@@ -181,25 +181,12 @@ public class Marshaller {
 		return map;
 	}
 
-	static private final String[] COLS_ALL = {
-		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
-		Scouting2017.COL_MATCH, Scouting2017.COL_TEAM_KEY,
-		Scouting2017.COL_AUTO_HIGH_GOAL,Scouting2017.COL_AUTO_LOW_GOAL,
-		Scouting2017.COL_AUTO_GEAR, Scouting2017.COL_AUTO_BASELINE,
-		Scouting2017.COL_HIGH_GOAL, Scouting2017.COL_LOW_GOAL,
-		Scouting2017.COL_PLACE_GEAR, Scouting2017.COL_CLIMB_ROPE,
-		Scouting2017.COL_TOUCH_PAD, Scouting2017.COL_BALL_HUMAN,
-		Scouting2017.COL_BALL_FLOOR, Scouting2017.COL_BALL_HOPPER,
-		Scouting2017.COL_PILOT_EFFECTIVE,Scouting2017.COL_RELEASE_ROPE,
-		Scouting2017.COL_LOSE_GEAR, Scouting2017.COL_NOTES,
-	};
-
 	static private JSONArray lookupExtraObservations(ContentResolver cr,
 		HashMap<Integer, Integer> map) throws IOException,
 		JSONException
 	{
-		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS_ALL, null,
-			null, null);
+		Cursor c = cr.query(Scouting2017.CONTENT_URI,
+			Scouting2017.COLS_ALL, null, null, null);
 		try {
 			if (c != null)
 				return lookupExtraObservations(c, map);
