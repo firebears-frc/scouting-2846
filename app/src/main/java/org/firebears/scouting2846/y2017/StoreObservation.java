@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -19,11 +19,12 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package org.firebears.scouting2846;
+package org.firebears.scouting2846.y2017;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.os.AsyncTask;
+import org.firebears.scouting2846.Param;
 
 /**
  * Task to store scouting observation.

@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package org.firebears.scouting2846;
+package org.firebears.scouting2846.y2017;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -159,7 +159,7 @@ public class Marshaller {
 		return ja;
 	}
 
-	static public String lookupExtraObservations(ContentResolver cr,
+	static private String lookupExtraObservations(ContentResolver cr,
 		String msg) throws IOException, JSONException
 	{
 		HashMap<Integer, Integer> map = parseFinalObservations(msg);
@@ -263,7 +263,7 @@ public class Marshaller {
 		return jo;
 	}
 
-	static public void parseExtraObservations(ContentResolver cr,
+	static private void parseExtraObservations(ContentResolver cr,
 		String obs) throws JSONException
 	{
 		JSONArray ja = new JSONArray(obs);

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -25,12 +25,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.security.SecureRandom;
+import org.firebears.scouting2846.y2017.Scouting2017;
 
 /**
  * Our DB helper.
  */
 public class OurDbHelper extends SQLiteOpenHelper {
-	static public final int DATABASE_VERSION = 1;
+	static public final int DATABASE_VERSION = 2;
 	static public final String DATABASE_NAME = "Scouting.db";
 
 	/** SQL statement to create parameter table */
@@ -158,7 +159,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		"DROP TABLE IF EXISTS " + Match.TABLE_NAME;
 
 	/** SQL statement to create scouting table */
-	static private final String SQL_CREATE_SCOUTING =
+	static private final String SQL_CREATE_SCOUTING_2017 =
 		"CREATE TABLE " + Scouting2017.TABLE_NAME + " (" +
 		Scouting2017.COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
 		Scouting2017.COL_SCOUTER + " INTEGER NOT NULL, " +
@@ -187,7 +188,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		        ") ON CONFLICT REPLACE)";
 
 	/** SQL statement to drop scouting table */
-	static private final String SQL_DROP_SCOUTING =
+	static private final String SQL_DROP_SCOUTING_2017 =
 		"DROP TABLE IF EXISTS " + Scouting2017.TABLE_NAME;
 
 	/** Create our DB helper */
@@ -208,7 +209,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_CREATE_EVENT_TEAMS);
 		db.execSQL(SQL_CREATE_ET_VIEW);
 		db.execSQL(SQL_CREATE_MATCHES);
-		db.execSQL(SQL_CREATE_SCOUTING);
+		db.execSQL(SQL_CREATE_SCOUTING_2017);
 		initParams(db);
 	}
 
@@ -216,7 +217,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion,
 		int newVersion)
 	{
-		db.execSQL(SQL_DROP_SCOUTING);
+		db.execSQL(SQL_DROP_SCOUTING_2017);
 		db.execSQL(SQL_DROP_MATCHES);
 		db.execSQL(SQL_DROP_ET_VIEW);
 		db.execSQL(SQL_DROP_EVENT_TEAMS);

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package org.firebears.scouting2846;
+package org.firebears.scouting2846.y2017;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -28,6 +28,8 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.firebears.scouting2846.OurContentProvider;
+import org.firebears.scouting2846.Param;
 
 /**
  * DB stuff for scouting data.
@@ -122,8 +124,20 @@ public class Scouting2017 implements BaseColumns {
 		}
 	}
 
+	/** Columns to retrieve from the loader */
+	static public final String[] COLS_LOADER = {
+		COL_ID,
+		COL_MATCH, COL_TEAM_KEY,
+		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
+		COL_AUTO_BASELINE, COL_HIGH_GOAL, COL_LOW_GOAL, COL_PLACE_GEAR,
+		COL_CLIMB_ROPE, COL_TOUCH_PAD, COL_BALL_HUMAN, COL_BALL_FLOOR,
+		COL_BALL_HOPPER, COL_PILOT_EFFECTIVE, COL_RELEASE_ROPE,
+		COL_LOSE_GEAR,COL_NOTES,
+	};
+
 	static private final String[] COLS_ALL = {
-		COL_SCOUTER, COL_OBSERVATION, COL_MATCH, COL_TEAM_KEY,
+		COL_SCOUTER, COL_OBSERVATION,
+		COL_MATCH, COL_TEAM_KEY,
 		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
 		COL_AUTO_BASELINE, COL_HIGH_GOAL, COL_LOW_GOAL, COL_PLACE_GEAR,
 		COL_CLIMB_ROPE, COL_TOUCH_PAD, COL_BALL_HUMAN, COL_BALL_FLOOR,

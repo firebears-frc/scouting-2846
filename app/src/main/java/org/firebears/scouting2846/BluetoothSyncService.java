@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
 import org.json.JSONException;
+import org.firebears.scouting2846.y2017.Marshaller;
 
 /**
  * Service for accepting bluetooth connections to sync data.
