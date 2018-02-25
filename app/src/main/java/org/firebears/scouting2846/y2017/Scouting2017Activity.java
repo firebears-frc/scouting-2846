@@ -228,65 +228,44 @@ public class Scouting2017Activity extends ScoutingActivity {
 		return getIntent().getStringExtra(ARG_MATCH_KEY);
 	}
 
-	private String addInt(String col, int p) {
-		if (content.containsKey(col)) {
-			int v = content.getAsInteger(col) + p;
-			if (v < 0)
-				v = 0;
-			content.put(col, v);
-			return Integer.toString(v);
-		} else
-			return "";
-	}
-
 	public void minusAutoHigh(View v) {
-		TextView tv = (TextView) findViewById(R.id.ah_txt);
-		tv.setText(addInt(Scouting2017.COL_AUTO_HIGH_GOAL, -1));
+		updateInt(R.id.ah_txt, Scouting2017.COL_AUTO_HIGH_GOAL, -1);
 	}
 
 	public void plusAutoHigh(View v) {
-		TextView tv = (TextView) findViewById(R.id.ah_txt);
-		tv.setText(addInt(Scouting2017.COL_AUTO_HIGH_GOAL, 1));
+		updateInt(R.id.ah_txt, Scouting2017.COL_AUTO_HIGH_GOAL, 1);
 	}
 
 	public void minusAutoLow(View v) {
-		TextView tv = (TextView) findViewById(R.id.al_txt);
-		tv.setText(addInt(Scouting2017.COL_AUTO_LOW_GOAL, -1));
+		updateInt(R.id.al_txt, Scouting2017.COL_AUTO_LOW_GOAL, -1);
 	}
 
 	public void plusAutoLow(View v) {
-		TextView tv = (TextView) findViewById(R.id.al_txt);
-		tv.setText(addInt(Scouting2017.COL_AUTO_LOW_GOAL, 1));
+		updateInt(R.id.al_txt, Scouting2017.COL_AUTO_LOW_GOAL, 1);
 	}
 
 	public void minusTeleHigh(View v) {
-		TextView tv = (TextView) findViewById(R.id.th_txt);
-		tv.setText(addInt(Scouting2017.COL_HIGH_GOAL, -1));
+		updateInt(R.id.th_txt, Scouting2017.COL_HIGH_GOAL, -1);
 	}
 
 	public void plusTeleHigh(View v) {
-		TextView tv = (TextView) findViewById(R.id.th_txt);
-		tv.setText(addInt(Scouting2017.COL_HIGH_GOAL, 1));
+		updateInt(R.id.th_txt, Scouting2017.COL_HIGH_GOAL, 1);
 	}
 
 	public void minusTeleLow(View v) {
-		TextView tv = (TextView) findViewById(R.id.tl_txt);
-		tv.setText(addInt(Scouting2017.COL_LOW_GOAL, -1));
+		updateInt(R.id.tl_txt, Scouting2017.COL_LOW_GOAL, -1);
 	}
 
 	public void plusTeleLow(View v) {
-		TextView tv = (TextView) findViewById(R.id.tl_txt);
-		tv.setText(addInt(Scouting2017.COL_LOW_GOAL, 1));
+		updateInt(R.id.tl_txt, Scouting2017.COL_LOW_GOAL, 1);
 	}
 
 	public void minusTeleGear(View v) {
-		TextView tv = (TextView) findViewById(R.id.tg_txt);
-		tv.setText(addInt(Scouting2017.COL_PLACE_GEAR, -1));
+		updateInt(R.id.tg_txt, Scouting2017.COL_PLACE_GEAR, -1);
 	}
 
 	public void plusTeleGear(View v) {
-		TextView tv = (TextView) findViewById(R.id.tg_txt);
-		tv.setText(addInt(Scouting2017.COL_PLACE_GEAR, 1));
+		updateInt(R.id.tg_txt, Scouting2017.COL_PLACE_GEAR, 1);
 	}
 
 	@Override

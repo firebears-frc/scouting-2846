@@ -73,4 +73,20 @@ abstract public class ScoutingActivity extends AppCompatActivity {
 		EditText et = (EditText) findViewById(res);
 		content.put(col, et.getText().toString());
 	}
+
+	protected void updateInt(int res, String col, int p) {
+		TextView tv = (TextView) findViewById(res);
+		tv.setText(addInt(col, p));
+	}
+
+	private String addInt(String col, int p) {
+		if (content.containsKey(col)) {
+			int v = content.getAsInteger(col) + p;
+			if (v < 0)
+				v = 0;
+			content.put(col, v);
+			return Integer.toString(v);
+		} else
+			return "";
+	}
 }
