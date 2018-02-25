@@ -59,7 +59,7 @@ public class Browse2017Activity extends AppCompatActivity {
 
 	/** Columns to retrieve from the loader */
 	static private final String[] COLS = {
-		Scouting2017.COL_ID,
+		Scouting2017._ID,
 		Scouting2017.COL_MATCH,
 		Scouting2017.COL_TEAM_KEY,
 		Scouting2017.COL_AUTO_HIGH_GOAL,
@@ -175,7 +175,7 @@ public class Browse2017Activity extends AppCompatActivity {
 		String where = getWhere();
 		return new CursorLoader(this, Scouting2017.CONTENT_URI,
 			COLS, where, null, Scouting2017.COL_MATCH + ',' +
-			Scouting2017.COL_ID);
+			Scouting2017._ID);
 	}
 
 	private String getWhere() {

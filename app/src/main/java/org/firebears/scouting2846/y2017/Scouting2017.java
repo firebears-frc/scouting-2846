@@ -37,7 +37,6 @@ import org.firebears.scouting2846.Param;
 public class Scouting2017 implements BaseColumns {
 
 	static public final String TABLE_NAME = "scouting_2017";
-	static public final String COL_ID = "_id";
 	static public final String COL_SCOUTER = Param.ROW_SCOUTER;
 	static public final String COL_OBSERVATION = Param.ROW_OBSERVATION;
 	static public final String COL_MATCH = "match_key";
@@ -126,7 +125,7 @@ public class Scouting2017 implements BaseColumns {
 
 	/** Columns to retrieve from the loader */
 	static final String[] COLS_LOADER = {
-		COL_ID,
+		_ID,
 		COL_MATCH, COL_TEAM_KEY,
 		COL_AUTO_HIGH_GOAL, COL_AUTO_LOW_GOAL, COL_AUTO_GEAR,
 		COL_AUTO_BASELINE, COL_HIGH_GOAL, COL_LOW_GOAL, COL_PLACE_GEAR,
@@ -211,7 +210,7 @@ public class Scouting2017 implements BaseColumns {
 	/** SQL statement to create scouting table */
 	static public final String SQL_CREATE =
 		"CREATE TABLE " + TABLE_NAME + " (" +
-		COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
+		_ID + " INTEGER PRIMARY KEY autoincrement, " +
 		COL_SCOUTER + " INTEGER NOT NULL, " +
 		COL_OBSERVATION + " INTEGER NOT NULL, " +
 		COL_MATCH + " TEXT, " +
