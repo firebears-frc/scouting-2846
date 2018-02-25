@@ -28,23 +28,21 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import org.firebears.scouting2846.R;
 import org.firebears.scouting2846.Param;
+import org.firebears.scouting2846.R;
+import org.firebears.scouting2846.ScoutingActivity;
 import org.firebears.scouting2846.Team;
 
 /**
  * Scouting activity for 2017 (Steamworks).
  */
-public class Scouting2017Activity extends AppCompatActivity {
+public class Scouting2017Activity extends ScoutingActivity {
 
 	static private final String TAG = "Scouting2017Activity";
 
@@ -69,9 +67,6 @@ public class Scouting2017Activity extends AppCompatActivity {
 		Team.COL_NICKNAME,
 	};
 
-	/** Content values */
-	private final ContentValues content = new ContentValues();
-
 	/** Loaded content values */
 	private ContentValues content_loaded;
 
@@ -90,15 +85,6 @@ public class Scouting2017Activity extends AppCompatActivity {
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(PARAM_LOADER_ID, null, param_cb);
 		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (android.R.id.home == item.getItemId()) {
-			onBackPressed();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	/** Callbacks for param loader */
@@ -238,24 +224,6 @@ public class Scouting2017Activity extends AppCompatActivity {
 		initText(R.id.notes, Scouting2017.COL_NOTES);
 	}
 
-	private void initString(int res, String col) {
-		Integer i = content.getAsInteger(col);
-		TextView tv = (TextView) findViewById(res);
-		tv.setText((i != null) ? Integer.toString(i) : "");
-	}
-
-	private void initSwitch(int res, String col) {
-		Integer i = content.getAsInteger(col);
-		SwitchCompat sw = (SwitchCompat) findViewById(res);
-		sw.setChecked((i != null) && (i != 0));
-	}
-
-	private void initText(int res, String col) {
-		String t = content.getAsString(col);
-		EditText et = (EditText) findViewById(res);
-		et.setText((t != null) ? t : "");
-	}
-
 	private String getMatchKey() {
 		return getIntent().getStringExtra(ARG_MATCH_KEY);
 	}
@@ -337,16 +305,5 @@ public class Scouting2017Activity extends AppCompatActivity {
 		if (!content.equals(content_loaded))
 			new StoreObservation(this, content).execute();
 		super.onPause();
-	}
-
-	private void updateBoolean(int res, String col) {
-		SwitchCompat sw = (SwitchCompat) findViewById(res);
-		boolean c = sw.isChecked();
-		content.put(col, (c) ? 1 : 0);
-	}
-
-	private void updateString(int res, String col) {
-		EditText et = (EditText) findViewById(res);
-		content.put(col, et.getText().toString());
 	}
 }
