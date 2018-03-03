@@ -25,7 +25,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.security.SecureRandom;
-import org.firebears.scouting2846.y2017.Scouting2017;
 
 /**
  * Our DB helper.
@@ -176,7 +175,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_CREATE_EVENT_TEAMS);
 		db.execSQL(SQL_CREATE_ET_VIEW);
 		db.execSQL(SQL_CREATE_MATCHES);
-		db.execSQL(Scouting2017.SQL_CREATE);
+		db.execSQL(ScoutingRec.REC.sqlCreate());
 		initParams(db);
 	}
 
@@ -184,7 +183,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion,
 		int newVersion)
 	{
-		db.execSQL(Scouting2017.SQL_DROP);
+		db.execSQL(ScoutingRec.REC.sqlDrop());
 		db.execSQL(SQL_DROP_MATCHES);
 		db.execSQL(SQL_DROP_ET_VIEW);
 		db.execSQL(SQL_DROP_EVENT_TEAMS);

@@ -50,7 +50,7 @@
                 android:value="org.firebears.scouting2846.TeamListActivity"/>
         </activity>
         <activity
-            android:name=".y2017.Browse2017Activity"
+            android:name=".BrowseActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"/>
         <activity
@@ -72,7 +72,7 @@
                 android:value="org.firebears.scouting2846.MatchListActivity"/>
         </activity>
         <activity
-            android:name=".y2017.Scouting2017Activity"
+            android:name=".ScoutingActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"/>
         <activity

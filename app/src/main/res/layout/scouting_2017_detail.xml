@@ -44,8 +44,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/autonomous"
-        android:layout_toRightOf="@id/ah_txt"
-        android:onClick="minusAutoHigh"/>
+        android:layout_toRightOf="@id/ah_txt"/>
 
     <TextView
         android:id="@+id/auto_high"
@@ -63,8 +62,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/autonomous"
-        android:layout_toRightOf="@id/auto_high"
-        android:onClick="plusAutoHigh"/>
+        android:layout_toRightOf="@id/auto_high"/>
 
     <TextView
         android:id="@+id/al_txt"
@@ -80,8 +78,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ah_minus"
-        android:layout_toRightOf="@id/al_txt"
-        android:onClick="minusAutoLow"/>
+        android:layout_toRightOf="@id/al_txt"/>
 
     <TextView
         android:id="@+id/auto_low"
@@ -99,8 +96,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ah_plus"
-        android:layout_toRightOf="@id/auto_low"
-        android:onClick="plusAutoLow"/>
+        android:layout_toRightOf="@id/auto_low"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_gear"
@@ -150,8 +146,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/teleop"
-        android:layout_toRightOf="@id/th_txt"
-        android:onClick="minusTeleHigh"/>
+        android:layout_toRightOf="@id/th_txt"/>
 
     <TextView
         android:id="@+id/tele_high"
@@ -169,8 +164,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/teleop"
-        android:layout_toRightOf="@id/tele_high"
-        android:onClick="plusTeleHigh"/>
+        android:layout_toRightOf="@id/tele_high"/>
 
     <TextView
         android:id="@+id/tl_txt"
@@ -186,8 +180,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/th_minus"
-        android:layout_toRightOf="@id/tl_txt"
-        android:onClick="minusTeleLow"/>
+        android:layout_toRightOf="@id/tl_txt"/>
 
     <TextView
         android:id="@+id/tele_low"
@@ -205,8 +198,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/th_plus"
-        android:layout_toRightOf="@id/tele_low"
-        android:onClick="plusTeleLow"/>
+        android:layout_toRightOf="@id/tele_low"/>
 
     <TextView
         android:id="@+id/tg_txt"
@@ -222,8 +214,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tl_minus"
-        android:layout_toRightOf="@id/tg_txt"
-        android:onClick="minusTeleGear"/>
+        android:layout_toRightOf="@id/tg_txt"/>
 
     <TextView
         android:id="@+id/tele_gear"
@@ -241,8 +232,7 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tl_plus"
-        android:layout_toRightOf="@id/tele_gear"
-        android:onClick="plusTeleGear"/>
+        android:layout_toRightOf="@id/tele_gear"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/climb"

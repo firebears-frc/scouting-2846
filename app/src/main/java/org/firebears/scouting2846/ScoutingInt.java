@@ -26,6 +26,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,10 +47,23 @@ public class ScoutingInt implements ScoutingData {
 	/** Resource ID */
 	private final int res;
 
+	/** Resource ID for "minus" button */
+	private final int res_m;
+
+	/** Resource ID for "plus" button */
+	private final int res_p;
+
 	/** Create scouting integer */
-	public ScoutingInt(String c, int r) {
+	public ScoutingInt(String c, int r, int rm, int rp) {
 		col = c;
 		res = r;
+		res_m = rm;
+		res_p = rp;
+	}
+
+	/** Create scouting integer */
+	public ScoutingInt(String c, int r) {
+		this(c, r, 0, 0);
 	}
 
 	public String sql() {
@@ -121,11 +135,27 @@ public class ScoutingInt implements ScoutingData {
 	}
 
 	@Override
-	public void init(ContentValues cv, Activity rv) {
+	public void init(final ContentValues cv, final Activity rv) {
 		if (res > 0) {
 			Integer v = cv.getAsInteger(col);
 			TextView tv = (TextView) rv.findViewById(res);
 			tv.setText((v != null) ? v.toString() : "");
+		}
+		if (res_m > 0) {
+			Button bm = (Button) rv.findViewById(res_m);
+			bm.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					update(cv, rv, -1);
+				}
+			});
+		}
+		if (res_p > 0) {
+			Button bp = (Button) rv.findViewById(res_p);
+			bp.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					update(cv, rv, 1);
+				}
+			});
 		}
 	}
 }

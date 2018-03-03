@@ -29,7 +29,6 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import org.firebears.scouting2846.y2017.Scouting2017Activity;
 
 /**
  * An activity representing the details of an FRC match.
@@ -82,10 +81,9 @@ public class MatchDetailActivity extends AppCompatActivity {
 	public void startScouting(View v) {
 		Button b = (Button) v;
 		String team_key = b.getText().toString();
-		Intent intent = new Intent(this, Scouting2017Activity.class);
-		intent.putExtra(Scouting2017Activity.ARG_MATCH_KEY,
-			getMatchKey());
-		intent.putExtra(Scouting2017Activity.ARG_TEAM_KEY, team_key);
+		Intent intent = new Intent(this, ScoutingActivity.class);
+		intent.putExtra(ScoutingActivity.ARG_MATCH_KEY, getMatchKey());
+		intent.putExtra(ScoutingActivity.ARG_TEAM_KEY, team_key);
 		startActivity(intent);
 	}
 }

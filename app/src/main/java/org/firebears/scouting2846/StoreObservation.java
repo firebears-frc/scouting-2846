@@ -19,12 +19,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package org.firebears.scouting2846.y2017;
+package org.firebears.scouting2846;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.os.AsyncTask;
-import org.firebears.scouting2846.Param;
 
 /**
  * Task to store scouting observation.
@@ -35,11 +34,11 @@ public class StoreObservation extends AsyncTask<Void, Void, Void> {
 	static private final String WHERE_OBS =
 		Param.COL_NAME + "='" + Param.ROW_OBSERVATION + "'";
 
-	private final Scouting2017Activity context;
+	private final ScoutingActivity context;
 
 	private final ContentValues content;
 
-	public StoreObservation(Scouting2017Activity ctx, ContentValues cv) {
+	public StoreObservation(ScoutingActivity ctx, ContentValues cv) {
 		context = ctx;
 		content = cv;
 	}
@@ -53,7 +52,7 @@ public class StoreObservation extends AsyncTask<Void, Void, Void> {
 	private void insert(ContentResolver cr) {
 		updateObservation(cr, content.getAsInteger(
 			Param.ROW_OBSERVATION));
-		cr.insert(Scouting2017.CONTENT_URI, content);
+		cr.insert(context.getContentUri(), content);
 	}
 
 	private void updateObservation(ContentResolver cr, Integer obs) {

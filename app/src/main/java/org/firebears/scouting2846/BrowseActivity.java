@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package org.firebears.scouting2846.y2017;
+package org.firebears.scouting2846;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -34,28 +34,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import java.util.ArrayList;
-import org.firebears.scouting2846.R;
-import org.firebears.scouting2846.Team;
 
 /**
- * Browsing activity for 2017 (Steamworks).
+ * Browsing activity.
  */
-public class Browse2017Activity extends AppCompatActivity {
+public class BrowseActivity extends AppCompatActivity {
 
-	static private final String TAG = "Browse2017Activity";
+	static private final String TAG = "BrowseActivity";
 
 	/** Activity Arguments */
 	static public final String ARG_TEAM_KEY = "team_key";
 
 	/** Scouting loader ID */
 	static private final int TEAM_LOADER_ID = 50;
-	static private final int SCOUTING_2017_LOADER_ID = 51;
+	static private final int SCOUTING_LOADER_ID = 51;
 
 	/** Columns to retrieve from the loader */
 	static private final String[] TEAM_COLS = {
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
 	};
+
+	/** Scouting rec */
+	private final ScoutingRec rec = ScoutingRec.REC;
 
 	/** Arguments for team info */
 	private final Bundle team_args = new Bundle();
@@ -66,7 +67,7 @@ public class Browse2017Activity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_browse_2017);
+		setContentView(rec.browse_activity_res);
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
 	}
@@ -102,8 +103,8 @@ public class Browse2017Activity extends AppCompatActivity {
 	/** Create a loader for team name */
 	private Loader<Cursor> createTeamLoader() {
 		String key = getTeamKey();
-		return new CursorLoader(this, Team.CONTENT_URI,
-			TEAM_COLS, Team.COL_KEY + "='" + key + "'", null,null);
+		return new CursorLoader(this, Team.CONTENT_URI, TEAM_COLS,
+			Team.COL_KEY + "='" + key + "'", null, null);
 	}
 
 	private String getTeamKey() {
@@ -118,7 +119,7 @@ public class Browse2017Activity extends AppCompatActivity {
 		team_args.putInt(Team.COL_TEAM_NUMBER, num);
 		team_args.putString(Team.COL_NICKNAME, nick);
 		LoaderManager lm = getSupportLoaderManager();
-		lm.initLoader(SCOUTING_2017_LOADER_ID, null, cb);
+		lm.initLoader(SCOUTING_LOADER_ID, null, cb);
 	}
 
 	/** Callbacks for loader */
@@ -127,7 +128,7 @@ public class Browse2017Activity extends AppCompatActivity {
 	{
 		@Override
 		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (SCOUTING_2017_LOADER_ID == id)
+			return (SCOUTING_LOADER_ID == id)
 			      ? createLoader()
 			      : null;
 		}
@@ -135,9 +136,9 @@ public class Browse2017Activity extends AppCompatActivity {
 		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
 			while (c.moveToNext()) {
 				Bundle b = new Bundle(team_args);
-				Scouting2017.updateBundle(b, c);
+				rec.updateBundle(b, c);
 				Log.d(TAG, "match " + b.getString(
-					Scouting2017.COL_MATCH));
+					rec.COL_MATCH));
 				observations.add(b);
 			}
 			ViewPager vp = (ViewPager) findViewById(R.id.pager);
@@ -150,13 +151,13 @@ public class Browse2017Activity extends AppCompatActivity {
 	/** Create a loader for scouting details */
 	private Loader<Cursor> createLoader() {
 		String where = getWhere();
-		return new CursorLoader(this, Scouting2017.CONTENT_URI,
-			Scouting2017.getCols(), where, null,
-			Scouting2017.COL_MATCH + ',' + Scouting2017._ID);
+		return new CursorLoader(this, rec.getContentUri(),
+			rec.getCols(), where, null,
+			rec.COL_MATCH + ',' + rec._ID);
 	}
 
 	private String getWhere() {
-		return Scouting2017.COL_TEAM_KEY + "='" + getTeamKey() + "'";
+		return rec.COL_TEAM_KEY + "='" + getTeamKey() + "'";
 	}
 
 	private class ScoutingPagerAdapter extends FragmentStatePagerAdapter {
@@ -167,7 +168,7 @@ public class Browse2017Activity extends AppCompatActivity {
 
 		@Override
 		public Fragment getItem(int pos) {
-			Fragment f = new Browse2017Fragment();
+			Fragment f = new BrowseFragment();
 			f.setArguments(observations.get(pos));
 			return f;
 		}
@@ -180,7 +181,7 @@ public class Browse2017Activity extends AppCompatActivity {
 		@Override
 		public CharSequence getPageTitle(int pos) {
 			Bundle b = observations.get(pos);
-			String m = b.getString(Scouting2017.COL_MATCH);
+			String m = b.getString(rec.COL_MATCH);
 			if ("".equals(m))
 				return getString(R.string.pit);
 			else

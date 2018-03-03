@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
 import org.json.JSONException;
-import org.firebears.scouting2846.y2017.Marshaller;
 
 /**
  * Service for accepting bluetooth connections to sync data.

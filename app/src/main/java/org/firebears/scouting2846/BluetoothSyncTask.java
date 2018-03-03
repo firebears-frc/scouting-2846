@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import org.json.JSONException;
-import org.firebears.scouting2846.y2017.Marshaller;
 
 /**
  * Task to sync via bluetooth.

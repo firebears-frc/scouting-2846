@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package org.firebears.scouting2846.y2017;
+package org.firebears.scouting2846;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -37,7 +37,7 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.firebears.scouting2846.ScoutingData;
+import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
  * Helper to marshall JSON messages.
@@ -109,13 +109,13 @@ public class Marshaller {
 	}
 
 	static private final String[] COLS = {
-		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
+		REC.COL_SCOUTER, REC.COL_OBSERVATION,
 	};
 
 	static private String lookupFinalObservations(ContentResolver cr)
 		throws IOException, JSONException
 	{
-		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS, null, null,
+		Cursor c = cr.query(REC.getContentUri(), COLS, null, null,
 			null);
 		try {
 			if (c != null)
@@ -134,8 +134,8 @@ public class Marshaller {
 	{
 		HashMap<Integer, Integer> map =
 			new HashMap<Integer, Integer>();
-		int cs = c.getColumnIndex(Scouting2017.COL_SCOUTER);
-		int co = c.getColumnIndex(Scouting2017.COL_OBSERVATION);
+		int cs = c.getColumnIndex(REC.COL_SCOUTER);
+		int co = c.getColumnIndex(REC.COL_OBSERVATION);
 		while (c.moveToNext()) {
 			int s = c.getInt(cs);
 			int o = c.getInt(co);
@@ -153,8 +153,8 @@ public class Marshaller {
 		for (Integer s : map.keySet()) {
 			JSONObject jo = new JSONObject();
 			Integer o = map.get(s);
-			jo.put(Scouting2017.COL_SCOUTER, s);
-			jo.put(Scouting2017.COL_OBSERVATION, o);
+			jo.put(REC.COL_SCOUTER, s);
+			jo.put(REC.COL_OBSERVATION, o);
 			ja.put(jo);
 		}
 		Log.d(TAG, "final observations: " + ja.length());
@@ -176,8 +176,8 @@ public class Marshaller {
 		JSONArray ja = new JSONArray(msg);
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject jo = ja.getJSONObject(i);
-			int s = jo.getInt(Scouting2017.COL_SCOUTER);
-			int o = jo.getInt(Scouting2017.COL_OBSERVATION);
+			int s = jo.getInt(REC.COL_SCOUTER);
+			int o = jo.getInt(REC.COL_OBSERVATION);
 			map.put(s, o);
 		}
 		return map;
@@ -187,8 +187,8 @@ public class Marshaller {
 		HashMap<Integer, Integer> map) throws IOException,
 		JSONException
 	{
-		Cursor c = cr.query(Scouting2017.CONTENT_URI,
-			Scouting2017.getCols(), null, null, null);
+		Cursor c = cr.query(REC.getContentUri(), REC.getCols(), null,
+			null, null);
 		try {
 			if (c != null)
 				return lookupExtraObservations(c, map);
@@ -205,8 +205,8 @@ public class Marshaller {
 		HashMap<Integer, Integer> map) throws JSONException
 	{
 		JSONArray ja = new JSONArray();
-		int cs = c.getColumnIndex(Scouting2017.COL_SCOUTER);
-		int co = c.getColumnIndex(Scouting2017.COL_OBSERVATION);
+		int cs = c.getColumnIndex(REC.COL_SCOUTER);
+		int co = c.getColumnIndex(REC.COL_OBSERVATION);
 		while (c.moveToNext()) {
 			int s = c.getInt(cs);
 			int o = c.getInt(co);
@@ -224,7 +224,7 @@ public class Marshaller {
 		throws JSONException
 	{
 		JSONObject jo = new JSONObject();
-		for (ScoutingData sd : Scouting2017.ALL_DATA) {
+		for (ScoutingData sd : REC.getAllData()) {
 			if (!sd.getCol().equals(BaseColumns._ID))
 				sd.update(jo, c);
 		}
@@ -237,8 +237,8 @@ public class Marshaller {
 		JSONArray ja = new JSONArray(obs);
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject jo = ja.getJSONObject(i);
-			ContentValues cv = Scouting2017.parse(jo);
-			cr.insert(Scouting2017.CONTENT_URI, cv);
+			ContentValues cv = REC.parse(jo);
+			cr.insert(REC.getContentUri(), cv);
 		}
 		Log.d(TAG, "received " + ja.length() + " observations");
 	}

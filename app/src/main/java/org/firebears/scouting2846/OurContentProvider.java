@@ -28,7 +28,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import org.firebears.scouting2846.y2017.Scouting2017;
 
 /**
  * Content provider for DB stuff.
@@ -74,9 +73,11 @@ public class OurContentProvider extends ContentProvider {
 				return Team.TABLE_NAME;
 		} else if (suri.startsWith(Match.CONTENT_URI.toString()))
 			return Match.TABLE_NAME;
-		else if (suri.startsWith(Scouting2017.CONTENT_URI.toString()))
-			return Scouting2017.TABLE_NAME;
-		else
+		else if (suri.startsWith(ScoutingRec.REC.getContentUri()
+			.toString()))
+		{
+			return ScoutingRec.REC.table_name;
+		} else
 			return null;
 	}
 
