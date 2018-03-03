@@ -37,6 +37,7 @@ import android.widget.TextView;
 import org.firebears.scouting2846.Param;
 import org.firebears.scouting2846.R;
 import org.firebears.scouting2846.ScoutingActivity;
+import org.firebears.scouting2846.ScoutingData;
 import org.firebears.scouting2846.Team;
 
 /**
@@ -191,7 +192,7 @@ public class Scouting2017Activity extends ScoutingActivity {
 	private Loader<Cursor> createLoader() {
 		String where = getWhere();
 		return new CursorLoader(this, Scouting2017.CONTENT_URI,
-			Scouting2017.COLS_LOADER, where, null, null);
+			Scouting2017.getCols(), where, null, null);
 	}
 
 	private String getWhere() {
@@ -206,22 +207,8 @@ public class Scouting2017Activity extends ScoutingActivity {
 	}
 
 	private void initView() {
-		initString(R.id.ah_txt, Scouting2017.COL_AUTO_HIGH_GOAL);
-		initString(R.id.al_txt, Scouting2017.COL_AUTO_LOW_GOAL);
-		initSwitch(R.id.auto_gear, Scouting2017.COL_AUTO_GEAR);
-		initSwitch(R.id.baseline, Scouting2017.COL_AUTO_BASELINE);
-		initString(R.id.th_txt, Scouting2017.COL_HIGH_GOAL);
-		initString(R.id.tl_txt, Scouting2017.COL_LOW_GOAL);
-		initString(R.id.tg_txt, Scouting2017.COL_PLACE_GEAR);
-		initSwitch(R.id.climb, Scouting2017.COL_CLIMB_ROPE);
-		initSwitch(R.id.touchpad, Scouting2017.COL_TOUCH_PAD);
-		initSwitch(R.id.ball_human, Scouting2017.COL_BALL_HUMAN);
-		initSwitch(R.id.ball_floor, Scouting2017.COL_BALL_FLOOR);
-		initSwitch(R.id.ball_hopper, Scouting2017.COL_BALL_HOPPER);
-		initSwitch(R.id.effective, Scouting2017.COL_PILOT_EFFECTIVE);
-		initSwitch(R.id.release_rope, Scouting2017.COL_RELEASE_ROPE);
-		initSwitch(R.id.lose_gear, Scouting2017.COL_LOSE_GEAR);
-		initText(R.id.notes, Scouting2017.COL_NOTES);
+		for (ScoutingData sd : Scouting2017.ALL_DATA)
+			init(sd);
 	}
 
 	private String getMatchKey() {
@@ -229,58 +216,50 @@ public class Scouting2017Activity extends ScoutingActivity {
 	}
 
 	public void minusAutoHigh(View v) {
-		updateInt(R.id.ah_txt, Scouting2017.COL_AUTO_HIGH_GOAL, -1);
+		Scouting2017.AUTO_HIGH_GOAL.update(content, this, -1);
 	}
 
 	public void plusAutoHigh(View v) {
-		updateInt(R.id.ah_txt, Scouting2017.COL_AUTO_HIGH_GOAL, 1);
+		Scouting2017.AUTO_HIGH_GOAL.update(content, this, 1);
 	}
 
 	public void minusAutoLow(View v) {
-		updateInt(R.id.al_txt, Scouting2017.COL_AUTO_LOW_GOAL, -1);
+		Scouting2017.AUTO_LOW_GOAL.update(content, this, -1);
 	}
 
 	public void plusAutoLow(View v) {
-		updateInt(R.id.al_txt, Scouting2017.COL_AUTO_LOW_GOAL, 1);
+		Scouting2017.AUTO_LOW_GOAL.update(content, this, 1);
 	}
 
 	public void minusTeleHigh(View v) {
-		updateInt(R.id.th_txt, Scouting2017.COL_HIGH_GOAL, -1);
+		Scouting2017.HIGH_GOAL.update(content, this, -1);
 	}
 
 	public void plusTeleHigh(View v) {
-		updateInt(R.id.th_txt, Scouting2017.COL_HIGH_GOAL, 1);
+		Scouting2017.HIGH_GOAL.update(content, this, 1);
 	}
 
 	public void minusTeleLow(View v) {
-		updateInt(R.id.tl_txt, Scouting2017.COL_LOW_GOAL, -1);
+		Scouting2017.LOW_GOAL.update(content, this, -1);
 	}
 
 	public void plusTeleLow(View v) {
-		updateInt(R.id.tl_txt, Scouting2017.COL_LOW_GOAL, 1);
+		Scouting2017.LOW_GOAL.update(content, this, 1);
 	}
 
 	public void minusTeleGear(View v) {
-		updateInt(R.id.tg_txt, Scouting2017.COL_PLACE_GEAR, -1);
+		Scouting2017.PLACE_GEAR.update(content, this, -1);
 	}
 
 	public void plusTeleGear(View v) {
-		updateInt(R.id.tg_txt, Scouting2017.COL_PLACE_GEAR, 1);
+		Scouting2017.PLACE_GEAR.update(content, this, 1);
 	}
 
 	@Override
 	public void onPause() {
-		updateBoolean(R.id.auto_gear, Scouting2017.COL_AUTO_GEAR);
-		updateBoolean(R.id.baseline, Scouting2017.COL_AUTO_BASELINE);
-		updateBoolean(R.id.climb, Scouting2017.COL_CLIMB_ROPE);
-		updateBoolean(R.id.touchpad, Scouting2017.COL_TOUCH_PAD);
-		updateBoolean(R.id.ball_human, Scouting2017.COL_BALL_HUMAN);
-		updateBoolean(R.id.ball_floor, Scouting2017.COL_BALL_FLOOR);
-		updateBoolean(R.id.ball_hopper, Scouting2017.COL_BALL_HOPPER);
-		updateBoolean(R.id.effective,Scouting2017.COL_PILOT_EFFECTIVE);
-		updateBoolean(R.id.release_rope,Scouting2017.COL_RELEASE_ROPE);
-		updateBoolean(R.id.lose_gear, Scouting2017.COL_LOSE_GEAR);
-		updateString(R.id.notes, Scouting2017.COL_NOTES);
+		for (ScoutingData sd : Scouting2017.ALL_DATA)
+			update(sd);
+		content.remove(Scouting2017._ID);
 		if (!content.equals(content_loaded))
 			new StoreObservation(this, content).execute();
 		super.onPause();

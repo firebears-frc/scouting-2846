@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,32 +21,46 @@
  */
 package org.firebears.scouting2846;
 
+import android.app.Activity;
 import android.content.ContentValues;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
- * Scouting activity.
+ * Scouting data.
  */
-abstract public class ScoutingActivity extends AppCompatActivity {
+public interface ScoutingData {
 
-	/** Content values */
-	protected final ContentValues content = new ContentValues();
+	/** Column name */
+	String getCol();
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (android.R.id.home == item.getItemId()) {
-			onBackPressed();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	/** Get SQL for column */
+	String sql();
 
-	protected void init(ScoutingData sd) {
-		sd.init(content, this);
-	}
+	/** Init content values */
+	void init(ContentValues cv);
 
-	protected void update(ScoutingData sd) {
-		sd.update(content, this);
-	}
+	/** Init a view with data from content values */
+	void init(ContentValues cv, Activity rv);
+
+	/** Init a view with data from a bundle */
+	void init(Bundle b, View rv);
+
+	/** Init content values with JSON data */
+	void init(ContentValues cv, JSONObject jo) throws JSONException;
+
+	/** Update ContentValues with data from a cursor */
+	void update(ContentValues cv, Cursor c);
+
+	/** Update ContentValues with data from view */
+	void update(ContentValues cv, Activity rv);
+
+	/** Update a bundle with data from a cursor */
+	void update(Bundle b, Cursor c);
+
+	/** Update a JSON object with data from a cursor */
+	void update(JSONObject jo, Cursor c) throws JSONException;
 }

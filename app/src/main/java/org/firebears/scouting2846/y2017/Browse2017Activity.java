@@ -57,29 +57,6 @@ public class Browse2017Activity extends AppCompatActivity {
 		Team.COL_NICKNAME,
 	};
 
-	/** Columns to retrieve from the loader */
-	static private final String[] COLS = {
-		Scouting2017._ID,
-		Scouting2017.COL_MATCH,
-		Scouting2017.COL_TEAM_KEY,
-		Scouting2017.COL_AUTO_HIGH_GOAL,
-		Scouting2017.COL_AUTO_LOW_GOAL,
-		Scouting2017.COL_AUTO_GEAR,
-		Scouting2017.COL_AUTO_BASELINE,
-		Scouting2017.COL_HIGH_GOAL,
-		Scouting2017.COL_LOW_GOAL,
-		Scouting2017.COL_PLACE_GEAR,
-		Scouting2017.COL_CLIMB_ROPE,
-		Scouting2017.COL_TOUCH_PAD,
-		Scouting2017.COL_BALL_HUMAN,
-		Scouting2017.COL_BALL_FLOOR,
-		Scouting2017.COL_BALL_HOPPER,
-		Scouting2017.COL_PILOT_EFFECTIVE,
-		Scouting2017.COL_RELEASE_ROPE,
-		Scouting2017.COL_LOSE_GEAR,
-		Scouting2017.COL_NOTES,
-	};
-
 	/** Arguments for team info */
 	private final Bundle team_args = new Bundle();
 
@@ -174,8 +151,8 @@ public class Browse2017Activity extends AppCompatActivity {
 	private Loader<Cursor> createLoader() {
 		String where = getWhere();
 		return new CursorLoader(this, Scouting2017.CONTENT_URI,
-			COLS, where, null, Scouting2017.COL_MATCH + ',' +
-			Scouting2017._ID);
+			Scouting2017.getCols(), where, null,
+			Scouting2017.COL_MATCH + ',' + Scouting2017._ID);
 	}
 
 	private String getWhere() {

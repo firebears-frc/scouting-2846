@@ -24,6 +24,7 @@ package org.firebears.scouting2846.y2017;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.provider.BaseColumns;
 import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.firebears.scouting2846.ScoutingData;
 
 /**
  * Helper to marshall JSON messages.
@@ -186,7 +188,7 @@ public class Marshaller {
 		JSONException
 	{
 		Cursor c = cr.query(Scouting2017.CONTENT_URI,
-			Scouting2017.COLS_ALL, null, null, null);
+			Scouting2017.getCols(), null, null, null);
 		try {
 			if (c != null)
 				return lookupExtraObservations(c, map);
@@ -222,13 +224,9 @@ public class Marshaller {
 		throws JSONException
 	{
 		JSONObject jo = new JSONObject();
-		for (String i : Scouting2017.COLS_INT) {
-			int v = c.getInt(c.getColumnIndex(i));
-			jo.put(i, v);
-		}
-		for (String i : Scouting2017.COLS_STR) {
-			String v = c.getString(c.getColumnIndex(i));
-			jo.put(i, v);
+		for (ScoutingData sd : Scouting2017.ALL_DATA) {
+			if (!sd.getCol().equals(BaseColumns._ID))
+				sd.update(jo, c);
 		}
 		return jo;
 	}

@@ -29,8 +29,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import org.firebears.scouting2846.R;
+import org.firebears.scouting2846.ScoutingData;
 import org.firebears.scouting2846.Team;
 
 /**
@@ -61,37 +61,7 @@ public class Browse2017Fragment extends Fragment {
 	}
 
 	private void initView(View rv) {
-		initString(rv, R.id.ah_txt, Scouting2017.COL_AUTO_HIGH_GOAL);
-		initString(rv, R.id.al_txt, Scouting2017.COL_AUTO_LOW_GOAL);
-		initBool(rv, R.id.ag_txt, Scouting2017.COL_AUTO_GEAR);
-		initBool(rv, R.id.bl_txt, Scouting2017.COL_AUTO_BASELINE);
-		initString(rv, R.id.th_txt, Scouting2017.COL_HIGH_GOAL);
-		initString(rv, R.id.tl_txt, Scouting2017.COL_LOW_GOAL);
-		initString(rv, R.id.tg_txt, Scouting2017.COL_PLACE_GEAR);
-		initBool(rv, R.id.cl_txt, Scouting2017.COL_CLIMB_ROPE);
-		initBool(rv, R.id.tp_txt, Scouting2017.COL_TOUCH_PAD);
-		initBool(rv, R.id.bh_txt, Scouting2017.COL_BALL_HUMAN);
-		initBool(rv, R.id.bf_txt, Scouting2017.COL_BALL_FLOOR);
-		initBool(rv, R.id.bp_txt, Scouting2017.COL_BALL_HOPPER);
-		initBool(rv, R.id.pe_txt, Scouting2017.COL_PILOT_EFFECTIVE);
-		initBool(rv, R.id.rr_txt, Scouting2017.COL_RELEASE_ROPE);
-		initBool(rv, R.id.lg_txt, Scouting2017.COL_LOSE_GEAR);
-		initString(rv, R.id.notes, Scouting2017.COL_NOTES);
-	}
-
-	private void initString(View rv, int res, String col) {
-		String v = (args.containsKey(col))
-		         ? args.get(col).toString()
-		         : "";
-		TextView tv = (TextView) rv.findViewById(res);
-		tv.setText(v);
-	}
-
-	private void initBool(View rv, int res, String col) {
-		int v = (args.containsKey(col))
-		      ? args.getInt(col)
-		      : 0;
-		TextView tv = (TextView) rv.findViewById(res);
-		tv.setText(v != 0 ? "Yes" : "No");
+		for (ScoutingData sd : Scouting2017.ALL_DATA)
+			sd.init(args, rv);
 	}
 }
