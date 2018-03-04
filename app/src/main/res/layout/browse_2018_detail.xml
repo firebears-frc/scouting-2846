@@ -45,73 +45,58 @@
         android:layout_alignParentTop="true"/>
 
     <TextView
-        android:id="@+id/ah_txt"
-        android:text="@string/high_goal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/autonomous"/>
-
-    <TextView
-        android:id="@+id/auto_high"
-        android:text="0"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/autonomous"
-        android:layout_toRightOf="@id/ah_txt"/>
-
-    <TextView
-        android:id="@+id/al_txt"
-        android:text="@string/low_goal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ah_txt"/>
-
-    <TextView
-        android:id="@+id/auto_low"
-        android:text="0"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/auto_high"
-        android:layout_toRightOf="@id/al_txt"/>
-
-    <TextView
-        android:id="@+id/ag_txt"
-        android:text="@string/gear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/al_txt"/>
-
-    <TextView
-        android:id="@+id/auto_gear"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/auto_low"
-        android:layout_toRightOf="@id/ag_txt"/>
-
-    <TextView
         android:id="@+id/bl_txt"
         android:text="@string/baseline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ag_txt"/>
+        android:layout_below="@id/autonomous"/>
 
     <TextView
         android:id="@+id/baseline"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/auto_gear"
+        android:layout_below="@id/autonomous"
         android:layout_toRightOf="@id/bl_txt"/>
+
+    <TextView
+        android:id="@+id/asw_txt"
+        android:text="@string/on_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"/>
+
+    <TextView
+        android:id="@+id/auto_switch"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"
+        android:layout_toRightOf="@id/ah_txt"/>
+
+    <TextView
+        android:id="@+id/asc_txt"
+        android:text="@string/scale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/asw_txt"/>
+
+    <TextView
+        android:id="@+id/auto_scale"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_switch"
+        android:layout_toRightOf="@id/asc_txt"/>
 
     <View
         style="@style/Divider"
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bl_txt"/>
+        android:layout_below="@id/asc_txt"/>
 
     <TextView
         android:id="@+id/teleop"
@@ -123,93 +108,62 @@
         android:layout_below="@id/divider1"/>
 
     <TextView
-        android:id="@+id/th_txt"
-        android:text="@string/high_goal"
+        android:id="@+id/tsw_txt"
+        android:text="@string/on_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/teleop"/>
 
     <TextView
-        android:id="@+id/tele_high"
-        android:text="0"
+        android:id="@+id/tele_switch"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/teleop"
-        android:layout_toRightOf="@id/th_txt"/>
+        android:layout_toRightOf="@id/tsw_txt"/>
 
     <TextView
-        android:id="@+id/tl_txt"
-        android:text="@string/low_goal"
+        android:id="@+id/tsc_txt"
+        android:text="@string/scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/th_txt"/>
+        android:layout_below="@id/tsw_txt"/>
 
     <TextView
-        android:id="@+id/tele_low"
+        android:id="@+id/tele_scale"
         android:text="0"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tele_high"
-        android:layout_toRightOf="@id/tl_txt"/>
+        android:layout_below="@id/tele_switch"
+        android:layout_toRightOf="@id/tsc_txt"/>
 
     <TextView
-        android:id="@+id/tg_txt"
-        android:text="@string/gear"
+        android:id="@+id/opp_txt"
+        android:text="@string/opp_scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tl_txt"/>
+        android:layout_below="@id/tsc_txt"/>
 
     <TextView
-        android:id="@+id/tele_gear"
+        android:id="@+id/opp_scale"
         android:text="0"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tele_low"
-        android:layout_toRightOf="@id/tg_txt"/>
-
-    <TextView
-        android:id="@+id/cl_txt"
-        android:text="@string/climb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tg_txt"/>
-
-    <TextView
-        android:id="@+id/climb"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tele_gear"
-        android:layout_toRightOf="@id/cl_txt"/>
-
-    <TextView
-        android:id="@+id/tp_txt"
-        android:text="@string/touchpad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cl_txt"/>
-
-    <TextView
-        android:id="@+id/touchpad"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/climb"
-        android:layout_toRightOf="@id/tp_txt"/>
+        android:layout_below="@id/tele_scale"
+        android:layout_toRightOf="@id/opp_txt"/>
 
     <View
         style="@style/Divider"
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tp_txt"/>
+        android:layout_below="@id/opp_txt"/>
 
     <TextView
-        android:id="@+id/ball_acquisition"
-        android:text="@string/ball_acquisition"
+        android:id="@+id/power_cubes"
+        android:text="@string/power_cubes"
 	android:textStyle="bold"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -217,60 +171,61 @@
         android:layout_below="@id/divider2"/>
 
     <TextView
-        android:id="@+id/bh_txt"
-        android:text="@string/ball_human"
+        android:id="@+id/c2h_txt"
+        android:text="@string/cube_to_human"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ball_acquisition"/>
+        android:layout_below="@id/power_cubes"/>
 
     <TextView
-        android:id="@+id/ball_human"
+        android:id="@+id/cube_to_human"
+        android:text="0"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ball_acquisition"
-        android:layout_toRightOf="@id/bh_txt"/>
+        android:layout_below="@id/power_cubes"
+        android:layout_toRightOf="@id/c2h_txt"/>
 
     <TextView
-        android:id="@+id/bf_txt"
-        android:text="@string/ball_floor"
+        android:id="@+id/cfh_txt"
+        android:text="@string/cube_from_human"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bh_txt"/>
+        android:layout_below="@id/c2h_txt"/>
 
     <TextView
-        android:id="@+id/ball_floor"
+        android:id="@+id/cube_from_human"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ball_human"
-        android:layout_toRightOf="@id/bf_txt"/>
+        android:layout_below="@id/cube_to_human"
+        android:layout_toRightOf="@id/cfh_txt"/>
 
     <TextView
-        android:id="@+id/bp_txt"
-        android:text="@string/ball_hopper"
+        android:id="@+id/cfl_txt"
+        android:text="@string/cube_floor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bf_txt"/>
+        android:layout_below="@id/cfh_txt"/>
 
     <TextView
-        android:id="@+id/ball_hopper"
+        android:id="@+id/cube_floor"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ball_floor"
-        android:layout_toRightOf="@id/bp_txt"/>
+        android:layout_below="@id/cube_from_human"
+        android:layout_toRightOf="@id/cfl_txt"/>
 
     <View
         style="@style/Divider"
         android:id="@+id/divider3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bp_txt"/>
+        android:layout_below="@id/cfl_txt"/>
 
     <TextView
-        android:id="@+id/pilot"
-        android:text="@string/pilot"
+        android:id="@+id/other"
+        android:text="@string/other"
 	android:textStyle="bold"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -278,56 +233,71 @@
         android:layout_below="@id/divider3"/>
 
     <TextView
-        android:id="@+id/pe_txt"
-        android:text="@string/effective"
+        android:id="@+id/def_txt"
+        android:text="@string/ball_human"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pilot"/>
+        android:layout_below="@id/other"/>
 
     <TextView
-        android:id="@+id/effective"
+        android:id="@+id/defense"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pilot"
-        android:layout_toRightOf="@id/pe_txt"/>
+        android:layout_below="@id/other"
+        android:layout_toRightOf="@id/def_txt"/>
 
     <TextView
-        android:id="@+id/rr_txt"
-        android:text="@string/release_rope"
+        android:id="@+id/cl_txt"
+        android:text="@string/climb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pe_txt"/>
+        android:layout_below="@id/def_txt"/>
 
     <TextView
-        android:id="@+id/release_rope"
+        android:id="@+id/climb"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/effective"
-        android:layout_toRightOf="@id/rr_txt"/>
+        android:layout_below="@id/defense"
+        android:layout_toRightOf="@id/cl_txt"/>
 
     <TextView
-        android:id="@+id/lg_txt"
-        android:text="@string/lose_gear"
+        android:id="@+id/cx_txt"
+        android:text="@string/climb_extra_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rr_txt"/>
+        android:layout_below="@id/cl_txt"/>
 
     <TextView
-        android:id="@+id/lose_gear"
+        android:id="@+id/climb_extra_room"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/release_rope"
-        android:layout_toRightOf="@id/lg_txt"/>
+        android:layout_below="@id/climb"
+        android:layout_toRightOf="@id/cx_txt"/>
+
+    <TextView
+        android:id="@+id/pk_txt"
+        android:text="@string/park"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cx_txt"/>
+
+    <TextView
+        android:id="@+id/park"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/climb_extra_room"
+        android:layout_toRightOf="@id/pk_txt"/>
 
     <View
         style="@style/Divider"
         android:id="@+id/divider4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lg_txt"/>
+        android:layout_below="@id/pk_txt"/>
 
     <TextView
         android:id="@+id/notes"

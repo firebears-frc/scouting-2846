@@ -42,14 +42,8 @@ public class ScoutingRec implements BaseColumns {
 
 	static private final ScoutingRec Y2017 = new ScoutingRec(
 		"scouting_2017", R.string.scouting_2017,
-		R.layout.activity_scouting_2017,
- 		R.layout.activity_browse_2017, R.layout.browse_2017_detail);
+		R.layout.activity_scouting_2017, R.layout.browse_2017_detail);
 	static {
-		Y2017.add(new ScoutingInt(_ID, 0));
-		Y2017.add(new ScoutingInt(COL_SCOUTER, 0));
-		Y2017.add(new ScoutingInt(COL_OBSERVATION, 0));
-		Y2017.add(new ScoutingStr(COL_MATCH, 0));
-		Y2017.add(new ScoutingStr(COL_TEAM_KEY, 0));
 		Y2017.add(new ScoutingInt("auto_high_goal", R.id.auto_high,
 			R.id.ah_minus, R.id.ah_plus));
 		Y2017.add(new ScoutingInt("auto_low_goal", R.id.auto_low,
@@ -72,7 +66,35 @@ public class ScoutingRec implements BaseColumns {
 		Y2017.add(new ScoutingBool("lose_gear", R.id.lose_gear));
 		Y2017.add(new ScoutingStr("notes", R.id.notes));
 	}
-	static public final ScoutingRec REC = Y2017;
+	static private final ScoutingRec Y2018 = new ScoutingRec(
+		"scouting_2018", R.string.scouting_2018,
+		R.layout.activity_scouting_2018, R.layout.browse_2018_detail);
+	static {
+		Y2018.add(new ScoutingBool("auto_baseline", R.id.baseline));
+		Y2018.add(new ScoutingInt("auto_switch", R.id.auto_switch,
+			R.id.asw_minus, R.id.asw_plus));
+		Y2018.add(new ScoutingInt("auto_scale", R.id.auto_scale,
+			R.id.asc_minus, R.id.asc_plus));
+		Y2018.add(new ScoutingInt("tele_switch", R.id.tele_switch,
+			R.id.tsw_minus, R.id.tsw_plus));
+		Y2018.add(new ScoutingInt("tele_scale", R.id.tele_scale,
+			R.id.tsc_minus, R.id.tsc_plus));
+		Y2018.add(new ScoutingInt("opp_scale", R.id.opp_scale,
+			R.id.opp_minus, R.id.opp_plus));
+		Y2018.add(new ScoutingInt("cube_to_human", R.id.cube_to_human,
+			R.id.c2h_minus, R.id.c2h_plus));
+		Y2018.add(new ScoutingBool("cube_from_human",
+			R.id.cube_from_human));
+		Y2018.add(new ScoutingBool("cube_floor", R.id.cube_floor));
+		Y2018.add(new ScoutingBool("defense", R.id.defense));
+		Y2018.add(new ScoutingBool("climb", R.id.climb));
+		Y2018.add(new ScoutingBool("climb_extra_room",
+			R.id.climb_extra_room));
+		Y2018.add(new ScoutingBool("park", R.id.park));
+		Y2018.add(new ScoutingStr("notes", R.id.notes));
+	}
+
+	static public final ScoutingRec REC = Y2018;
 
 	public final String table_name;
 
@@ -80,21 +102,21 @@ public class ScoutingRec implements BaseColumns {
 
 	public final int scouting_activity_res;
 
-	public final int browse_activity_res;
-
 	public final int browse_detail_res;
 
 	private final ArrayList<ScoutingData> data;
 
-	private ScoutingRec(String n, int t_res, int sa_res, int ba_res,
-		int bd_res)
-	{
+	private ScoutingRec(String n, int t_res, int sa_res, int bd_res) {
 		table_name = n;
 		title_res = t_res;
 		scouting_activity_res = sa_res;
-		browse_activity_res = ba_res;
 		browse_detail_res = bd_res;
 		data = new ArrayList<ScoutingData>();
+		data.add(new ScoutingInt(_ID, 0));
+		data.add(new ScoutingInt(COL_SCOUTER, 0));
+		data.add(new ScoutingInt(COL_OBSERVATION, 0));
+		data.add(new ScoutingStr(COL_MATCH, 0));
+		data.add(new ScoutingStr(COL_TEAM_KEY, 0));
 	}
 
 	private void add(ScoutingData sd) {

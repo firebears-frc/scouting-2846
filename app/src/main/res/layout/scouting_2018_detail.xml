@@ -1,0 +1,360 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/team_lbl"
+        android:gravity="center"
+	android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/text_margin" />
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider0"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/team_lbl"/>
+
+    <TextView
+        android:id="@+id/autonomous"
+        android:text="@string/autonomous"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_below="@id/divider0"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/baseline"
+        android:text="@string/baseline"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autonomous"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <TextView
+        android:id="@+id/asw_txt"
+        android:text="@string/on_switch"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/asw_minus"
+        android:text="@string/minus"
+        android:padding="0dp"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"
+        android:layout_toRightOf="@id/asw_txt"/>
+
+    <TextView
+        android:id="@+id/auto_switch"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"
+        android:layout_toRightOf="@id/asw_minus"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/asw_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baseline"
+        android:layout_toRightOf="@id/auto_switch"/>
+
+    <TextView
+        android:id="@+id/asc_txt"
+        android:text="@string/scale"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/asw_txt"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/asc_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/asw_minus"
+        android:layout_toRightOf="@id/asc_txt"/>
+
+    <TextView
+        android:id="@+id/auto_scale"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auto_switch"
+        android:layout_toRightOf="@id/asc_minus"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/asc_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/asw_plus"
+        android:layout_toRightOf="@id/auto_scale"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider1"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/asc_txt"/>
+
+    <TextView
+        android:id="@+id/teleop"
+        android:text="@string/teleop"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider1"
+        android:layout_margin="@dimen/text_margin" />
+
+    <TextView
+        android:id="@+id/tsw_txt"
+        android:text="@string/on_switch"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/tsw_minus"
+        android:text="@string/minus"
+        android:padding="0dp"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_toRightOf="@id/tsw_txt"/>
+
+    <TextView
+        android:id="@+id/tele_switch"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_toRightOf="@id/tsw_minus"
+        android:layout_margin="@dimen/text_margin" />
+
+    <Button
+        android:id="@+id/tsw_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teleop"
+        android:layout_toRightOf="@id/tele_switch"/>
+
+    <TextView
+        android:id="@+id/tsc_txt"
+        android:text="@string/scale"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsw_txt"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tsc_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsw_minus"
+        android:layout_toRightOf="@id/tsc_txt"/>
+
+    <TextView
+        android:id="@+id/tele_scale"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_switch"
+        android:layout_toRightOf="@id/tsc_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tsc_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsw_plus"
+        android:layout_toRightOf="@id/tele_scale"/>
+
+    <TextView
+        android:id="@+id/opp_txt"
+        android:text="@string/opp_scale"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsc_txt"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/opp_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsc_minus"
+        android:layout_toRightOf="@id/opp_txt"/>
+
+    <TextView
+        android:id="@+id/opp_scale"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_scale"
+        android:layout_toRightOf="@id/opp_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/opp_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsc_plus"
+        android:layout_toRightOf="@id/opp_scale"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider2"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opp_txt"/>
+
+    <TextView
+        android:id="@+id/power_cubes"
+        android:text="@string/power_cubes"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider2"
+        android:layout_margin="@dimen/text_margin" />
+
+    <TextView
+        android:id="@+id/c2h_txt"
+        android:text="@string/cube_to_human"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/power_cubes"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/c2h_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/power_cubes"
+        android:layout_toRightOf="@id/c2h_txt"/>
+
+    <TextView
+        android:id="@+id/cube_to_human"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/power_cubes"
+        android:layout_toRightOf="@id/c2h_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/c2h_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/power_cubes"
+        android:layout_toRightOf="@id/cube_to_human"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/cube_from_human"
+        android:text="@string/cube_from_human"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/c2h_txt"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/cube_floor"
+        android:text="@string/cube_floor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cube_from_human"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider3"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cube_floor" />
+
+    <TextView
+        android:id="@+id/other"
+        android:text="@string/other"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider3"
+        android:layout_margin="@dimen/text_margin" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/defense"
+        android:text="@string/defense"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/other"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/climb"
+        android:text="@string/climb"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/defense"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/climb_extra_room"
+        android:text="@string/climb_extra_room"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/climb"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/park"
+        android:text="@string/park"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/climb_extra_room"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider4"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/park" />
+
+    <EditText
+        android:id="@+id/notes"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider4" />
+
+</RelativeLayout>

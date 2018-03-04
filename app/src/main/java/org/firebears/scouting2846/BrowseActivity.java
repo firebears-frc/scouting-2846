@@ -67,7 +67,7 @@ public class BrowseActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(rec.browse_activity_res);
+		setContentView(R.layout.activity_browse);
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
 	}

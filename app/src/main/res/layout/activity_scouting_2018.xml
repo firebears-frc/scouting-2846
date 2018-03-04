@@ -24,12 +24,12 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scouting_2017_container"
+        android:id="@+id/scouting_2018_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <include layout="@layout/scouting_2017_detail"/>
+    <include layout="@layout/scouting_2018_detail"/>
 
     </android.support.v4.widget.NestedScrollView>
 

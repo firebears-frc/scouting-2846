@@ -22,18 +22,20 @@
     <string name="pit">(Pit)</string>
     <string name="pit_scouting">Scouting</string>
     <string name="obs_browse">Browse Observations</string>
-    <string name="scouting_2017">Steamworks Scouting</string>
+
     <string name="autonomous">Autonomous</string>
     <string name="teleop">Teleop</string>
-    <string name="high_goal">High Goal</string>
-    <string name="low_goal">Low Goal</string>
+
+    <string name="scouting_2017">Steamworks Scouting</string>
+    <string name="high_goal">High goal</string>
+    <string name="low_goal">Low goal</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="baseline">Cross baseline</string>
     <string name="gear">Place gear</string>
-    <string name="climb">Climb rope</string>
+    <string name="climb">Climb</string>
     <string name="touchpad">Activate touch pad</string>
-    <string name="ball_acquisition">Ball Acquisition</string>
+    <string name="ball_acquisition">Ball acquisition</string>
     <string name="ball_human">Human player</string>
     <string name="ball_floor">Floor</string>
     <string name="ball_hopper">Hopper</string>
@@ -41,4 +43,17 @@
     <string name="effective">Effective</string>
     <string name="release_rope">Release rope</string>
     <string name="lose_gear">Lose gear</string>
+
+    <string name="scouting_2018">POWER UP Scouting</string>
+    <string name="on_switch">Cubes on switch</string>
+    <string name="scale">Cubes on scale</string>
+    <string name="opp_scale">Opposing scale</string>
+    <string name="power_cubes">Power Cubes</string>
+    <string name="cube_to_human">To human</string>
+    <string name="cube_from_human">From human</string>
+    <string name="cube_floor">From floor</string>
+    <string name="other">Other</string>
+    <string name="defense">Defense</string>
+    <string name="climb_extra_room">Climb extra room</string>
+    <string name="park">Park</string>
 </resources>
