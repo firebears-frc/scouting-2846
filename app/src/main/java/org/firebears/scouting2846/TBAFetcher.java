@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -29,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.CharBuffer;
+import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
  * Helper class to fetch data from The Blue Alliance.
@@ -45,7 +46,7 @@ public class TBAFetcher {
 		"https://www.thebluealliance.com/api/v2/";
 
 	/** URL for event list */
-	static private final String EVENT_URL = BASE_URL + "events/2017";
+	static private final String EVENT_URL = BASE_URL + "events/" +REC.year;
 
 	/** Fetch event list as JSON */
 	static public String fetchEvents() {

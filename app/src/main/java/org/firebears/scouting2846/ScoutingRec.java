@@ -40,9 +40,9 @@ public class ScoutingRec implements BaseColumns {
 	static public final String COL_MATCH = "match_key";
 	static public final String COL_TEAM_KEY = "tm_key";
 
-	static private final ScoutingRec Y2017 = new ScoutingRec(
-		"scouting_2017", R.string.scouting_2017,
-		R.layout.activity_scouting_2017, R.layout.browse_2017_detail);
+	static private final ScoutingRec Y2017 = new ScoutingRec("2017",
+		R.string.scouting_2017, R.layout.activity_scouting_2017,
+		R.layout.browse_2017_detail);
 	static {
 		Y2017.add(new ScoutingInt("auto_high_goal", R.id.auto_high,
 			R.id.ah_minus, R.id.ah_plus));
@@ -66,9 +66,9 @@ public class ScoutingRec implements BaseColumns {
 		Y2017.add(new ScoutingBool("lose_gear", R.id.lose_gear));
 		Y2017.add(new ScoutingStr("notes", R.id.notes));
 	}
-	static private final ScoutingRec Y2018 = new ScoutingRec(
-		"scouting_2018", R.string.scouting_2018,
-		R.layout.activity_scouting_2018, R.layout.browse_2018_detail);
+	static private final ScoutingRec Y2018 = new ScoutingRec("2018",
+		R.string.scouting_2018, R.layout.activity_scouting_2018,
+		R.layout.browse_2018_detail);
 	static {
 		Y2018.add(new ScoutingBool("auto_baseline", R.id.baseline));
 		Y2018.add(new ScoutingInt("auto_switch", R.id.auto_switch,
@@ -96,6 +96,8 @@ public class ScoutingRec implements BaseColumns {
 
 	static public final ScoutingRec REC = Y2018;
 
+	public final String year;
+
 	public final String table_name;
 
 	public final int title_res;
@@ -106,8 +108,9 @@ public class ScoutingRec implements BaseColumns {
 
 	private final ArrayList<ScoutingData> data;
 
-	private ScoutingRec(String n, int t_res, int sa_res, int bd_res) {
-		table_name = n;
+	private ScoutingRec(String y, int t_res, int sa_res, int bd_res) {
+		year = y;
+		table_name = "scouting_" + y;
 		title_res = t_res;
 		scouting_activity_res = sa_res;
 		browse_detail_res = bd_res;
