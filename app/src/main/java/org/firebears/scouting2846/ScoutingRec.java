@@ -146,8 +146,10 @@ public class ScoutingRec implements BaseColumns {
 	/** Parse a JSON scouting object */
 	public ContentValues parse(JSONObject jo) throws JSONException {
 		ContentValues cv = new ContentValues();
-		for (ScoutingData sd : data)
-			sd.init(cv, jo);
+		for (ScoutingData sd : data) {
+			if (!sd.getCol().equals(BaseColumns._ID))
+				sd.init(cv, jo);
+		}
 		return cv;
 	}
 
