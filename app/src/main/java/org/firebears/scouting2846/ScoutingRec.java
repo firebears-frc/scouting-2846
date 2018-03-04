@@ -77,19 +77,20 @@ public class ScoutingRec implements BaseColumns {
 			R.id.asc_minus, R.id.asc_plus));
 		Y2018.add(new ScoutingInt("tele_switch", R.id.tele_switch,
 			R.id.tsw_minus, R.id.tsw_plus));
+		Y2018.add(new ScoutingInt("opp_switch", R.id.opp_switch,
+			R.id.opp_minus, R.id.opp_plus));
 		Y2018.add(new ScoutingInt("tele_scale", R.id.tele_scale,
 			R.id.tsc_minus, R.id.tsc_plus));
-		Y2018.add(new ScoutingInt("opp_scale", R.id.opp_scale,
-			R.id.opp_minus, R.id.opp_plus));
-		Y2018.add(new ScoutingInt("cube_to_human", R.id.cube_to_human,
-			R.id.c2h_minus, R.id.c2h_plus));
+		Y2018.add(new ScoutingInt("fell_scale", R.id.fell_scale,
+			R.id.fell_minus, R.id.fell_plus));
+		Y2018.add(new ScoutingInt("exchange", R.id.exchange,
+			R.id.ex_minus, R.id.ex_plus));
 		Y2018.add(new ScoutingBool("cube_from_human",
 			R.id.cube_from_human));
 		Y2018.add(new ScoutingBool("cube_floor", R.id.cube_floor));
 		Y2018.add(new ScoutingBool("defense", R.id.defense));
 		Y2018.add(new ScoutingBool("climb", R.id.climb));
-		Y2018.add(new ScoutingBool("climb_extra_room",
-			R.id.climb_extra_room));
+		Y2018.add(new ScoutingBool("rider", R.id.rider));
 		Y2018.add(new ScoutingBool("park", R.id.park));
 		Y2018.add(new ScoutingStr("notes", R.id.notes));
 	}

@@ -116,7 +116,7 @@
 
     <TextView
         android:id="@+id/teleop"
-        android:text="@string/teleop"
+        android:text="@string/teleop_cubes"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -159,45 +159,11 @@
         android:layout_toRightOf="@id/tele_switch"/>
 
     <TextView
-        android:id="@+id/tsc_txt"
-        android:text="@string/scale"
+        android:id="@+id/opp_txt"
+        android:text="@string/opp_switch"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tsw_txt"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <Button
-        android:id="@+id/tsc_minus"
-        android:text="@string/minus"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tsw_minus"
-        android:layout_toRightOf="@id/tsc_txt"/>
-
-    <TextView
-        android:id="@+id/tele_scale"
-        android:text="0"
-        android:gravity="center"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tele_switch"
-        android:layout_toRightOf="@id/tsc_minus"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <Button
-        android:id="@+id/tsc_plus"
-        android:text="@string/plus"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tsw_plus"
-        android:layout_toRightOf="@id/tele_scale"/>
-
-    <TextView
-        android:id="@+id/opp_txt"
-        android:text="@string/opp_scale"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tsc_txt"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -205,16 +171,16 @@
         android:text="@string/minus"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tsc_minus"
+        android:layout_below="@id/tsw_minus"
         android:layout_toRightOf="@id/opp_txt"/>
 
     <TextView
-        android:id="@+id/opp_scale"
+        android:id="@+id/opp_switch"
         android:text="0"
         android:gravity="center"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tele_scale"
+        android:layout_below="@id/tele_switch"
         android:layout_toRightOf="@id/opp_minus"
         android:layout_margin="@dimen/text_margin"/>
 
@@ -223,8 +189,112 @@
         android:text="@string/plus"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tsw_plus"
+        android:layout_toRightOf="@id/opp_switch"/>
+
+    <TextView
+        android:id="@+id/tsc_txt"
+        android:text="@string/scale"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opp_txt"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tsc_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opp_minus"
+        android:layout_toRightOf="@id/tsc_txt"/>
+
+    <TextView
+        android:id="@+id/tele_scale"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opp_switch"
+        android:layout_toRightOf="@id/tsc_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tsc_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opp_plus"
+        android:layout_toRightOf="@id/tele_scale"/>
+
+
+    <TextView
+        android:id="@+id/fell_txt"
+        android:text="@string/fell_scale"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsc_txt"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/fell_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsc_minus"
+        android:layout_toRightOf="@id/fell_txt"/>
+
+    <TextView
+        android:id="@+id/fell_scale"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_scale"
+        android:layout_toRightOf="@id/fell_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/fell_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tsc_plus"
-        android:layout_toRightOf="@id/opp_scale"/>
+        android:layout_toRightOf="@id/fell_scale"/>
+
+
+    <TextView
+        android:id="@+id/ex_txt"
+        android:text="@string/exchange"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fell_txt"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/ex_minus"
+        android:text="@string/minus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fell_minus"
+        android:layout_toRightOf="@id/ex_txt"/>
+
+    <TextView
+        android:id="@+id/exchange"
+        android:text="0"
+        android:gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fell_scale"
+        android:layout_toRightOf="@id/ex_minus"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/ex_plus"
+        android:text="@string/plus"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fell_plus"
+        android:layout_toRightOf="@id/exchange"/>
 
     <View
         style="@style/Divider"
@@ -232,7 +302,7 @@
         android:layout_margin="@dimen/text_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/opp_txt"/>
+        android:layout_below="@id/ex_txt"/>
 
     <TextView
         android:id="@+id/power_cubes"
@@ -243,46 +313,12 @@
         android:layout_below="@id/divider2"
         android:layout_margin="@dimen/text_margin" />
 
-    <TextView
-        android:id="@+id/c2h_txt"
-        android:text="@string/cube_to_human"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/power_cubes"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <Button
-        android:id="@+id/c2h_minus"
-        android:text="@string/minus"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/power_cubes"
-        android:layout_toRightOf="@id/c2h_txt"/>
-
-    <TextView
-        android:id="@+id/cube_to_human"
-        android:text="0"
-        android:gravity="center"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/power_cubes"
-        android:layout_toRightOf="@id/c2h_minus"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <Button
-        android:id="@+id/c2h_plus"
-        android:text="@string/plus"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/power_cubes"
-        android:layout_toRightOf="@id/cube_to_human"/>
-
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/cube_from_human"
         android:text="@string/cube_from_human"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/c2h_txt"
+        android:layout_below="@id/power_cubes"
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
@@ -327,8 +363,8 @@
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
-        android:id="@+id/climb_extra_room"
-        android:text="@string/climb_extra_room"
+        android:id="@+id/rider"
+        android:text="@string/rider"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/climb"
@@ -339,7 +375,7 @@
         android:text="@string/park"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/climb_extra_room"
+        android:layout_below="@id/rider"
         android:layout_margin="@dimen/text_margin"/>
 
     <View

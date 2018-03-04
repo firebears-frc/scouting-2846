@@ -100,7 +100,7 @@
 
     <TextView
         android:id="@+id/teleop"
-        android:text="@string/teleop"
+        android:text="@string/teleop_cubes"
 	android:textStyle="bold"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -123,11 +123,27 @@
         android:layout_toRightOf="@id/tsw_txt"/>
 
     <TextView
+        android:id="@+id/opp_txt"
+        android:text="@string/opp_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tsw_txt"/>
+
+    <TextView
+        android:id="@+id/opp_switch"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tele_switch"
+        android:layout_toRightOf="@id/opp_txt"/>
+
+    <TextView
         android:id="@+id/tsc_txt"
         android:text="@string/scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tsw_txt"/>
+        android:layout_below="@id/opp_txt"/>
 
     <TextView
         android:id="@+id/tele_scale"
@@ -135,31 +151,47 @@
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tele_switch"
+        android:layout_below="@id/opp_switch"
         android:layout_toRightOf="@id/tsc_txt"/>
 
     <TextView
-        android:id="@+id/opp_txt"
-        android:text="@string/opp_scale"
+        android:id="@+id/fell_txt"
+        android:text="@string/fell_scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tsc_txt"/>
 
     <TextView
-        android:id="@+id/opp_scale"
+        android:id="@+id/fell_scale"
         android:text="0"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tele_scale"
-        android:layout_toRightOf="@id/opp_txt"/>
+        android:layout_toRightOf="@id/fell_txt"/>
+
+    <TextView
+        android:id="@+id/ex_txt"
+        android:text="@string/exchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fell_txt"/>
+
+    <TextView
+        android:id="@+id/exchange"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fell_scale"
+        android:layout_toRightOf="@id/ex_txt"/>
 
     <View
         style="@style/Divider"
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/opp_txt"/>
+        android:layout_below="@id/ex_txt"/>
 
     <TextView
         android:id="@+id/power_cubes"
@@ -171,34 +203,18 @@
         android:layout_below="@id/divider2"/>
 
     <TextView
-        android:id="@+id/c2h_txt"
-        android:text="@string/cube_to_human"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/power_cubes"/>
-
-    <TextView
-        android:id="@+id/cube_to_human"
-        android:text="0"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/power_cubes"
-        android:layout_toRightOf="@id/c2h_txt"/>
-
-    <TextView
         android:id="@+id/cfh_txt"
         android:text="@string/cube_from_human"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/c2h_txt"/>
+        android:layout_below="@id/power_cubes"/>
 
     <TextView
         android:id="@+id/cube_from_human"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cube_to_human"
+        android:layout_below="@id/power_cubes"
         android:layout_toRightOf="@id/cfh_txt"/>
 
     <TextView
@@ -263,33 +279,33 @@
         android:layout_toRightOf="@id/cl_txt"/>
 
     <TextView
-        android:id="@+id/cx_txt"
-        android:text="@string/climb_extra_room"
+        android:id="@+id/rider_txt"
+        android:text="@string/rider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/cl_txt"/>
 
     <TextView
-        android:id="@+id/climb_extra_room"
+        android:id="@+id/rider"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/climb"
-        android:layout_toRightOf="@id/cx_txt"/>
+        android:layout_toRightOf="@id/rider_txt"/>
 
     <TextView
         android:id="@+id/pk_txt"
         android:text="@string/park"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cx_txt"/>
+        android:layout_below="@id/rider_txt"/>
 
     <TextView
         android:id="@+id/park"
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/climb_extra_room"
+        android:layout_below="@id/rider"
         android:layout_toRightOf="@id/pk_txt"/>
 
     <View

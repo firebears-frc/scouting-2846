@@ -45,15 +45,17 @@
     <string name="lose_gear">Lose gear</string>
 
     <string name="scouting_2018">POWER UP Scouting</string>
-    <string name="on_switch">Cubes on switch</string>
-    <string name="scale">Cubes on scale</string>
-    <string name="opp_scale">Opposing scale</string>
-    <string name="power_cubes">Power Cubes</string>
-    <string name="cube_to_human">To human</string>
+    <string name="teleop_cubes">Teleop - Place Cubes</string>
+    <string name="on_switch">On switch</string>
+    <string name="scale">On scale</string>
+    <string name="opp_switch">Opposing switch</string>
+    <string name="fell_scale">Fell off scale</string>
+    <string name="exchange">At exchange</string>
+    <string name="power_cubes">Acquire Cubes</string>
     <string name="cube_from_human">From human</string>
     <string name="cube_floor">From floor</string>
     <string name="other">Other</string>
     <string name="defense">Defense</string>
-    <string name="climb_extra_room">Climb extra room</string>
+    <string name="rider">Carry rider</string>
     <string name="park">Park</string>
 </resources>
