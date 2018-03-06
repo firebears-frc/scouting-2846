@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -57,7 +57,7 @@ public class TeamListActivity extends AppCompatActivity {
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
 		Team.COL_KEY,
-		Team.COL_ID,
+		Team._ID,
 	};
 
 	/** Cursor adapter */

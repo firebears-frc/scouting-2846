@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -33,7 +33,6 @@ public class EventTeam implements BaseColumns {
 		FRCEvent.TABLE_NAME + "_" + Team.TABLE_NAME;
 	static public final String VIEW_NAME = TABLE_NAME + "_view";
 
-	static public final String COL_ID = "_id";
 	static public final String COL_EVENT = "event_id";
 	static public final String COL_TEAM = "team_id";
 

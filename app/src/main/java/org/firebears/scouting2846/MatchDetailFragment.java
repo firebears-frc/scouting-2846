@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -55,7 +55,7 @@ public class MatchDetailFragment extends Fragment {
 		Match.COL_BLUE_0,
 		Match.COL_BLUE_1,
 		Match.COL_BLUE_2,
-		Match.COL_ID,
+		Match._ID,
 	};
 
 	/** Required constructor */

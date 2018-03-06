@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -50,7 +50,7 @@ public class EventListActivity extends AppCompatActivity {
 	static private final String[] COLS = {
 		FRCEvent.COL_WEEK,
 		FRCEvent.COL_NAME,
-		FRCEvent.COL_ID,
+		FRCEvent._ID,
 		FRCEvent.COL_KEY,
 		FRCEvent.COL_SHORT,
 		FRCEvent.COL_START_DATE,
@@ -116,7 +116,7 @@ public class EventListActivity extends AppCompatActivity {
 
 	/** Start event detail activity */
 	private void startDetailActivity(Cursor c) {
-		int _id = c.getInt(c.getColumnIndex(FRCEvent.COL_ID));
+		int _id = c.getInt(c.getColumnIndex(FRCEvent._ID));
 		String key = c.getString(c.getColumnIndex(FRCEvent.COL_KEY));
 		String short_name = c.getString(c.getColumnIndex(
 			FRCEvent.COL_SHORT));

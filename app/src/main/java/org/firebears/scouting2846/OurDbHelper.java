@@ -36,7 +36,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	/** SQL statement to create parameter table */
 	static private final String SQL_CREATE_PARAMS =
 		"CREATE TABLE " + Param.TABLE_NAME + " (" +
-		Param.COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
+		Param._ID + " INTEGER PRIMARY KEY autoincrement, " +
 		Param.COL_NAME + " TEXT UNIQUE NOT NULL, " +
 		Param.COL_VALUE + " INTEGER UNIQUE NOT NULL)";
 
@@ -47,7 +47,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	/** SQL statement to create event table */
 	static private final String SQL_CREATE_EVENTS =
 		"CREATE TABLE " + FRCEvent.TABLE_NAME + " (" +
-		FRCEvent.COL_ID +	" INTEGER PRIMARY KEY autoincrement, "+
+		FRCEvent._ID +          " INTEGER PRIMARY KEY autoincrement, "+
 		FRCEvent.COL_KEY +	" TEXT UNIQUE NOT NULL, " +
 		FRCEvent.COL_NAME +	" TEXT NOT NULL, " +
 		FRCEvent.COL_SHORT +	" TEXT, " +
@@ -71,7 +71,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	/** SQL statement to create team table */
 	static private final String SQL_CREATE_TEAMS =
 		"CREATE TABLE " + Team.TABLE_NAME + " (" +
-		Team.COL_ID +		" INTEGER PRIMARY KEY autoincrement, "+
+		Team._ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		Team.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
 		Team.COL_TEAM_NUMBER +	" INTEGER UNIQUE NOT NULL, " +
 		Team.COL_NAME +		" TEXT NOT NULL, " +
@@ -91,7 +91,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	/** SQL statement to create event/team relation table */
 	static private final String SQL_CREATE_EVENT_TEAMS =
 		"CREATE TABLE " + EventTeam.TABLE_NAME + " (" +
-		EventTeam.COL_ID +	" INTEGER PRIMARY KEY autoincrement, "+
+		EventTeam._ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		EventTeam.COL_EVENT +	" INTEGER NOT NULL, " +
 		EventTeam.COL_TEAM +	" INTEGER NOT NULL, " +
 		"UNIQUE (" + EventTeam.COL_EVENT + ", " +
@@ -108,7 +108,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	/** SQL statement to create event/team view */
 	static private final String SQL_CREATE_ET_VIEW =
 		"CREATE VIEW " + EventTeam.VIEW_NAME + " AS SELECT " +
-		Team.TABLE_NAME + "." + Team.COL_ID + ", " +
+		Team.TABLE_NAME + "." + Team._ID + ", " +
 		EventTeam.COL_EVENT + ", " +
 		Team.COL_KEY + ", " +
 		Team.COL_TEAM_NUMBER + ", " +
@@ -123,7 +123,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		Team.COL_MOTTO +
 		" FROM " + Team.TABLE_NAME +
 		" JOIN " + EventTeam.TABLE_NAME +
-		" ON " + Team.TABLE_NAME + "." + Team.COL_ID +
+		" ON " + Team.TABLE_NAME + "." + Team._ID +
 		" = " + EventTeam.TABLE_NAME + "." + EventTeam.COL_TEAM;
 
 	/** SQL statement to drop event/teams relation view */
@@ -133,7 +133,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	/** SQL statement to create match table */
 	static private final String SQL_CREATE_MATCHES =
 		"CREATE TABLE " + Match.TABLE_NAME + " (" +
-		Match.COL_ID +		" INTEGER PRIMARY KEY autoincrement, "+
+		Match._ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		Match.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
 		Match.COL_EVENT +	" INTEGER NOT NULL, " +
 		Match.COL_EVENT_KEY +	" TEXT NOT NULL, " +

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -36,7 +36,6 @@ public class FRCEvent implements BaseColumns {
 	static private final String TAG = "FRCEvent";
 
 	static public final String TABLE_NAME = "event";
-	static public final String COL_ID = "_id";
 	static public final String COL_KEY = "ev_key";
 	static public final String COL_NAME = "ev_name";
 	static public final String COL_SHORT = "short_name";

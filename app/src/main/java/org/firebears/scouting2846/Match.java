@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -34,7 +34,6 @@ import org.json.JSONObject;
 public class Match implements BaseColumns {
 
 	static public final String TABLE_NAME = "match";
-	static public final String COL_ID = "_id";
 	static public final String COL_KEY = "mt_key";
 	static public final String COL_EVENT = "event_id";
 	static public final String COL_EVENT_KEY = "event_key";

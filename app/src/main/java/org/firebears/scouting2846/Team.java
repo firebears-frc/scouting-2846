@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -33,7 +33,6 @@ import org.json.JSONObject;
 public class Team implements BaseColumns {
 
 	static public final String TABLE_NAME = "team";
-	static public final String COL_ID = "_id";
 	static public final String COL_KEY = "tm_key";
 	static public final String COL_TEAM_NUMBER = "team_number";
 	static public final String COL_NAME = "name";

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -62,7 +62,7 @@ public class FetchEventMatches extends AsyncTask<Void, Void, Void> {
 	}
 
 	static private final String[] COLS_KEY = { Match.COL_KEY, };
-	static private final String[] COLS_ID = { Match.COL_ID, };
+	static private final String[] COLS_ID = { Match._ID, };
 
 	private void insertEventMatches(ContentResolver cr, String js)
 		throws JSONException
@@ -106,7 +106,7 @@ public class FetchEventMatches extends AsyncTask<Void, Void, Void> {
 	private int lookupMatchId(Cursor c) {
 		try {
 			c.moveToFirst();
-			return c.getInt(c.getColumnIndex(Match.COL_ID));
+			return c.getInt(c.getColumnIndex(Match._ID));
 		}
 		finally {
 			c.close();

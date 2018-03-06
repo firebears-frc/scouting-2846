@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -58,7 +58,7 @@ public class MatchListActivity extends AppCompatActivity {
 		Match.COL_COMP_LEVEL,
 		Match.COL_SET_NUMBER,
 		Match.COL_MATCH_NUMBER,
-		Match.COL_ID,
+		Match._ID,
 		Match.COL_KEY,
 	};
 

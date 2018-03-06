@@ -14,6 +14,13 @@
         grid:columnCount="4">
 
     <TextView
+        android:id="@+id/my_obs"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <TextView
         android:id="@+id/team_lbl"
         grid:layout_columnSpan="4"
         android:gravity="center"
