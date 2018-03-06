@@ -88,6 +88,12 @@ public class ScoutingInt implements ScoutingData {
 		// Not needed for integers in TextView
 	}
 
+	@Override
+	public boolean hasData(ContentValues cv) {
+		Integer v = cv.getAsInteger(col);
+		return (v != null) && (v > 0);
+	}
+
 	/** Update ContentValues by adding / subtracting */
 	public void update(ContentValues cv, Activity rv, int p) {
 		Integer ov = cv.getAsInteger(col);

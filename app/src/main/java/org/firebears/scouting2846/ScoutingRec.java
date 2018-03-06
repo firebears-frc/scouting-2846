@@ -21,9 +21,11 @@
  */
 package org.firebears.scouting2846;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ import org.json.JSONObject;
  * DB stuff for scouting data.
  */
 public class ScoutingRec implements BaseColumns {
+
+	static private final String TAG = "ScoutingRec";
 
 	static public final String COL_SCOUTER = Param.ROW_SCOUTER;
 	static public final String COL_OBSERVATION = Param.ROW_OBSERVATION;
@@ -146,9 +150,10 @@ public class ScoutingRec implements BaseColumns {
 	/** Parse a JSON scouting object */
 	public ContentValues parse(JSONObject jo) throws JSONException {
 		ContentValues cv = new ContentValues();
-		for (ScoutingData sd : data) {
-			if (!sd.getCol().equals(BaseColumns._ID))
-				sd.init(cv, jo);
+		// Skip _ID column
+		for (int i = 1; i < data.size(); i++) {
+			ScoutingData sd = data.get(i);
+			sd.init(cv, jo);
 		}
 		return cv;
 	}
@@ -187,14 +192,32 @@ public class ScoutingRec implements BaseColumns {
 	public void initContent(ContentValues cv, String team_key,
 		String match_key)
 	{
-		for (ScoutingData sd : data)
+		// Skip _ID column
+		for (int i = 1; i < data.size(); i++) {
+			ScoutingData sd = data.get(i);
 			sd.init(cv);
+		}
 		cv.put(COL_MATCH, match_key);
 		cv.put(COL_TEAM_KEY, team_key);
 	}
 
 	public void updateContent(ContentValues cv, Cursor c) {
-		for (ScoutingData sd : data)
+		for (int i = 5; i < data.size(); i++) {
+			ScoutingData sd = data.get(i);
 			sd.update(cv, c);
+		}
+	}
+
+	public boolean updateContent(ContentValues cv, Activity a) {
+		boolean r = false;
+		for (int i = 5; i < data.size(); i++) {
+			ScoutingData sd = data.get(i);
+			sd.update(cv, a);
+			boolean d = sd.hasData(cv);
+			r |= d;
+			String c = sd.getCol();
+			Log.d(TAG, "update: " + c + " " + cv.get(c) + " " + d);
+		}
+		return r;
 	}
 }

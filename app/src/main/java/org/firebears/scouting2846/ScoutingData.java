@@ -52,6 +52,9 @@ public interface ScoutingData {
 	/** Init content values with JSON data */
 	void init(ContentValues cv, JSONObject jo) throws JSONException;
 
+	/** Check if content values contains changed data */
+	boolean hasData(ContentValues cv);
+
 	/** Update ContentValues with data from a cursor */
 	void update(ContentValues cv, Cursor c);
 

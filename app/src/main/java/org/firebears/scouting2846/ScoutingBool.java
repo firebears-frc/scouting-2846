@@ -81,6 +81,12 @@ public class ScoutingBool implements ScoutingData {
 		}
 	}
 
+	@Override
+	public boolean hasData(ContentValues cv) {
+		Integer v = cv.getAsInteger(col);
+		return (v != null) && (v > 0);
+	}
+
 	/** Update a bundle with data from a cursor */
 	@Override
 	public void update(Bundle b, Cursor c) {

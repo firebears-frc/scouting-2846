@@ -69,9 +69,6 @@ public class ScoutingActivity extends AppCompatActivity {
 	/** Content values */
 	private final ContentValues content = new ContentValues();
 
-	/** Loaded content values */
-	private ContentValues content_loaded;
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (android.R.id.home == item.getItemId()) {
@@ -83,10 +80,6 @@ public class ScoutingActivity extends AppCompatActivity {
 
 	protected void init(ScoutingData sd) {
 		sd.init(content, this);
-	}
-
-	protected void update(ScoutingData sd) {
-		sd.update(content, this);
 	}
 
 	public Uri getContentUri() {
@@ -198,7 +191,6 @@ public class ScoutingActivity extends AppCompatActivity {
 			if (c.getCount() == 1) {
 				c.moveToFirst();
 				REC.updateContent(content, c);
-				content_loaded = new ContentValues(content);
 			}
 			initView();
 		}
@@ -235,10 +227,7 @@ public class ScoutingActivity extends AppCompatActivity {
 
 	@Override
 	public void onPause() {
-		for (ScoutingData sd : REC.getAllData())
-			update(sd);
-		content.remove(REC._ID);
-		if (!content.equals(content_loaded))
+		if (REC.updateContent(content, this))
 			new StoreObservation(this, content).execute();
 		super.onPause();
 	}

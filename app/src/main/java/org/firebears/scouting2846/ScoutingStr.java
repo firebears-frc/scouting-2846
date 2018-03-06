@@ -73,8 +73,14 @@ public class ScoutingStr implements ScoutingData {
 	public void update(ContentValues cv, Activity rv) {
 		if (res > 0) {
 			TextView tv = (TextView) rv.findViewById(res);
-			cv.put(col, tv.getText().toString());
+			cv.put(col, tv.getText().toString().trim());
 		}
+	}
+
+	@Override
+	public boolean hasData(ContentValues cv) {
+		String v = cv.getAsString(col);
+		return (v != null) && (v.trim().length() > 0);
 	}
 
 	/** Update a bundle with data from a cursor */
