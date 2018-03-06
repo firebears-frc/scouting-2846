@@ -83,7 +83,7 @@ public class MatchDetailActivity extends AppCompatActivity {
 		String team_key = b.getText().toString();
 		Intent intent = new Intent(this, ScoutingActivity.class);
 		intent.putExtra(ScoutingActivity.ARG_MATCH_KEY, getMatchKey());
-		intent.putExtra(ScoutingActivity.ARG_TEAM_KEY, team_key);
+		intent.putExtra(Team.COL_KEY, team_key);
 		startActivity(intent);
 	}
 }

@@ -47,23 +47,15 @@ public class ScoutingActivity extends AppCompatActivity {
 
 	/** Activity Arguments */
 	static public final String ARG_MATCH_KEY = "match_key";
-	static public final String ARG_TEAM_KEY = "team_key";
 
 	/** Scouting loader ID */
 	static private final int SCOUTING_LOADER_ID = 44;
-	static private final int TEAM_LOADER_ID = 45;
 	static private final int PARAM_LOADER_ID = 46;
 
 	/** Columns to retrieve from the loader */
 	static private final String[] PARAM_COLS = {
 		Param.COL_NAME,
 		Param.COL_VALUE,
-	};
-
-	/** Columns to retrieve from the loader */
-	static private final String[] TEAM_COLS = {
-		Team.COL_TEAM_NUMBER,
-		Team.COL_NICKNAME,
 	};
 
 	/** Content values */
@@ -89,7 +81,8 @@ public class ScoutingActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		REC.initContent(content, getTeamKey(), getMatchKey());
+		String team = getTeamKey();
+		REC.initContent(content, team, getMatchKey());
 		setContentView(REC.scouting_activity_res);
 		setSupportActionBar((Toolbar)
 			findViewById(R.id.detail_toolbar));
@@ -100,7 +93,19 @@ public class ScoutingActivity extends AppCompatActivity {
 		}
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(PARAM_LOADER_ID, null, param_cb);
-		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
+		TeamLoaderCallbacks team_cb = new TeamLoaderCallbacks(this) {
+			protected void onTeamLoaded(Cursor c) {
+				ScoutingActivity.this.onTeamLoaded(c);
+			}
+		};
+		lm.initLoader(team_cb.LOADER_ID, createArguments(), team_cb);
+	}
+
+	private void onTeamLoaded(Cursor c) {
+		TextView tv = (TextView) findViewById(R.id.team_lbl);
+		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
+		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
+		tv.setText("" + num + ' ' + nick);
 	}
 
 	/** Callbacks for param loader */
@@ -139,41 +144,14 @@ public class ScoutingActivity extends AppCompatActivity {
 			null, null, null);
 	}
 
-	/** Callbacks for team loader */
-	private final LoaderCallbacks<Cursor> team_cb =
-		new LoaderCallbacks<Cursor>()
-	{
-		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (TEAM_LOADER_ID == id)
-			      ? createTeamLoader()
-			      : null;
-		}
-		@Override
-		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-			if (c.getCount() != 1)
-				return;
-			c.moveToFirst();
-			TextView tv = (TextView) findViewById(R.id.team_lbl);
-			int num = c.getInt(c.getColumnIndex(
-				Team.COL_TEAM_NUMBER));
-			String nick = c.getString(c.getColumnIndex(
-				Team.COL_NICKNAME));
-			tv.setText("" + num + ' ' + nick);
-		}
-		@Override
-		public void onLoaderReset(Loader<Cursor> loader) { }
-	};
-
-	/** Create a loader for team name */
-	private Loader<Cursor> createTeamLoader() {
-		String key = getTeamKey();
-		return new CursorLoader(this, Team.CONTENT_URI,
-			TEAM_COLS, Team.COL_KEY + "='" + key + "'", null,null);
+	private String getTeamKey() {
+		return getIntent().getStringExtra(Team.COL_KEY);
 	}
 
-	private String getTeamKey() {
-		return getIntent().getStringExtra(ARG_TEAM_KEY);
+	private Bundle createArguments() {
+		Bundle b = new Bundle();
+		b.putString(Team.COL_KEY, getTeamKey());
+		return b;
 	}
 
 	/** Callbacks for loader */

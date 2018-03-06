@@ -36,13 +36,20 @@
     android:layout_marginRight="36dp">
 
     <TextView
+        android:id="@+id/my_obs"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
         android:id="@+id/autonomous"
         android:text="@string/autonomous"
 	android:textStyle="bold"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_below="@id/my_obs"/>
 
     <TextView
         android:id="@+id/bl_txt"

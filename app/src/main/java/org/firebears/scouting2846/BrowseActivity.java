@@ -42,18 +42,8 @@ public class BrowseActivity extends AppCompatActivity {
 
 	static private final String TAG = "BrowseActivity";
 
-	/** Activity Arguments */
-	static public final String ARG_TEAM_KEY = "team_key";
-
 	/** Scouting loader ID */
-	static private final int TEAM_LOADER_ID = 50;
 	static private final int SCOUTING_LOADER_ID = 51;
-
-	/** Columns to retrieve from the loader */
-	static private final String[] TEAM_COLS = {
-		Team.COL_TEAM_NUMBER,
-		Team.COL_NICKNAME,
-	};
 
 	/** Scouting rec */
 	private final ScoutingRec rec = ScoutingRec.REC;
@@ -68,8 +58,24 @@ public class BrowseActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse);
+		String team = getTeamKey();
 		LoaderManager lm = getSupportLoaderManager();
-		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
+		TeamLoaderCallbacks team_cb = new TeamLoaderCallbacks(this) {
+			protected void onTeamLoaded(Cursor c) {
+				BrowseActivity.this.onTeamLoaded(c);
+			}
+		};
+		lm.initLoader(team_cb.LOADER_ID, createArguments(), team_cb);
+	}
+
+	private void onTeamLoaded(Cursor c) {
+		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
+		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
+		Log.d(TAG, "team " + num + " " + nick);
+		team_args.putInt(Team.COL_TEAM_NUMBER, num);
+		team_args.putString(Team.COL_NICKNAME, nick);
+		LoaderManager lm = getSupportLoaderManager();
+		lm.initLoader(SCOUTING_LOADER_ID, null, cb);
 	}
 
 	@Override
@@ -81,45 +87,14 @@ public class BrowseActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/** Callbacks for team loader */
-	private final LoaderCallbacks<Cursor> team_cb =
-		new LoaderCallbacks<Cursor>()
-	{
-		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (TEAM_LOADER_ID == id)
-			      ? createTeamLoader()
-			      : null;
-		}
-		@Override
-		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-			if (c.getCount() == 1)
-				onTeamLoaded(c);
-		}
-		@Override
-		public void onLoaderReset(Loader<Cursor> loader) { }
-	};
-
-	/** Create a loader for team name */
-	private Loader<Cursor> createTeamLoader() {
-		String key = getTeamKey();
-		return new CursorLoader(this, Team.CONTENT_URI, TEAM_COLS,
-			Team.COL_KEY + "='" + key + "'", null, null);
-	}
-
 	private String getTeamKey() {
-		return getIntent().getStringExtra(ARG_TEAM_KEY);
+		return getIntent().getStringExtra(Team.COL_KEY);
 	}
 
-	private void onTeamLoaded(Cursor c) {
-		c.moveToFirst();
-		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
-		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
-		Log.d(TAG, "team " + num + " " + nick);
-		team_args.putInt(Team.COL_TEAM_NUMBER, num);
-		team_args.putString(Team.COL_NICKNAME, nick);
-		LoaderManager lm = getSupportLoaderManager();
-		lm.initLoader(SCOUTING_LOADER_ID, null, cb);
+	private Bundle createArguments() {
+		Bundle b = new Bundle();
+		b.putString(Team.COL_KEY, getTeamKey());
+		return b;
 	}
 
 	/** Callbacks for loader */

@@ -146,7 +146,7 @@ public class TeamListActivity extends AppCompatActivity {
 	/** Start team detail activity */
 	private void startDetailActivity(String key) {
 		Intent intent = new Intent(this, TeamDetailActivity.class);
-		intent.putExtra(TeamDetailFragment.ARG_TEAM_KEY, key);
+		intent.putExtra(Team.COL_KEY, key);
 		startActivity(intent);
 	}
 
