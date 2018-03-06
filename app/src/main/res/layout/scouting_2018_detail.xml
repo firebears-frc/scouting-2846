@@ -3,40 +3,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/team_lbl"
-        android:gravity="center"
-	android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/text_margin" />
-
-    <View
-        style="@style/Divider"
-        android:id="@+id/divider0"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/team_lbl"/>
-
-    <TextView
-        android:id="@+id/autonomous"
-        android:text="@string/autonomous"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_below="@id/divider0"/>
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/baseline"
-        android:text="@string/baseline"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/autonomous"
-        android:layout_margin="@dimen/text_margin"/>
-
     <android.support.v7.widget.GridLayout
         android:id="@+id/auto_grid"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,12 +11,43 @@
         android:layout_height="match_parent"
         grid:useDefaultMargins="true"
         grid:alignmentMode="alignBounds"
-        android:layout_below="@id/baseline"
         grid:columnCount="4">
+
+    <TextView
+        android:id="@+id/team_lbl"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+	android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider0"
+        grid:layout_columnSpan="4"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="match_parent"/>
+
+    <TextView
+        android:id="@+id/autonomous"
+        android:text="@string/autonomous"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/baseline"
+        android:text="@string/baseline"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
 
     <TextView
         android:id="@+id/asw_txt"
         android:text="@string/on_switch"
+        grid:layout_columnWeight="3"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -71,6 +68,7 @@
     <TextView
         android:id="@+id/asc_txt"
         android:text="@string/scale"
+        grid:layout_columnWeight="3"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -88,39 +86,23 @@
         android:text="@string/plus"
         android:minWidth="40dp"/>
 
-    </android.support.v7.widget.GridLayout>
-
     <View
         style="@style/Divider"
         android:id="@+id/divider1"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/auto_grid"/>
+        grid:layout_columnSpan="4"
+        android:layout_margin="@dimen/text_margin"/>
 
     <TextView
         android:id="@+id/teleop"
         android:text="@string/teleop_cubes"
+        grid:layout_columnSpan="4"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/divider1"
-        android:layout_margin="@dimen/text_margin" />
-
-    <android.support.v7.widget.GridLayout
-        android:id="@+id/tele_grid"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:grid="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        grid:useDefaultMargins="true"
-        grid:alignmentMode="alignBounds"
-        android:layout_below="@id/teleop"
-        grid:columnCount="4">
+        android:layout_width="match_parent"/>
 
     <TextView
         android:id="@+id/tsw_txt"
         android:text="@string/on_switch"
+        grid:layout_columnWeight="3"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -141,6 +123,7 @@
     <TextView
         android:id="@+id/opp_txt"
         android:text="@string/opp_switch"
+        grid:layout_columnWeight="3"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -161,6 +144,7 @@
     <TextView
         android:id="@+id/tsc_txt"
         android:text="@string/scale"
+        grid:layout_columnWeight="3"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -181,6 +165,7 @@
     <TextView
         android:id="@+id/fell_txt"
         android:text="@string/fell_scale"
+        grid:layout_columnWeight="3"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -201,6 +186,7 @@
     <TextView
         android:id="@+id/ex_txt"
         android:text="@string/exchange"
+        grid:layout_columnWeight="3"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -218,103 +204,91 @@
         android:text="@string/plus"
         android:minWidth="40dp"/>
 
-    </android.support.v7.widget.GridLayout>
-
     <View
         style="@style/Divider"
         android:id="@+id/divider2"
+        grid:layout_columnSpan="4"
         android:layout_margin="@dimen/text_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tele_grid"/>
+        android:layout_width="match_parent"/>
 
     <TextView
         android:id="@+id/power_cubes"
         android:text="@string/power_cubes"
+        grid:layout_columnSpan="4"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/divider2"
-        android:layout_margin="@dimen/text_margin" />
+        android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/cube_from_human"
         android:text="@string/cube_from_human"
+        grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/power_cubes"
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/cube_floor"
         android:text="@string/cube_floor"
+        grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cube_from_human"
         android:layout_margin="@dimen/text_margin"/>
 
     <View
         style="@style/Divider"
         android:id="@+id/divider3"
-        android:layout_margin="@dimen/text_margin"
+        grid:layout_columnSpan="4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cube_floor" />
+        android:layout_margin="@dimen/text_margin"/>
 
     <TextView
         android:id="@+id/other"
         android:text="@string/other"
+        grid:layout_columnSpan="4"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/divider3"
-        android:layout_margin="@dimen/text_margin" />
+        android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/defense"
         android:text="@string/defense"
+        grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/other"
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/climb"
         android:text="@string/climb"
+        grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/defense"
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/rider"
         android:text="@string/rider"
+        grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/climb"
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/park"
         android:text="@string/park"
+        grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rider"
         android:layout_margin="@dimen/text_margin"/>
 
     <View
         style="@style/Divider"
         android:id="@+id/divider4"
-        android:layout_margin="@dimen/text_margin"
+        grid:layout_columnSpan="4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/park" />
+        android:layout_margin="@dimen/text_margin"/>
 
     <EditText
         android:id="@+id/notes"
-        android:layout_margin="@dimen/text_margin"
+        grid:layout_columnSpan="4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/divider4" />
+        android:layout_margin="@dimen/text_margin"/>
+
+    </android.support.v7.widget.GridLayout>
 
 </RelativeLayout>
