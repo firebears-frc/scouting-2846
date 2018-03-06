@@ -24,9 +24,7 @@
     <View
         style="@style/Divider"
         android:id="@+id/divider0"
-        grid:layout_columnSpan="4"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_width="match_parent"/>
+        grid:layout_columnSpan="4"/>
 
     <TextView
         android:id="@+id/autonomous"
@@ -89,8 +87,7 @@
     <View
         style="@style/Divider"
         android:id="@+id/divider1"
-        grid:layout_columnSpan="4"
-        android:layout_margin="@dimen/text_margin"/>
+        grid:layout_columnSpan="4"/>
 
     <TextView
         android:id="@+id/teleop"
@@ -207,9 +204,7 @@
     <View
         style="@style/Divider"
         android:id="@+id/divider2"
-        grid:layout_columnSpan="4"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_width="match_parent"/>
+        grid:layout_columnSpan="4"/>
 
     <TextView
         android:id="@+id/power_cubes"
@@ -236,9 +231,7 @@
     <View
         style="@style/Divider"
         android:id="@+id/divider3"
-        grid:layout_columnSpan="4"
-        android:layout_width="match_parent"
-        android:layout_margin="@dimen/text_margin"/>
+        grid:layout_columnSpan="4"/>
 
     <TextView
         android:id="@+id/other"
@@ -279,9 +272,7 @@
     <View
         style="@style/Divider"
         android:id="@+id/divider4"
-        grid:layout_columnSpan="4"
-        android:layout_width="match_parent"
-        android:layout_margin="@dimen/text_margin"/>
+        grid:layout_columnSpan="4"/>
 
     <EditText
         android:id="@+id/notes"
