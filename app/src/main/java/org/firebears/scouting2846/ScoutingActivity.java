@@ -26,9 +26,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,12 +42,6 @@ public class ScoutingActivity extends AppCompatActivity {
 
 	static private final String TAG = "ScoutingActivity";
 
-	/** Activity Arguments */
-	static public final String ARG_MATCH_KEY = "match_key";
-
-	/** Scouting loader ID */
-	static private final int SCOUTING_LOADER_ID = 44;
-
 	/** Content values */
 	private final ContentValues content = new ContentValues();
 
@@ -63,10 +54,6 @@ public class ScoutingActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	protected void init(ScoutingData sd) {
-		sd.init(content, this);
-	}
-
 	public Uri getContentUri() {
 		return REC.getContentUri();
 	}
@@ -74,8 +61,7 @@ public class ScoutingActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String team = getTeamKey();
-		REC.initContent(content, team, getMatchKey());
+		REC.initContent(content, getTeamKey(), getMatchKey());
 		setContentView(REC.scouting_activity_res);
 		setSupportActionBar((Toolbar)
 			findViewById(R.id.detail_toolbar));
@@ -113,74 +99,44 @@ public class ScoutingActivity extends AppCompatActivity {
 			if (Param.ROW_OBSERVATION.equals(n))
 				content.put(REC.COL_OBSERVATION, v + 1);
 		}
-		LoaderManager lm = getSupportLoaderManager();
-		lm.initLoader(SCOUTING_LOADER_ID, null, cb);
+		addLoaderCallbacks(new ScoutingLoaderHelper(this) {
+			protected void onLoaded(Cursor c) {
+				onScoutingLoaded(c);
+			}
+		});
+	}
+
+	private void onScoutingLoaded(Cursor c) {
+		REC.updateContent(content, c);
+		for (ScoutingData sd : REC.getAllData())
+			sd.init(content, this);
 	}
 
 	private void onTeamLoaded(Cursor c) {
-		TextView tv = (TextView) findViewById(R.id.team_lbl);
 		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
 		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
+		TextView tv = (TextView) findViewById(R.id.team_lbl);
 		tv.setText("" + num + ' ' + nick);
-	}
-
-	private String getTeamKey() {
-		return getIntent().getStringExtra(Team.COL_KEY);
 	}
 
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
+		b.putInt(REC.COL_SCOUTER, getScouter());
+		b.putString(Match.COL_KEY, getMatchKey());
 		b.putString(Team.COL_KEY, getTeamKey());
 		return b;
 	}
 
-	/** Callbacks for loader */
-	private final LoaderCallbacks<Cursor> cb =
-		new LoaderCallbacks<Cursor>()
-	{
-		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (SCOUTING_LOADER_ID == id)
-			      ? createLoader()
-			      : null;
-		}
-		@Override
-		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-			if (c.getCount() == 1) {
-				c.moveToFirst();
-				REC.updateContent(content, c);
-			}
-			initView();
-		}
-		@Override
-		public void onLoaderReset(Loader<Cursor> loader) { }
-	};
-
-	/** Create a loader for scouting details */
-	private Loader<Cursor> createLoader() {
-		String where = getWhere();
-		return new CursorLoader(this, REC.getContentUri(),
-			REC.getCols(), where, null, null);
-	}
-
-	private String getWhere() {
-		return REC.COL_SCOUTER + "=" + getScouter() + " AND "+
-		       REC.COL_MATCH + "='" + getMatchKey() +"' AND "+
-		       REC.COL_TEAM_KEY + "='" + getTeamKey() + "'";
-	}
-
-	private int getScouter() {
-		Integer i = content.getAsInteger(REC.COL_SCOUTER);
-		return (i != null) ? i : 0;
-	}
-
-	private void initView() {
-		for (ScoutingData sd : REC.getAllData())
-			init(sd);
+	private Integer getScouter() {
+		return content.getAsInteger(REC.COL_SCOUTER);
 	}
 
 	private String getMatchKey() {
-		return getIntent().getStringExtra(ARG_MATCH_KEY);
+		return getIntent().getStringExtra(Match.COL_KEY);
+	}
+
+	private String getTeamKey() {
+		return getIntent().getStringExtra(Team.COL_KEY);
 	}
 
 	@Override

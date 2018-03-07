@@ -24,38 +24,46 @@ package org.firebears.scouting2846;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
- * Loader helper.
+ * Scouting loader helper.
  */
-abstract public class LoaderHelper implements LoaderCallbacks<Cursor> {
+abstract public class ScoutingLoaderHelper extends LoaderHelper {
 
-	/** Context */
-	protected final Context context;
-
-	/** Create loader helper */
-	protected LoaderHelper(Context c) {
-		context = c;
+	/** Create scouting loader helper */
+	public ScoutingLoaderHelper(Context c) {
+		super(c);
 	}
 
-	/** Get the loader ID */
-	abstract public int getId();
-
-	/** Called on loader created */
+	/** Get loader ID */
 	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-		return (getId() == id) ? createLoader(b) : null;
+	public int getId() {
+		return 44;
 	}
 
 	/** Create a loader */
-	abstract protected Loader<Cursor> createLoader(Bundle b);
-
-	/** Called when fully loaded */
-	abstract protected void onLoaded(Cursor c);
-
-	/** Called on loader reset */
 	@Override
-	public void onLoaderReset(Loader<Cursor> loader) { }
+	protected Loader<Cursor> createLoader(Bundle b) {
+		String where = getWhere(b);
+		return new CursorLoader(context, REC.getContentUri(),
+			REC.getCols(), where, null, null);
+	}
+
+	/** Get where clause */
+	private String getWhere(Bundle b) {
+		return REC.COL_SCOUTER + "=" + b.getInt(REC.COL_SCOUTER) + " AND "
+		     + REC.COL_MATCH + "='" + b.getString(Match.COL_KEY) + "' AND "
+		     + Team.COL_KEY + "='" + b.getString(Team.COL_KEY) + "'";
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+		if (c.getCount() == 1) {
+			c.moveToFirst();
+			onLoaded(c);
+		}
+	}
 }

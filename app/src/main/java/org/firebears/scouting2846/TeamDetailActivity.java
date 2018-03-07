@@ -79,7 +79,7 @@ public class TeamDetailActivity extends AppCompatActivity {
 
 	public void startScouting(View v) {
 		Intent intent = new Intent(this, ScoutingActivity.class);
-		intent.putExtra(ScoutingActivity.ARG_MATCH_KEY, getMatch());
+		intent.putExtra(Match.COL_KEY, getMatch());
 		intent.putExtra(Team.COL_KEY, getTeamKey());
 		startActivity(intent);
 	}
