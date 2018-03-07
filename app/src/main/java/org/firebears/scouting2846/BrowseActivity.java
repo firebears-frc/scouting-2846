@@ -48,8 +48,8 @@ public class BrowseActivity extends AppCompatActivity {
 	/** Scouting rec */
 	private final ScoutingRec rec = ScoutingRec.REC;
 
-	/** Arguments for team info */
-	private final Bundle team_args = new Bundle();
+	/** Default arguments */
+	private final Bundle def_args = new Bundle();
 
 	/** Arguments for observations */
 	private final ArrayList<Bundle> observations = new ArrayList<Bundle>();
@@ -58,6 +58,11 @@ public class BrowseActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse);
+		addLoaderCallbacks(new ParamLoaderHelper(this) {
+			protected void onLoaded(Cursor c) {
+				onParamLoaded(c);
+			}
+		});
 		addLoaderCallbacks(new TeamLoaderHelper(this) {
 			protected void onLoaded(Cursor c) {
 				onTeamLoaded(c);
@@ -70,12 +75,24 @@ public class BrowseActivity extends AppCompatActivity {
 		lm.initLoader(helper.getId(), createArguments(), helper);
 	}
 
+	private void onParamLoaded(Cursor c) {
+		int ni = c.getColumnIndex(Param.COL_NAME);
+		int vi = c.getColumnIndex(Param.COL_VALUE);
+		while (c.moveToNext()) {
+			String n = c.getString(ni);
+			int v = c.getInt(vi);
+			Log.d(TAG, n + ": " + v);
+			if (Param.ROW_SCOUTER.equals(n))
+				def_args.putInt(BrowseFragment.THIS_SCOUTER,v);
+		}
+	}
+
 	private void onTeamLoaded(Cursor c) {
 		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
 		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
 		Log.d(TAG, "team " + num + " " + nick);
-		team_args.putInt(Team.COL_TEAM_NUMBER, num);
-		team_args.putString(Team.COL_NICKNAME, nick);
+		def_args.putInt(Team.COL_TEAM_NUMBER, num);
+		def_args.putString(Team.COL_NICKNAME, nick);
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(SCOUTING_LOADER_ID, null, cb);
 	}
@@ -112,7 +129,7 @@ public class BrowseActivity extends AppCompatActivity {
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
 			while (c.moveToNext()) {
-				Bundle b = new Bundle(team_args);
+				Bundle b = new Bundle(def_args);
 				rec.updateBundle(b, c);
 				Log.d(TAG, "match " + b.getString(
 					rec.COL_MATCH));

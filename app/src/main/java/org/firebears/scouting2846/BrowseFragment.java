@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Browsing fragment.
@@ -36,6 +37,8 @@ import android.view.ViewGroup;
 public class BrowseFragment extends Fragment {
 
 	static private final String TAG = "BrowseFragment";
+
+	static public final String THIS_SCOUTER = "this_scouter";
 
 	/** Scouting rec */
 	private final ScoutingRec rec = ScoutingRec.REC;
@@ -60,6 +63,12 @@ public class BrowseFragment extends Fragment {
 	}
 
 	private void initView(View rv) {
+		int s0 = args.getInt(THIS_SCOUTER, 0);
+		int s1 = args.getInt(ScoutingRec.COL_SCOUTER, 0);
+		TextView tv = (TextView) rv.findViewById(R.id.my_obs);
+		tv.setText((s0 != 0) && (s0 == s1)
+			? "~ My observation ~"
+		        : "~ Other scouter ~");
 		for (ScoutingData sd : rec.getAllData())
 			sd.init(args, rv);
 	}
