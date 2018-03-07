@@ -34,6 +34,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import java.util.ArrayList;
+import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
  * Browsing activity.
@@ -44,9 +45,6 @@ public class BrowseActivity extends AppCompatActivity {
 
 	/** Scouting loader ID */
 	static private final int SCOUTING_LOADER_ID = 51;
-
-	/** Scouting rec */
-	private final ScoutingRec rec = ScoutingRec.REC;
 
 	/** Default arguments */
 	private final Bundle def_args = new Bundle();
@@ -130,9 +128,9 @@ public class BrowseActivity extends AppCompatActivity {
 		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
 			while (c.moveToNext()) {
 				Bundle b = new Bundle(def_args);
-				rec.updateBundle(b, c);
+				REC.updateBundle(b, c);
 				Log.d(TAG, "match " + b.getString(
-					rec.COL_MATCH));
+					REC.COL_MATCH));
 				observations.add(b);
 			}
 			ViewPager vp = (ViewPager) findViewById(R.id.pager);
@@ -145,13 +143,13 @@ public class BrowseActivity extends AppCompatActivity {
 	/** Create a loader for scouting details */
 	private Loader<Cursor> createLoader() {
 		String where = getWhere();
-		return new CursorLoader(this, rec.getContentUri(),
-			rec.getCols(), where, null,
-			rec.COL_MATCH + ',' + rec._ID);
+		return new CursorLoader(this, REC.getContentUri(),
+			REC.getCols(), where, null,
+			REC.COL_MATCH + ',' + REC._ID);
 	}
 
 	private String getWhere() {
-		return rec.COL_TEAM_KEY + "='" + getTeamKey() + "'";
+		return REC.COL_TEAM_KEY + "='" + getTeamKey() + "'";
 	}
 
 	private class ScoutingPagerAdapter extends FragmentStatePagerAdapter {
@@ -175,7 +173,7 @@ public class BrowseActivity extends AppCompatActivity {
 		@Override
 		public CharSequence getPageTitle(int pos) {
 			Bundle b = observations.get(pos);
-			String m = b.getString(rec.COL_MATCH);
+			String m = b.getString(REC.COL_MATCH);
 			if ("".equals(m))
 				return getString(R.string.pit);
 			else
