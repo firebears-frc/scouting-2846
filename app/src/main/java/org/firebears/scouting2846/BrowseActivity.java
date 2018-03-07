@@ -58,14 +58,16 @@ public class BrowseActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse);
-		String team = getTeamKey();
-		LoaderManager lm = getSupportLoaderManager();
-		TeamLoaderCallbacks team_cb = new TeamLoaderCallbacks(this) {
-			protected void onTeamLoaded(Cursor c) {
-				BrowseActivity.this.onTeamLoaded(c);
+		addLoaderCallbacks(new TeamLoaderHelper(this) {
+			protected void onLoaded(Cursor c) {
+				onTeamLoaded(c);
 			}
-		};
-		lm.initLoader(team_cb.LOADER_ID, createArguments(), team_cb);
+		});
+	}
+
+	private void addLoaderCallbacks(LoaderHelper helper) {
+		LoaderManager lm = getSupportLoaderManager();
+		lm.initLoader(helper.getId(), createArguments(), helper);
 	}
 
 	private void onTeamLoaded(Cursor c) {

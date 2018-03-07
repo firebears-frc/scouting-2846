@@ -49,15 +49,16 @@ public class TeamDetailFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LoaderManager lm = getLoaderManager();
-		TeamLoaderCallbacks team_cb = new TeamLoaderCallbacks(
-			getContext())
-		{
-			protected void onTeamLoaded(Cursor c) {
-				TeamDetailFragment.this.onTeamLoaded(c);
+		addLoaderCallbacks(new TeamLoaderHelper(getContext()) {
+			protected void onLoaded(Cursor c) {
+				onTeamLoaded(c);
 			}
-		};
-		lm.initLoader(team_cb.LOADER_ID, getArguments(), team_cb);
+		});
+	}
+
+	private void addLoaderCallbacks(LoaderHelper helper) {
+		LoaderManager lm = getLoaderManager();
+		lm.initLoader(helper.getId(), getArguments(), helper);
 	}
 
 	private void onTeamLoaded(Cursor c) {

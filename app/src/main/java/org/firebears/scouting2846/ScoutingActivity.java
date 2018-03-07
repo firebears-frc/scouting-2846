@@ -50,13 +50,6 @@ public class ScoutingActivity extends AppCompatActivity {
 
 	/** Scouting loader ID */
 	static private final int SCOUTING_LOADER_ID = 44;
-	static private final int PARAM_LOADER_ID = 46;
-
-	/** Columns to retrieve from the loader */
-	static private final String[] PARAM_COLS = {
-		Param.COL_NAME,
-		Param.COL_VALUE,
-	};
 
 	/** Content values */
 	private final ContentValues content = new ContentValues();
@@ -91,14 +84,37 @@ public class ScoutingActivity extends AppCompatActivity {
 			ab.setDisplayHomeAsUpEnabled(true);
 			ab.setTitle(REC.title_res);
 		}
-		LoaderManager lm = getSupportLoaderManager();
-		lm.initLoader(PARAM_LOADER_ID, null, param_cb);
-		TeamLoaderCallbacks team_cb = new TeamLoaderCallbacks(this) {
-			protected void onTeamLoaded(Cursor c) {
-				ScoutingActivity.this.onTeamLoaded(c);
+		addLoaderCallbacks(new ParamLoaderHelper(this) {
+			protected void onLoaded(Cursor c) {
+				onParamLoaded(c);
 			}
-		};
-		lm.initLoader(team_cb.LOADER_ID, createArguments(), team_cb);
+		});
+		addLoaderCallbacks(new TeamLoaderHelper(this) {
+			protected void onLoaded(Cursor c) {
+				onTeamLoaded(c);
+			}
+		});
+	}
+
+	private void addLoaderCallbacks(LoaderHelper helper) {
+		LoaderManager lm = getSupportLoaderManager();
+		lm.initLoader(helper.getId(), createArguments(), helper);
+	}
+
+	private void onParamLoaded(Cursor c) {
+		int ni = c.getColumnIndex(Param.COL_NAME);
+		int vi = c.getColumnIndex(Param.COL_VALUE);
+		while (c.moveToNext()) {
+			String n = c.getString(ni);
+			int v = c.getInt(vi);
+			Log.d(TAG, n + ": " + v);
+			if (Param.ROW_SCOUTER.equals(n))
+				content.put(REC.COL_SCOUTER, v);
+			if (Param.ROW_OBSERVATION.equals(n))
+				content.put(REC.COL_OBSERVATION, v + 1);
+		}
+		LoaderManager lm = getSupportLoaderManager();
+		lm.initLoader(SCOUTING_LOADER_ID, null, cb);
 	}
 
 	private void onTeamLoaded(Cursor c) {
@@ -106,42 +122,6 @@ public class ScoutingActivity extends AppCompatActivity {
 		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
 		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
 		tv.setText("" + num + ' ' + nick);
-	}
-
-	/** Callbacks for param loader */
-	private final LoaderCallbacks<Cursor> param_cb =
-		new LoaderCallbacks<Cursor>()
-	{
-		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (PARAM_LOADER_ID == id)
-			      ? createParamLoader()
-			      : null;
-		}
-		@Override
-		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-			int ni = c.getColumnIndex(Param.COL_NAME);
-			int vi = c.getColumnIndex(Param.COL_VALUE);
-			while (c.moveToNext()) {
-				String n = c.getString(ni);
-				int v = c.getInt(vi);
-				Log.d(TAG, n + ": " + v);
-				if (Param.ROW_SCOUTER.equals(n))
-					content.put(REC.COL_SCOUTER, v);
-				if (Param.ROW_OBSERVATION.equals(n))
-					content.put(REC.COL_OBSERVATION, v+1);
-			}
-			LoaderManager lm = getSupportLoaderManager();
-			lm.initLoader(SCOUTING_LOADER_ID, null, cb);
-		}
-		@Override
-		public void onLoaderReset(Loader<Cursor> loader) { }
-	};
-
-	/** Create a loader for parameters */
-	private Loader<Cursor> createParamLoader() {
-		return new CursorLoader(this, Param.CONTENT_URI, PARAM_COLS,
-			null, null, null);
 	}
 
 	private String getTeamKey() {

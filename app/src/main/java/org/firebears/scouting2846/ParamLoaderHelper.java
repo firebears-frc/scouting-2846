@@ -29,59 +29,36 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
 /**
- * Callbacks for team loader.
+ * Param loader helper.
  */
-abstract public class TeamLoaderCallbacks implements LoaderCallbacks<Cursor> {
-
-	/** Team loader ID */
-	static public final int LOADER_ID = 45;
+abstract public class ParamLoaderHelper extends LoaderHelper {
 
 	/** Columns to retrieve from the loader */
 	static private final String[] COLS = {
-		Team.COL_NAME,
-		Team.COL_TEAM_NUMBER,
-		Team.COL_NICKNAME,
-		Team.COL_WEBSITE,
-		Team.COL_ROOKIE_YEAR,
-		Team.COL_MOTTO,
+		Param.COL_NAME,
+		Param.COL_VALUE,
 	};
 
-	private final Context context;
-
-	/** Create team loader callbacks */
-	public TeamLoaderCallbacks(Context c) {
-		context = c;
+	/** Create param loader helper */
+	public ParamLoaderHelper(Context c) {
+		super(c);
 	}
 
+	/** Get loader ID */
 	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-		return (LOADER_ID == id)
-		      ? createLoader(b)
-		      : null;
+	public int getId() {
+		return 46;
 	}
 
-	/** Create a team loader */
-	private Loader<Cursor> createLoader(Bundle b) {
-		if (b.containsKey(Team.COL_KEY)) {
-			String key = b.getString(Team.COL_KEY);
-			return new CursorLoader(context, Team.CONTENT_URI,
-				COLS, Team.COL_KEY + "='" + key + "'", null,
-				null);
-		} else
-			return null;
+	/** Create a param loader */
+	@Override
+	protected Loader<Cursor> createLoader(Bundle b) {
+		return new CursorLoader(context, Param.CONTENT_URI, COLS, null,
+			null, null);
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-		if (c.getCount() == 1) {
-			c.moveToFirst();
-			onTeamLoaded(c);
-		}
+		onLoaded(c);
 	}
-
-	/** Called when team has been loaded */
-	abstract protected void onTeamLoaded(Cursor c);
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) { }
 }
