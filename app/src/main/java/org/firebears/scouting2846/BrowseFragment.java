@@ -67,8 +67,8 @@ public class BrowseFragment extends Fragment {
 		int s1 = args.getInt(ScoutingRec.COL_SCOUTER, 0);
 		TextView tv = (TextView) rv.findViewById(R.id.my_obs);
 		tv.setText((s0 != 0) && (s0 == s1)
-			? "~ My observation ~"
-		        : "~ Other scouter ~");
+			? R.string.my_observation
+		        : R.string.other_scouter);
 		for (ScoutingData sd : rec.getAllData())
 			sd.init(args, rv);
 	}

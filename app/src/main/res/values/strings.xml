@@ -22,15 +22,17 @@
     <string name="pit">(Pit)</string>
     <string name="pit_scouting">Scouting</string>
     <string name="obs_browse">Browse Observations</string>
+    <string name="my_observation">~ My observation ~</string>
+    <string name="other_scouter">~ Other scouter ~</string>
 
     <string name="autonomous">Autonomous</string>
     <string name="teleop">Teleop</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
 
     <string name="scouting_2017">Steamworks Scouting</string>
     <string name="high_goal">High goal</string>
     <string name="low_goal">Low goal</string>
-    <string name="minus">-</string>
-    <string name="plus">+</string>
     <string name="baseline">Cross baseline</string>
     <string name="gear">Place gear</string>
     <string name="climb">Climb</string>
