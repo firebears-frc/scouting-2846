@@ -130,7 +130,7 @@ public class BrowseActivity extends AppCompatActivity {
 				Bundle b = new Bundle(def_args);
 				REC.updateBundle(b, c);
 				Log.d(TAG, "match " + b.getString(
-					REC.COL_MATCH));
+					REC.COL_MATCH_KEY));
 				observations.add(b);
 			}
 			// FIXME: if no observations, use blank fragment
@@ -146,7 +146,7 @@ public class BrowseActivity extends AppCompatActivity {
 		String where = getWhere();
 		return new CursorLoader(this, REC.getContentUri(),
 			REC.getCols(), where, null,
-			REC.COL_MATCH + ',' + REC._ID);
+			REC.COL_MATCH_KEY + ',' + REC._ID);
 	}
 
 	private String getWhere() {
@@ -174,7 +174,7 @@ public class BrowseActivity extends AppCompatActivity {
 		@Override
 		public CharSequence getPageTitle(int pos) {
 			Bundle b = observations.get(pos);
-			String m = b.getString(REC.COL_MATCH);
+			String m = b.getString(REC.COL_MATCH_KEY);
 			if ("".equals(m))
 				return getString(R.string.pit);
 			else

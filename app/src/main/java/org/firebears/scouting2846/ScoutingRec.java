@@ -41,7 +41,7 @@ public class ScoutingRec implements BaseColumns {
 
 	static public final String COL_SCOUTER = Param.ROW_SCOUTER;
 	static public final String COL_OBSERVATION = Param.ROW_OBSERVATION;
-	static public final String COL_MATCH = "match_key";
+	static public final String COL_MATCH_KEY = "match_key";
 	static public final String COL_TEAM_KEY = "tm_key";
 
 	static private final ScoutingRec Y2017 = new ScoutingRec("2017",
@@ -123,12 +123,12 @@ public class ScoutingRec implements BaseColumns {
 		data.add(new ScoutingInt(_ID, 0));
 		data.add(new ScoutingInt(COL_SCOUTER, 0));
 		data.add(new ScoutingInt(COL_OBSERVATION, 0));
-		data.add(new ScoutingStr(COL_MATCH, 0));
+		data.add(new ScoutingStr(COL_MATCH_KEY, 0));
 		data.add(new ScoutingStr(COL_TEAM_KEY, 0));
 	}
 
 	static public boolean isMeta(String c) {
-		return c.equals(COL_MATCH) || c.equals(COL_TEAM_KEY);
+		return c.equals(COL_MATCH_KEY) || c.equals(COL_TEAM_KEY);
 	}
 
 	private void add(ScoutingData sd) {
@@ -169,7 +169,7 @@ public class ScoutingRec implements BaseColumns {
 		          _ID + " INTEGER PRIMARY KEY autoincrement, " +
 		          COL_SCOUTER + " INTEGER NOT NULL, " +
 		          COL_OBSERVATION + " INTEGER NOT NULL, " +
-		          COL_MATCH + " TEXT, " +
+		          COL_MATCH_KEY + " TEXT, " +
 		          COL_TEAM_KEY + " TEXT NOT NULL, ");
 		for (int i = 5; i < data.size(); i++) {
 			ScoutingData sd = data.get(i);
@@ -177,7 +177,7 @@ public class ScoutingRec implements BaseColumns {
 			sb.append(", ");
 		}
 		sb.append("UNIQUE (" + COL_SCOUTER + ", " +
-		                       COL_MATCH + ", " +
+		                       COL_MATCH_KEY + ", " +
 		                       COL_TEAM_KEY +
 		                 ") ON CONFLICT REPLACE)");
 		return sb.toString();
@@ -210,7 +210,7 @@ public class ScoutingRec implements BaseColumns {
 			ScoutingData sd = data.get(i);
 			sd.init(cv);
 		}
-		cv.put(COL_MATCH, match_key);
+		cv.put(COL_MATCH_KEY, match_key);
 		cv.put(COL_TEAM_KEY, team_key);
 	}
 
