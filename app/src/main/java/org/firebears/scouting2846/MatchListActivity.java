@@ -45,10 +45,6 @@ import android.widget.TextView;
  */
 public class MatchListActivity extends AppCompatActivity {
 
-	/** Argument for event id */
-	static public final String ARG_EVENT_KEY = "event_key";
-	static public final String ARG_EVENT_SHORT = "event_short";
-
 	/** Loader ID */
 	static private final int MATCH_LOADER_ID = 42;
 
@@ -102,15 +98,15 @@ public class MatchListActivity extends AppCompatActivity {
 	}
 
 	private int getEventId() {
-		return getIntent().getIntExtra(Match.COL_EVENT_ID, 0);
+		return getIntent().getIntExtra(FRCEvent.COL_EVENT_ID, 0);
 	}
 
 	private String getEventKey() {
-		return getIntent().getStringExtra(ARG_EVENT_KEY);
+		return getIntent().getStringExtra(FRCEvent.COL_EVENT_KEY);
 	}
 
 	private String getEventShortName() {
-		return getIntent().getStringExtra(ARG_EVENT_SHORT);
+		return getIntent().getStringExtra(FRCEvent.COL_SHORT);
 	}
 
 	@Override

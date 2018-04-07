@@ -36,7 +36,7 @@ public class Match implements BaseColumns {
 	static public final String TABLE_NAME = "match";
 	static public final String COL_KEY = "mt_key";
 	static public final String COL_EVENT_ID = "event_id";
-	static public final String COL_EVENT_KEY = "event_key";
+	static public final String COL_EVENT_KEY = FRCEvent.COL_EVENT_KEY;
 	static public final String COL_COMP_LEVEL = "comp_level";
 	static public final String COL_SET_NUMBER = "set_number";
 	static public final String COL_MATCH_NUMBER = "match_number";

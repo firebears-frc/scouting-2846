@@ -52,8 +52,9 @@ public class FRCEvent implements BaseColumns {
 	static public final String COL_TIMEZONE = "timezone";
 	static public final String COL_WEBSITE = "website";
 
-	// Foreign key for FRCEvent._id
+	// Foreign keys for _id and ev_key
 	static public final String COL_EVENT_ID = "event_id";
+	static public final String COL_EVENT_KEY = "event_key";
 
 	static public final Uri CONTENT_URI = OurContentProvider.buildUri(
 		TABLE_NAME);

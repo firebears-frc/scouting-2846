@@ -136,7 +136,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		Match._ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		Match.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
 		Match.COL_EVENT_ID +	" INTEGER NOT NULL, " +
-		Match.COL_EVENT_KEY +	" TEXT NOT NULL, " +
+		FRCEvent.COL_EVENT_KEY +" TEXT NOT NULL, " +
 		Match.COL_COMP_LEVEL +	" INTEGER NOT NULL, " +
 		Match.COL_SET_NUMBER +	" INTEGER, " +
 		Match.COL_MATCH_NUMBER +" INTEGER, " +

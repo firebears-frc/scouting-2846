@@ -76,9 +76,8 @@ public class EventDetailActivity extends AppCompatActivity {
 	public void startEventTeams(View v) {
 		Intent intent = new Intent(this, TeamListActivity.class);
 		intent.putExtra(FRCEvent.COL_EVENT_ID, getEventId());
-		intent.putExtra(TeamListActivity.ARG_EVENT_KEY, getEventKey());
-		intent.putExtra(TeamListActivity.ARG_EVENT_SHORT,
-			getEventShortName());
+		intent.putExtra(FRCEvent.COL_EVENT_KEY, getEventKey());
+		intent.putExtra(FRCEvent.COL_SHORT, getEventShortName());
 		startActivity(intent);
 	}
 
@@ -87,21 +86,18 @@ public class EventDetailActivity extends AppCompatActivity {
 	}
 
 	private String getEventKey() {
-		return getIntent().getStringExtra(
-			EventDetailFragment.ARG_EVENT_KEY);
+		return getIntent().getStringExtra(FRCEvent.COL_EVENT_KEY);
 	}
 
 	private String getEventShortName() {
-		return getIntent().getStringExtra(
-			EventDetailFragment.ARG_EVENT_SHORT);
+		return getIntent().getStringExtra(FRCEvent.COL_SHORT);
 	}
 
 	public void startEventMatches(View v) {
 		Intent intent = new Intent(this, MatchListActivity.class);
 		intent.putExtra(FRCEvent.COL_EVENT_ID, getEventId());
-		intent.putExtra(MatchListActivity.ARG_EVENT_KEY, getEventKey());
-		intent.putExtra(MatchListActivity.ARG_EVENT_SHORT,
-			getEventShortName());
+		intent.putExtra(FRCEvent.COL_EVENT_KEY, getEventKey());
+		intent.putExtra(FRCEvent.COL_SHORT, getEventShortName());
 		startActivity(intent);
 	}
 }

@@ -44,10 +44,6 @@ import android.widget.ListView;
  */
 public class TeamListActivity extends AppCompatActivity {
 
-	/** Argument for event id */
-	static public final String ARG_EVENT_KEY = "event_key";
-	static public final String ARG_EVENT_SHORT = "event_short";
-
 	/** Loader ID */
 	static private final int TEAM_LOADER_ID = 39;
 
@@ -95,15 +91,15 @@ public class TeamListActivity extends AppCompatActivity {
 	}
 
 	private int getEventId() {
-		return getIntent().getIntExtra(EventTeam.COL_EVENT_ID, 0);
+		return getIntent().getIntExtra(FRCEvent.COL_EVENT_ID, 0);
 	}
 
 	private String getEventKey() {
-		return getIntent().getStringExtra(ARG_EVENT_KEY);
+		return getIntent().getStringExtra(FRCEvent.COL_EVENT_KEY);
 	}
 
 	private String getEventShortName() {
-		return getIntent().getStringExtra(ARG_EVENT_SHORT);
+		return getIntent().getStringExtra(FRCEvent.COL_SHORT);
 	}
 
 	@Override

@@ -42,10 +42,6 @@ import java.util.Date;
  */
 public class EventDetailFragment extends Fragment {
 
-	/** Argument for event id */
-	static public final String ARG_EVENT_KEY = "event_key";
-	static public final String ARG_EVENT_SHORT = "event_short";
-
 	/** Event detail loader ID */
 	static private final int EVENT_DETAIL_LOADER_ID = 38;
 
