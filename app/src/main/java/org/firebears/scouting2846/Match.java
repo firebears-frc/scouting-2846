@@ -35,7 +35,7 @@ public class Match implements BaseColumns {
 
 	static public final String TABLE_NAME = "match";
 	static public final String COL_KEY = "mt_key";
-	static public final String COL_EVENT = "event_id";
+	static public final String COL_EVENT_ID = "event_id";
 	static public final String COL_EVENT_KEY = "event_key";
 	static public final String COL_COMP_LEVEL = "comp_level";
 	static public final String COL_SET_NUMBER = "set_number";
@@ -106,7 +106,7 @@ public class Match implements BaseColumns {
 		cv.put(COL_MATCH_NUMBER, mt.optInt("match_number"));
 		cv.put(COL_ALLIANCES, mt.optString("alliances"));
 		cv.put(COL_SCORE_BREAKDOWN, mt.optString("score_breakdown"));
-		cv.put(COL_EVENT, event_id);
+		cv.put(COL_EVENT_ID, event_id);
 		cv.put(COL_EVENT_KEY, mt.optString("event_key"));
 		cv.put(COL_VIDEOS, mt.optString("videos"));
 		cv.put(COL_TIME, mt.optInt("time"));

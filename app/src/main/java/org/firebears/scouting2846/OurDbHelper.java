@@ -92,11 +92,11 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_CREATE_EVENT_TEAMS =
 		"CREATE TABLE " + EventTeam.TABLE_NAME + " (" +
 		EventTeam._ID +		" INTEGER PRIMARY KEY autoincrement, "+
-		EventTeam.COL_EVENT +	" INTEGER NOT NULL, " +
+		EventTeam.COL_EVENT_ID +" INTEGER NOT NULL, " +
 		EventTeam.COL_TEAM +	" INTEGER NOT NULL, " +
-		"UNIQUE (" + EventTeam.COL_EVENT + ", " +
+		"UNIQUE (" + EventTeam.COL_EVENT_ID + ", " +
 		             EventTeam.COL_TEAM + ") ON CONFLICT REPLACE, " +
-		"FOREIGN KEY (" + EventTeam.COL_EVENT + ") REFERENCES " +
+		"FOREIGN KEY (" + EventTeam.COL_EVENT_ID + ") REFERENCES " +
 			FRCEvent.TABLE_NAME + ", " +
 		"FOREIGN KEY (" + EventTeam.COL_TEAM + ") REFERENCES " +
 			Team.TABLE_NAME + ")";
@@ -109,7 +109,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_CREATE_ET_VIEW =
 		"CREATE VIEW " + EventTeam.VIEW_NAME + " AS SELECT " +
 		Team.TABLE_NAME + "." + Team._ID + ", " +
-		EventTeam.COL_EVENT + ", " +
+		EventTeam.COL_EVENT_ID + ", " +
 		Team.COL_KEY + ", " +
 		Team.COL_TEAM_NUMBER + ", " +
 		Team.COL_NAME + ", " +
@@ -135,7 +135,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		"CREATE TABLE " + Match.TABLE_NAME + " (" +
 		Match._ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		Match.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
-		Match.COL_EVENT +	" INTEGER NOT NULL, " +
+		Match.COL_EVENT_ID +	" INTEGER NOT NULL, " +
 		Match.COL_EVENT_KEY +	" TEXT NOT NULL, " +
 		Match.COL_COMP_LEVEL +	" INTEGER NOT NULL, " +
 		Match.COL_SET_NUMBER +	" INTEGER, " +
@@ -150,7 +150,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		Match.COL_BLUE_0 +	" TEXT NOT NULL, " +
 		Match.COL_BLUE_1 +	" TEXT NOT NULL, " +
 		Match.COL_BLUE_2 +	" TEXT NOT NULL, " +
-		"FOREIGN KEY (" + Match.COL_EVENT + ") REFERENCES " +
+		"FOREIGN KEY (" + Match.COL_EVENT_ID + ") REFERENCES " +
 			FRCEvent.TABLE_NAME + ")";
 
 	/** SQL statement to drop match table */

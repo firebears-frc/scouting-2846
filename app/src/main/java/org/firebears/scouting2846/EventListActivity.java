@@ -121,7 +121,7 @@ public class EventListActivity extends AppCompatActivity {
 		String short_name = c.getString(c.getColumnIndex(
 			FRCEvent.COL_SHORT));
 		Intent intent = new Intent(this, EventDetailActivity.class);
-		intent.putExtra(EventDetailFragment.ARG_EVENT_ID, _id);
+		intent.putExtra(FRCEvent.COL_EVENT_ID, _id);
 		intent.putExtra(EventDetailFragment.ARG_EVENT_KEY, key);
 		intent.putExtra(EventDetailFragment.ARG_EVENT_SHORT,
 			short_name);

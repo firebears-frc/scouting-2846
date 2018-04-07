@@ -118,7 +118,7 @@ public class FetchEventTeams extends AsyncTask<Void, Void, Void> {
 	{
 		int team_id = lookupTeamId(cr, tv);
 		ContentValues cv = new ContentValues();
-		cv.put(EventTeam.COL_EVENT, event_id);
+		cv.put(EventTeam.COL_EVENT_ID, event_id);
 		cv.put(EventTeam.COL_TEAM, team_id);
 		return cv;
 	}

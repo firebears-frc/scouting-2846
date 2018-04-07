@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -43,7 +43,6 @@ import java.util.Date;
 public class EventDetailFragment extends Fragment {
 
 	/** Argument for event id */
-	static public final String ARG_EVENT_ID = "event_id";
 	static public final String ARG_EVENT_KEY = "event_key";
 	static public final String ARG_EVENT_SHORT = "event_short";
 
@@ -165,8 +164,8 @@ public class EventDetailFragment extends Fragment {
 
 	/** Create a loader for Event details */
 	private Loader<Cursor> createLoader(Bundle b) {
-		if (b.containsKey(ARG_EVENT_ID)) {
-			int _id = b.getInt(ARG_EVENT_ID);
+		if (b.containsKey(FRCEvent.COL_EVENT_ID)) {
+			int _id = b.getInt(FRCEvent.COL_EVENT_ID);
 			return new CursorLoader(getContext(),
 				FRCEvent.CONTENT_URI, COLS, "_id=" + _id,
 				null, null);

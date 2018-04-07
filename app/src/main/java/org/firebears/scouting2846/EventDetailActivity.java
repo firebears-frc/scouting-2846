@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -59,9 +59,8 @@ public class EventDetailActivity extends AppCompatActivity {
 	/** Create arguments for fragment */
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
-		b.putInt(EventDetailFragment.ARG_EVENT_ID,
-			getIntent().getIntExtra(
-			EventDetailFragment.ARG_EVENT_ID, 0));
+		b.putInt(FRCEvent.COL_EVENT_ID, getIntent().getIntExtra(
+			FRCEvent.COL_EVENT_ID, 0));
 		return b;
 	}
 
@@ -76,7 +75,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
 	public void startEventTeams(View v) {
 		Intent intent = new Intent(this, TeamListActivity.class);
-		intent.putExtra(TeamListActivity.ARG_EVENT_ID, getEventId());
+		intent.putExtra(FRCEvent.COL_EVENT_ID, getEventId());
 		intent.putExtra(TeamListActivity.ARG_EVENT_KEY, getEventKey());
 		intent.putExtra(TeamListActivity.ARG_EVENT_SHORT,
 			getEventShortName());
@@ -84,8 +83,7 @@ public class EventDetailActivity extends AppCompatActivity {
 	}
 
 	private int getEventId() {
-		return getIntent().getIntExtra(
-			EventDetailFragment.ARG_EVENT_ID, 0);
+		return getIntent().getIntExtra(FRCEvent.COL_EVENT_ID, 0);
 	}
 
 	private String getEventKey() {
@@ -100,7 +98,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
 	public void startEventMatches(View v) {
 		Intent intent = new Intent(this, MatchListActivity.class);
-		intent.putExtra(MatchListActivity.ARG_EVENT_ID, getEventId());
+		intent.putExtra(FRCEvent.COL_EVENT_ID, getEventId());
 		intent.putExtra(MatchListActivity.ARG_EVENT_KEY, getEventKey());
 		intent.putExtra(MatchListActivity.ARG_EVENT_SHORT,
 			getEventShortName());

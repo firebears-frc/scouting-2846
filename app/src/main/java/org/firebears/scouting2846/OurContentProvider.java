@@ -67,7 +67,7 @@ public class OurContentProvider extends ContentProvider {
 		else if (suri.startsWith(FRCEvent.CONTENT_URI.toString()))
 			return FRCEvent.TABLE_NAME;
 		else if (suri.startsWith(Team.CONTENT_URI.toString())) {
-			if (sel != null && sel.contains(EventTeam.COL_EVENT))
+			if (sel != null && sel.contains(EventTeam.COL_EVENT_ID))
 				return EventTeam.VIEW_NAME;
 			else
 				return Team.TABLE_NAME;

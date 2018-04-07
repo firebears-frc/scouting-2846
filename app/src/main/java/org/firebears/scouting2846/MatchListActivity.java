@@ -46,7 +46,6 @@ import android.widget.TextView;
 public class MatchListActivity extends AppCompatActivity {
 
 	/** Argument for event id */
-	static public final String ARG_EVENT_ID = "event_id";
 	static public final String ARG_EVENT_KEY = "event_key";
 	static public final String ARG_EVENT_SHORT = "event_short";
 
@@ -103,7 +102,7 @@ public class MatchListActivity extends AppCompatActivity {
 	}
 
 	private int getEventId() {
-		return getIntent().getIntExtra(ARG_EVENT_ID, 0);
+		return getIntent().getIntExtra(Match.COL_EVENT_ID, 0);
 	}
 
 	private String getEventKey() {

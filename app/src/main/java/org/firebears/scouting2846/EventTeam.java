@@ -33,7 +33,7 @@ public class EventTeam implements BaseColumns {
 		FRCEvent.TABLE_NAME + "_" + Team.TABLE_NAME;
 	static public final String VIEW_NAME = TABLE_NAME + "_view";
 
-	static public final String COL_EVENT = "event_id";
+	static public final String COL_EVENT_ID = "event_id";
 	static public final String COL_TEAM = "team_id";
 
 	static public final Uri CONTENT_URI = OurContentProvider.buildUri(
