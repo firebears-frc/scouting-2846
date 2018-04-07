@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
 
 /**
  * Scouting integer data.
@@ -163,5 +164,20 @@ public class ScoutingInt implements ScoutingData {
 				}
 			});
 		}
+	}
+
+	/** Summarize data */
+	@Override
+	public void summarize(Bundle b, ArrayList<Bundle> v) {
+		int total = 0;
+		int max = 0;
+		for (Bundle vb : v) {
+			int i = vb.getInt(col);
+			total += i;
+			max = Math.max(max, i);
+		}
+		String avg = Float.toString((float) total / v.size());
+		avg = avg.substring(0, Math.min(3, avg.length()));
+		b.putString(col, "" + avg + " / " + max);
 	}
 }

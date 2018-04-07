@@ -133,6 +133,7 @@ public class BrowseActivity extends AppCompatActivity {
 					REC.COL_MATCH));
 				observations.add(b);
 			}
+			// FIXME: if no observations, use blank fragment
 			ViewPager vp = (ViewPager) findViewById(R.id.pager);
 			vp.setAdapter(new ScoutingPagerAdapter());
 		}

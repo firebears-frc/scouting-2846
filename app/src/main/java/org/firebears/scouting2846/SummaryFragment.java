@@ -21,53 +21,48 @@
  */
 package org.firebears.scouting2846;
 
-import android.app.Activity;
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.ArrayList;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
- * Scouting data.
+ * Summary fragment.
  */
-public interface ScoutingData {
+public class SummaryFragment extends Fragment {
 
-	/** Column name */
-	String getCol();
+	static private final String TAG = "SummaryFragment";
 
-	/** Get SQL for column */
-	String sql();
+	/** Scouting rec */
+	private final ScoutingRec rec = ScoutingRec.REC;
 
-	/** Init content values */
-	void init(ContentValues cv);
+	private Bundle args;
 
-	/** Init a view with data from content values */
-	void init(ContentValues cv, Activity rv);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup vg,
+		Bundle savedInstanceState)
+	{
+		args = getArguments();
+		View rv = inflater.inflate(rec.browse_detail_res, vg, false);
+		Toolbar tb = (Toolbar) rv.findViewById(R.id.detail_toolbar);
+		AppCompatActivity act = (AppCompatActivity) getActivity();
+		act.setSupportActionBar(tb);
+		String team_key = args.getString(rec.COL_TEAM_KEY);
+		tb.setTitle(team_key);
+		Log.d(TAG, "team " + team_key);
+		initView(rv);
+		return rv;
+	}
 
-	/** Init a view with data from a bundle */
-	void init(Bundle b, View rv);
-
-	/** Init content values with JSON data */
-	void init(ContentValues cv, JSONObject jo) throws JSONException;
-
-	/** Check if content values contains changed data */
-	boolean hasData(ContentValues cv);
-
-	/** Update ContentValues with data from a cursor */
-	void update(ContentValues cv, Cursor c);
-
-	/** Update ContentValues with data from view */
-	void update(ContentValues cv, Activity rv);
-
-	/** Update a bundle with data from a cursor */
-	void update(Bundle b, Cursor c);
-
-	/** Update a JSON object with data from a cursor */
-	void update(JSONObject jo, Cursor c) throws JSONException;
-
-	/** Summarize data */
-	void summarize(Bundle b, ArrayList<Bundle> v);
+	private void initView(View rv) {
+		TextView tv = (TextView) rv.findViewById(R.id.my_obs);
+		tv.setText(args.getString("title"));
+		for (ScoutingData sd : rec.getAllData())
+			sd.init(args, rv);
+	}
 }

@@ -16,6 +16,7 @@
     <string name="bt_no_devices">Please pair bluetooth device</string>
     <string name="teams">Teams</string>
     <string name="matches">Matches</string>
+    <string name="summary">Summary</string>
     <string name="rookie_year">Rookie year</string>
     <string name="red_alliance">Red Alliance</string>
     <string name="blue_alliance">Blue Alliance</string>
@@ -50,7 +51,7 @@
     <string name="teleop_cubes">Teleop - Place Cubes</string>
     <string name="on_switch">On switch</string>
     <string name="scale">On scale</string>
-    <string name="opp_switch">Opposing switch</string>
+    <string name="opp_switch">Opp. switch</string>
     <string name="fell_scale">Fell off scale</string>
     <string name="exchange">At exchange</string>
     <string name="power_cubes">Acquire Cubes</string>

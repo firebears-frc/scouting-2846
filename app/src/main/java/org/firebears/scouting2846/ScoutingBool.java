@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
 
 /**
  * Scouting integer data.
@@ -115,14 +116,19 @@ public class ScoutingBool implements ScoutingData {
 	@Override
 	public void init(Bundle b, View rv) {
 		if (res > 0) {
-			int v = b.getInt(col, 0);
 			Object o = rv.findViewById(res);
 			if (o instanceof SwitchCompat) {
+				int v = b.getInt(col, 0);
 				SwitchCompat sw = (SwitchCompat) o;
 				sw.setChecked(v != 0);
 			} else if (o instanceof TextView) {
+				Object ov = b.get(col);
 				TextView tv = (TextView) o;
-				tv.setText((v != 0) ? "Yes" : "No");
+				if (ov instanceof Integer) {
+					int vi = (Integer) ov;
+					tv.setText((vi > 0) ? "Yes" : "No");
+				} else
+					tv.setText(ov.toString());
 			}
 		}
 	}
@@ -142,5 +148,17 @@ public class ScoutingBool implements ScoutingData {
 				tv.setText(b ? "Yes" : "No");
 			}
 		}
+	}
+
+	/** Summarize data */
+	@Override
+	public void summarize(Bundle b, ArrayList<Bundle> v) {
+		int total = 0;
+		for (Bundle vb : v) {
+			if (vb.getInt(col, 0) != 0)
+				total++;
+		}
+		int pct = Math.round(100f * total / v.size());
+		b.putString(col, "" + pct + "%");
 	}
 }

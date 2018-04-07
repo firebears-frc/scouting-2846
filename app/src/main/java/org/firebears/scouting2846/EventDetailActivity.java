@@ -100,4 +100,11 @@ public class EventDetailActivity extends AppCompatActivity {
 		intent.putExtra(FRCEvent.COL_SHORT, getEventShortName());
 		startActivity(intent);
 	}
+
+	public void startEventSummary(View v) {
+		Intent intent = new Intent(this, SummaryActivity.class);
+		intent.putExtra(FRCEvent.COL_EVENT_ID, getEventId());
+		intent.putExtra(FRCEvent.COL_EVENT_KEY, getEventKey());
+		startActivity(intent);
+	}
 }

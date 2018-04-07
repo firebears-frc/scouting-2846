@@ -127,6 +127,10 @@ public class ScoutingRec implements BaseColumns {
 		data.add(new ScoutingStr(COL_TEAM_KEY, 0));
 	}
 
+	static public boolean isMeta(String c) {
+		return c.equals(COL_MATCH) || c.equals(COL_TEAM_KEY);
+	}
+
 	private void add(ScoutingData sd) {
 		data.add(sd);
 	}
@@ -187,6 +191,15 @@ public class ScoutingRec implements BaseColumns {
 	public void updateBundle(Bundle b, Cursor c) {
 		for (ScoutingData sd : data)
 			sd.update(b, c);
+	}
+
+	public Bundle summarize(ArrayList<Bundle> v) {
+		Bundle b = new Bundle();
+		for (ScoutingData sd : data)
+			sd.summarize(b, v);
+		b.putString("title", b.getString(COL_TEAM_KEY) +
+			" (" + v.size() + ")");
+		return b;
 	}
 
 	public void initContent(ContentValues cv, String team_key,

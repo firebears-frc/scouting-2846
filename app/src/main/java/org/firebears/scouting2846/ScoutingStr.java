@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
 
 /**
  * Scouting string data.
@@ -125,5 +126,25 @@ public class ScoutingStr implements ScoutingData {
 			TextView tv = (TextView) rv.findViewById(res);
 			tv.setText((v != null) ? v : "");
 		}
+	}
+
+	/** Summarize data */
+	@Override
+	public void summarize(Bundle b, ArrayList<Bundle> v) {
+		StringBuilder sb = new StringBuilder();
+		for (Bundle vb : v) {
+			String s = vb.getString(col).trim();
+			if (ScoutingRec.isMeta(col)) {
+				sb.append(s);
+				break;
+			}
+			if (s.length() > 0) {
+				if (sb.length() > 0)
+					sb.append('\n');
+				sb.append("- ");
+				sb.append(s);
+			}
+		}
+		b.putString(col, sb.toString());
 	}
 }
