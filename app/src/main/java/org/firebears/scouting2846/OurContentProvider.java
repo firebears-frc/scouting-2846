@@ -28,11 +28,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Content provider for DB stuff.
  */
 public class OurContentProvider extends ContentProvider {
+
+	static private final String TAG = "OurContentProvider";
 
 	/** Base content URI */
 	static private final String BASE_URI =
@@ -87,6 +90,7 @@ public class OurContentProvider extends ContentProvider {
 	{
 		String tn = getTableName(uri, selection);
 		if (tn != null) {
+			Log.d(TAG, "query " + tn + " selection: " + selection);
 			SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 			qb.setTables(tn);
 			return qb.query(dbHelper.getReadableDatabase(),

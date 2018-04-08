@@ -94,6 +94,7 @@ public class SummaryActivity extends AppCompatActivity {
 			while (c.moveToNext()) {
 				Bundle b = new Bundle();
 				REC.updateBundle(b, c);
+				// FIXME: only from current event
 				putObservation(b);
 			}
 			buildSummary();

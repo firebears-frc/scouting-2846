@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
  * Scouting integer data.
  */
 public class ScoutingInt implements ScoutingData {
+
+	static private final String TAG = "ScoutingInt";
 
 	/** Column name */
 	private final String col;
@@ -101,6 +104,7 @@ public class ScoutingInt implements ScoutingData {
 		int pv = (ov != null) ? ov + p : p;
 		int v = (pv > 0) ? pv : 0;
 		cv.put(col, v);
+		Log.d(TAG, "update " + res + ", " + p);
 		if (res > 0) {
 			TextView tv = (TextView) rv.findViewById(res);
 			tv.setText(Integer.toString(v));
@@ -143,6 +147,8 @@ public class ScoutingInt implements ScoutingData {
 
 	@Override
 	public void init(final ContentValues cv, final Activity rv) {
+		Log.d(TAG, "init res:" + res + " res_m:" + res_m + " res_p:" +
+			res_p);
 		if (res > 0) {
 			Integer v = cv.getAsInteger(col);
 			TextView tv = (TextView) rv.findViewById(res);

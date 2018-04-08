@@ -59,8 +59,7 @@ public class EventDetailActivity extends AppCompatActivity {
 	/** Create arguments for fragment */
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
-		b.putInt(FRCEvent.COL_EVENT_ID, getIntent().getIntExtra(
-			FRCEvent.COL_EVENT_ID, 0));
+		b.putInt(FRCEvent.COL_EVENT_ID, getEventId());
 		return b;
 	}
 
