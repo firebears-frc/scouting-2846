@@ -26,12 +26,15 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
  * Scouting loader helper.
  */
 abstract public class ScoutingLoaderHelper extends LoaderHelper {
+
+	static private final String TAG = "ScoutingLoaderHelper";
 
 	/** Create scouting loader helper */
 	public ScoutingLoaderHelper(Context c) {
@@ -48,6 +51,7 @@ abstract public class ScoutingLoaderHelper extends LoaderHelper {
 	@Override
 	protected Loader<Cursor> createLoader(Bundle b) {
 		String where = getWhere(b);
+		Log.d(TAG, "createLoader where " + where);
 		return new CursorLoader(context, REC.getContentUri(),
 			REC.getCols(), where, null, null);
 	}
@@ -61,9 +65,11 @@ abstract public class ScoutingLoaderHelper extends LoaderHelper {
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+		Log.d(TAG, "onLoadFinished: " + c.getCount());
 		if (c.getCount() == 1) {
 			c.moveToFirst();
 			onLoaded(c);
-		}
+		} else
+			onLoaded(null);
 	}
 }

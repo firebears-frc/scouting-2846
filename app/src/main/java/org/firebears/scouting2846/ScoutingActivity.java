@@ -99,6 +99,7 @@ public class ScoutingActivity extends AppCompatActivity {
 			if (Param.ROW_OBSERVATION.equals(n))
 				content.put(REC.COL_OBSERVATION, v + 1);
 		}
+		Log.d(TAG, "onParamLoaded");
 		addLoaderCallbacks(new ScoutingLoaderHelper(this) {
 			protected void onLoaded(Cursor c) {
 				onScoutingLoaded(c);
@@ -107,7 +108,9 @@ public class ScoutingActivity extends AppCompatActivity {
 	}
 
 	private void onScoutingLoaded(Cursor c) {
-		REC.updateContent(content, c);
+		if (c != null)
+			REC.updateContent(content, c);
+		Log.d(TAG, "onScoutingLoaded");
 		for (ScoutingData sd : REC.getAllData())
 			sd.init(content, this);
 	}
