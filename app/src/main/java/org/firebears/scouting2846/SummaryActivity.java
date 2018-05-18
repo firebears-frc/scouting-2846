@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
@@ -67,6 +68,7 @@ public class SummaryActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse);
+		// FIXME: Load list of matches for event
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(OBS_LOADER_ID, null, cb);
 	}
@@ -117,7 +119,10 @@ public class SummaryActivity extends AppCompatActivity {
 	}
 
 	private void buildSummary() {
-		for (ArrayList<Bundle> v : observations.values()) {
+		TreeSet<String> teams = new TreeSet<String>(
+			observations.keySet());
+		for (String team : teams) {
+			ArrayList<Bundle> v = observations.get(team);
 			Log.d(TAG, "summary " + v.size());
 			Bundle b = REC.summarize(v);
 			summary.add(b);
@@ -126,8 +131,10 @@ public class SummaryActivity extends AppCompatActivity {
 
 	/** Create a loader for observation details */
 	private Loader<Cursor> createLoader() {
+		String where = REC.COL_MATCH_KEY + "!='" +
+			getString(R.string.pit) + "'";
 		return new CursorLoader(this, REC.getContentUri(),
-			REC.getCols(), null, null, null);
+			REC.getCols(), where, null, null);
 	}
 
 	private class SummaryPagerAdapter extends FragmentStatePagerAdapter {
