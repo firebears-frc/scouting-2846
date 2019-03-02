@@ -13,7 +13,7 @@
 	<provider android:name=".OurContentProvider"
 	          android:authorities="org.firebears.scouting2846" />
         <activity
-            android:name=".EventListActivity"
+            android:name=".TeamListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask">
@@ -22,23 +22,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".EventDetailActivity"
-            android:parentActivityName=".EventListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.firebears.scouting2846.EventListActivity"/>
-        </activity>
-        <activity
-            android:name=".TeamListActivity"
-            android:parentActivityName=".EventDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.firebears.scouting2846.EventDetailActivity"/>
         </activity>
         <activity
             android:name=".TeamDetailActivity"
@@ -57,24 +40,6 @@
             android:name=".BrowseActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"/>
-        <activity
-            android:name=".MatchListActivity"
-            android:parentActivityName=".EventDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.firebears.scouting2846.EventDetailActivity"/>
-        </activity>
-        <activity
-            android:name=".MatchDetailActivity"
-            android:parentActivityName=".MatchListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.firebears.scouting2846.MatchListActivity"/>
-        </activity>
         <activity
             android:name=".ScoutingActivity"
             android:theme="@style/AppTheme.NoActionBar"

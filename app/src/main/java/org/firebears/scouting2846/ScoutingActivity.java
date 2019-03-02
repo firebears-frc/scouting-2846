@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -125,7 +125,7 @@ public class ScoutingActivity extends AppCompatActivity {
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
 		b.putInt(REC.COL_SCOUTER, getScouter());
-		b.putString(Match.COL_KEY, getMatchKey());
+		b.putString(REC.COL_MATCH_KEY, getMatchKey());
 		b.putString(Team.COL_KEY, getTeamKey());
 		return b;
 	}
@@ -135,7 +135,7 @@ public class ScoutingActivity extends AppCompatActivity {
 	}
 
 	private String getMatchKey() {
-		return getIntent().getStringExtra(Match.COL_KEY);
+		return getIntent().getStringExtra(REC.COL_MATCH_KEY);
 	}
 
 	private String getTeamKey() {

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -44,30 +44,6 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_PARAMS =
 		"DROP TABLE IF EXISTS " + Param.TABLE_NAME;
 
-	/** SQL statement to create event table */
-	static private final String SQL_CREATE_EVENTS =
-		"CREATE TABLE " + FRCEvent.TABLE_NAME + " (" +
-		FRCEvent._ID +          " INTEGER PRIMARY KEY autoincrement, "+
-		FRCEvent.COL_KEY +	" TEXT UNIQUE NOT NULL, " +
-		FRCEvent.COL_NAME +	" TEXT NOT NULL, " +
-		FRCEvent.COL_SHORT +	" TEXT, " +
-		FRCEvent.COL_OFFICIAL +	" INTEGER NOT NULL, " +
-		FRCEvent.COL_EV_CODE +	" TEXT NOT NULL, " +
-		FRCEvent.COL_EV_TYPE +	" INTEGER NOT NULL, " +
-		FRCEvent.COL_DISTRICT +	" INTEGER NOT NULL, " +
-		FRCEvent.COL_YEAR +	" INTEGER NOT NULL, " +
-		FRCEvent.COL_WEEK +	" INTEGER, " +
-		FRCEvent.COL_START_DATE+" TEXT, " +
-		FRCEvent.COL_END_DATE + " TEXT, " +
-		FRCEvent.COL_LOCATION +	" TEXT NOT NULL, " +
-		FRCEvent.COL_VENUE_ADDRESS + " TEXT, " +
-		FRCEvent.COL_TIMEZONE +	" TEXT, " +
-		FRCEvent.COL_WEBSITE +	" TEXT)";
-
-	/** SQL statement to drop event table */
-	static private final String SQL_DROP_EVENTS =
-		"DROP TABLE IF EXISTS " + FRCEvent.TABLE_NAME;
-
 	/** SQL statement to create team table */
 	static private final String SQL_CREATE_TEAMS =
 		"CREATE TABLE " + Team.TABLE_NAME + " (" +
@@ -88,75 +64,6 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	static private final String SQL_DROP_TEAMS =
 		"DROP TABLE IF EXISTS " + Team.TABLE_NAME;
 
-	/** SQL statement to create event/team relation table */
-	static private final String SQL_CREATE_EVENT_TEAMS =
-		"CREATE TABLE " + EventTeam.TABLE_NAME + " (" +
-		EventTeam._ID +		" INTEGER PRIMARY KEY autoincrement, "+
-		EventTeam.COL_EVENT_ID +" INTEGER NOT NULL, " +
-		EventTeam.COL_TEAM +	" INTEGER NOT NULL, " +
-		"UNIQUE (" + EventTeam.COL_EVENT_ID + ", " +
-		             EventTeam.COL_TEAM + ") ON CONFLICT REPLACE, " +
-		"FOREIGN KEY (" + EventTeam.COL_EVENT_ID + ") REFERENCES " +
-			FRCEvent.TABLE_NAME + ", " +
-		"FOREIGN KEY (" + EventTeam.COL_TEAM + ") REFERENCES " +
-			Team.TABLE_NAME + ")";
-
-	/** SQL statement to drop event/teams relation table */
-	static private final String SQL_DROP_EVENT_TEAMS =
-		"DROP TABLE IF EXISTS " + EventTeam.TABLE_NAME;
-
-	/** SQL statement to create event/team view */
-	static private final String SQL_CREATE_ET_VIEW =
-		"CREATE VIEW " + EventTeam.VIEW_NAME + " AS SELECT " +
-		Team.TABLE_NAME + "." + Team._ID + ", " +
-		EventTeam.COL_EVENT_ID + ", " +
-		Team.COL_KEY + ", " +
-		Team.COL_TEAM_NUMBER + ", " +
-		Team.COL_NAME + ", " +
-		Team.COL_NICKNAME + ", " +
-		Team.COL_WEBSITE + ", " +
-		Team.COL_LOCALITY + ", " +
-		Team.COL_REGION + ", " +
-		Team.COL_COUNTRY + ", " +
-		Team.COL_LOCATION + ", " +
-		Team.COL_ROOKIE_YEAR + ", " +
-		Team.COL_MOTTO +
-		" FROM " + Team.TABLE_NAME +
-		" JOIN " + EventTeam.TABLE_NAME +
-		" ON " + Team.TABLE_NAME + "." + Team._ID +
-		" = " + EventTeam.TABLE_NAME + "." + EventTeam.COL_TEAM;
-
-	/** SQL statement to drop event/teams relation view */
-	static private final String SQL_DROP_ET_VIEW =
-		"DROP VIEW IF EXISTS " + EventTeam.VIEW_NAME;
-
-	/** SQL statement to create match table */
-	static private final String SQL_CREATE_MATCHES =
-		"CREATE TABLE " + Match.TABLE_NAME + " (" +
-		Match._ID +		" INTEGER PRIMARY KEY autoincrement, "+
-		Match.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
-		Match.COL_EVENT_ID +	" INTEGER NOT NULL, " +
-		FRCEvent.COL_EVENT_KEY +" TEXT NOT NULL, " +
-		Match.COL_COMP_LEVEL +	" INTEGER NOT NULL, " +
-		Match.COL_SET_NUMBER +	" INTEGER, " +
-		Match.COL_MATCH_NUMBER +" INTEGER, " +
-		Match.COL_ALLIANCES +	" TEXT, " +
-		Match.COL_SCORE_BREAKDOWN + " TEXT, " +
-		Match.COL_VIDEOS +	" TEXT, " +
-		Match.COL_TIME +	" INTEGER, " +
-		Match.COL_RED_0 +	" TEXT NOT NULL, " +
-		Match.COL_RED_1 +	" TEXT NOT NULL, " +
-		Match.COL_RED_2 +	" TEXT NOT NULL, " +
-		Match.COL_BLUE_0 +	" TEXT NOT NULL, " +
-		Match.COL_BLUE_1 +	" TEXT NOT NULL, " +
-		Match.COL_BLUE_2 +	" TEXT NOT NULL, " +
-		"FOREIGN KEY (" + Match.COL_EVENT_ID + ") REFERENCES " +
-			FRCEvent.TABLE_NAME + ")";
-
-	/** SQL statement to drop match table */
-	static private final String SQL_DROP_MATCHES =
-		"DROP TABLE IF EXISTS " + Match.TABLE_NAME;
-
 	/** Create our DB helper */
 	public OurDbHelper(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -170,11 +77,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 	@Override
        	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_PARAMS);
-		db.execSQL(SQL_CREATE_EVENTS);
 		db.execSQL(SQL_CREATE_TEAMS);
-		db.execSQL(SQL_CREATE_EVENT_TEAMS);
-		db.execSQL(SQL_CREATE_ET_VIEW);
-		db.execSQL(SQL_CREATE_MATCHES);
 		db.execSQL(ScoutingRec.REC.sqlCreate());
 		initParams(db);
 	}
@@ -184,11 +87,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		int newVersion)
 	{
 		db.execSQL(ScoutingRec.REC.sqlDrop());
-		db.execSQL(SQL_DROP_MATCHES);
-		db.execSQL(SQL_DROP_ET_VIEW);
-		db.execSQL(SQL_DROP_EVENT_TEAMS);
 		db.execSQL(SQL_DROP_TEAMS);
-		db.execSQL(SQL_DROP_EVENTS);
 		db.execSQL(SQL_DROP_PARAMS);
 		onCreate(db);
 	}

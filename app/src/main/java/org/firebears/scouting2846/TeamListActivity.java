@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -81,25 +81,8 @@ public class TeamListActivity extends AppCompatActivity {
 	/** Create a loader for teams */
 	private Loader<Cursor> createLoader(Bundle b) {
 		return new CursorLoader(TeamListActivity.this,
-			Team.CONTENT_URI, COLS, getSelectionClause(),
+			Team.CONTENT_URI, COLS, null,
 			null, Team.COL_TEAM_NUMBER);
-	}
-
-	private String getSelectionClause() {
-		int event_id = getEventId();
-		return (event_id > 0) ? ("event_id=" + event_id) : null;
-	}
-
-	private int getEventId() {
-		return getIntent().getIntExtra(FRCEvent.COL_EVENT_ID, 0);
-	}
-
-	private String getEventKey() {
-		return getIntent().getStringExtra(FRCEvent.COL_EVENT_KEY);
-	}
-
-	private String getEventShortName() {
-		return getIntent().getStringExtra(FRCEvent.COL_SHORT);
 	}
 
 	@Override
@@ -108,10 +91,8 @@ public class TeamListActivity extends AppCompatActivity {
 		setContentView(R.layout.team_list_activity);
 		Toolbar bar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(bar);
-		if (bar != null) {
-			bar.setTitle(getEventShortName() + ' ' + getText(
-				R.string.title_team_list));
-		}
+		if (bar != null)
+			bar.setTitle(getText(R.string.title_team_list));
 		ActionBar ab = getSupportActionBar();
 		if (ab != null)
 			ab.setDisplayHomeAsUpEnabled(true);
@@ -132,6 +113,7 @@ public class TeamListActivity extends AppCompatActivity {
 			}
 		});
 		getLoaderManager().initLoader(TEAM_LOADER_ID, null, cb);
+		startService(new Intent(this, BluetoothSyncService.class));
 	}
 
 	public void restartLoader() {
@@ -157,18 +139,13 @@ public class TeamListActivity extends AppCompatActivity {
 		if (android.R.id.home == item.getItemId()) {
 			onBackPressed();
 			return true;
-		} else if (R.id.action_refresh == item.getItemId())
-			return onRefreshSelected();
-		else
+		} else
 			return super.onOptionsItemSelected(item);
 	}
 
-	private boolean onRefreshSelected() {
+	/** Show a snackbar */
+	public void showSnack(int res) {
 		View v = findViewById(R.id.team_list);
-		Snackbar.make(v, R.string.fetch_teams, Snackbar.LENGTH_LONG)
-		        .show();
-		new FetchEventTeams(this, getEventId(),
-			getEventKey()).execute();
-		return true;
+		Snackbar.make(v, res, Snackbar.LENGTH_LONG).show();
 	}
 }

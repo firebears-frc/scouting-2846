@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  Douglas P Lau
+ * Copyright  2018-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -59,7 +59,7 @@ abstract public class ScoutingLoaderHelper extends LoaderHelper {
 	/** Get where clause */
 	private String getWhere(Bundle b) {
 		return REC.COL_SCOUTER + "=" + b.getInt(REC.COL_SCOUTER) + " AND "
-		     + REC.COL_MATCH_KEY + "='" + b.getString(Match.COL_KEY) + "' AND "
+		     + REC.COL_MATCH_KEY + "='" + b.getString(REC.COL_MATCH_KEY) + "' AND "
 		     + Team.COL_KEY + "='" + b.getString(Team.COL_KEY) + "'";
 	}
 

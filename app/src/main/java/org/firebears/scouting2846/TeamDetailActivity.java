@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -78,7 +78,7 @@ public class TeamDetailActivity extends AppCompatActivity {
 
 	public void startScouting(View v) {
 		Intent intent = new Intent(this, ScoutingActivity.class);
-		intent.putExtra(Match.COL_KEY, getMatch());
+		intent.putExtra(ScoutingRec.COL_MATCH_KEY, getMatch());
 		intent.putExtra(Team.COL_KEY, getTeamKey());
 		startActivity(intent);
 	}

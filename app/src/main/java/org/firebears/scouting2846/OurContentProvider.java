@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -65,18 +65,9 @@ public class OurContentProvider extends ContentProvider {
 		String suri = uri.toString();
 		if (suri.startsWith(Param.CONTENT_URI.toString()))
 			return Param.TABLE_NAME;
-		else if (suri.startsWith(EventTeam.CONTENT_URI.toString()))
-			return EventTeam.TABLE_NAME;
-		else if (suri.startsWith(FRCEvent.CONTENT_URI.toString()))
-			return FRCEvent.TABLE_NAME;
 		else if (suri.startsWith(Team.CONTENT_URI.toString())) {
-			if (sel != null && sel.contains(EventTeam.COL_EVENT_ID))
-				return EventTeam.VIEW_NAME;
-			else
-				return Team.TABLE_NAME;
-		} else if (suri.startsWith(Match.CONTENT_URI.toString()))
-			return Match.TABLE_NAME;
-		else if (suri.startsWith(ScoutingRec.REC.getContentUri()
+			return Team.TABLE_NAME;
+		} else if (suri.startsWith(ScoutingRec.REC.getContentUri()
 			.toString()))
 		{
 			return ScoutingRec.REC.table_name;

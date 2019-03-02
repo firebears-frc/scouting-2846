@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  Douglas P Lau
+ * Copyright  2018-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -71,14 +71,6 @@ public class SummaryActivity extends AppCompatActivity {
 		// FIXME: Load list of matches for event
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(OBS_LOADER_ID, null, cb);
-	}
-
-	private int getEventId() {
-		return getIntent().getIntExtra(FRCEvent.COL_EVENT_ID, 0);
-	}
-
-	private String getEventKey() {
-		return getIntent().getStringExtra(FRCEvent.COL_EVENT_KEY);
 	}
 
 	/** Callbacks for loader */
