@@ -88,7 +88,7 @@ public class TeamListActivity extends AppCompatActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.team_list_activity);
+		setContentView(R.layout.activity_team_list);
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		int[] cols = new int[] { R.id.team_number, R.id.team_nickname };
 		adapter = new SimpleCursorAdapter(this,
