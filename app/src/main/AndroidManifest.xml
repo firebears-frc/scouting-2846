@@ -48,6 +48,10 @@
             android:name=".SelectDeviceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity
+            android:name=".SelectTeamActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <service
             android:name=".BluetoothSyncService"
             android:exported="false"/>

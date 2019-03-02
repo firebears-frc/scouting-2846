@@ -31,6 +31,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,6 +44,11 @@ import android.widget.ListView;
  * An activity representing a list of FRC teams.
  */
 public class TeamListActivity extends AppCompatActivity {
+
+	static private final String TAG = "TeamListActivity";
+
+	static private final int REQ_TEAM = 1;
+	static private final int REQ_BLUETOOTH = 2;
 
 	/** Loader ID */
 	static private final int TEAM_LOADER_ID = 39;
@@ -115,9 +121,13 @@ public class TeamListActivity extends AppCompatActivity {
 
 	/** Start team detail activity */
 	private void startDetailActivity(Cursor c) {
-		String key = c.getString(c.getColumnIndex(Team.COL_KEY));
+		String team = c.getString(c.getColumnIndex(Team.COL_KEY));
+		startDetailActivity(team);
+	}
+
+	private void startDetailActivity(String team) {
 		Intent intent = new Intent(this, TeamDetailActivity.class);
-		intent.putExtra(Team.COL_KEY, key);
+		intent.putExtra(Team.COL_KEY, team);
 		startActivity(intent);
 	}
 
@@ -130,23 +140,53 @@ public class TeamListActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (R.id.action_bt_sync == item.getItemId())
+		switch (item.getItemId()) {
+		case R.id.action_select_team:
+			return onSelectTeamSelected();
+		case R.id.action_bt_sync:
 			return onBluetoothSyncSelected();
-		else
+		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int req, int rc, Intent data) {
+		switch (req) {
+		case REQ_TEAM:
+			onTeamResult(rc, data);
+			break;
+		case REQ_BLUETOOTH:
+			onBluetoothResult(rc, data);
+			break;
+		}
+	}
+
+	private boolean onSelectTeamSelected() {
+		Intent intent = new Intent(this, SelectTeamActivity.class);
+		startActivityForResult(intent, REQ_TEAM);
+		return true;
+	}
+
+	private void onTeamResult(int rc, Intent data) {
+		switch (rc) {
+		case RESULT_OK:
+			String team = data.getStringExtra(
+				SelectTeamActivity.TEAM_NUMBER);
+			Log.d(TAG, "team #" + team);
+			startDetailActivity(team);
+			break;
+		}
 	}
 
 	private boolean onBluetoothSyncSelected() {
 		Intent intent = new Intent(this, SelectDeviceActivity.class);
-		startActivityForResult(intent, 1);
+		startActivityForResult(intent, REQ_BLUETOOTH);
 		return true;
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-		Intent data)
-	{
-		switch (resultCode) {
+	private void onBluetoothResult(int rc, Intent data) {
+		switch (rc) {
 		case RESULT_OK:
 			String address = data.getStringExtra(
 				SelectDeviceActivity.DEVICE_ADDRESS);
