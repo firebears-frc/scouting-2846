@@ -61,4 +61,26 @@
     <string name="defense">Defense</string>
     <string name="rider">Carry rider</string>
     <string name="park">Park</string>
+
+    <string name="scouting_2019">Deep Space Scouting</string>
+    <string name="vision_driver">Vision (driver)</string>
+    <string name="auto_lvl_1">Drive off level 1</string>
+    <string name="auto_lvl_2">Drive off level 2</string>
+    <string name="on_low">low</string>
+    <string name="on_middle">middle</string>
+    <string name="on_high">high</string>
+    <string name="auto_hatch">Autonomous Hatch</string>
+    <string name="auto_cargo">Autonomous Cargo</string>
+    <string name="tele_hatch">Teleop Hatch</string>
+    <string name="tele_cargo">Teleop Cargo</string>
+    <string name="tele_hatch_human">Hatch from human</string>
+    <string name="tele_cargo_human">Cargo from human</string>
+    <string name="tele_hatch_floor">Hatch from floor</string>
+    <string name="tele_cargo_floor">Cargo from floor</string>
+    <string name="endgame">Endgame</string>
+    <string name="climb_lvl_1">Climb level 1</string>
+    <string name="climb_lvl_2">Climb level 2</string>
+    <string name="climb_lvl_3">Climb level 3</string>
+    <string name="assist_lvl_2">Climb level 2</string>
+    <string name="assist_lvl_3">Climb level 3</string>
 </resources>

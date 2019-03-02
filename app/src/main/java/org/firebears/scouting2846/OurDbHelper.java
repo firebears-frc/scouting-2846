@@ -30,7 +30,7 @@ import java.security.SecureRandom;
  * Our DB helper.
  */
 public class OurDbHelper extends SQLiteOpenHelper {
-	static public final int DATABASE_VERSION = 2;
+	static public final int DATABASE_VERSION = 3;
 	static public final String DATABASE_NAME = "Scouting.db";
 
 	/** SQL statement to create parameter table */

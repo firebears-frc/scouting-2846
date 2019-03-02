@@ -1,0 +1,370 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/auto_grid"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:grid="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        grid:useDefaultMargins="true"
+        grid:alignmentMode="alignBounds"
+        grid:columnCount="4">
+
+    <TextView
+        android:id="@+id/team_lbl"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+	android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider0"
+        grid:layout_columnSpan="4"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/autonomous"
+        android:text="@string/autonomous"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/vision_driver"
+        android:text="@string/vision_driver"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_lvl_1"
+        android:text="@string/auto_lvl_1"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_lvl_2"
+        android:text="@string/auto_lvl_2"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <TextView
+        android:id="@+id/auto_hatch"
+        android:text="@string/auto_hatch"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_hatch_lo"
+        android:text="@string/on_low"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_hatch_md"
+        android:text="@string/on_middle"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_hatch_hi"
+        android:text="@string/on_high"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <TextView
+        android:id="@+id/auto_cargo"
+        android:text="@string/auto_cargo"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_cargo_lo"
+        android:text="@string/on_low"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_cargo_md"
+        android:text="@string/on_middle"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/auto_cargo_hi"
+        android:text="@string/on_high"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider1"
+        grid:layout_columnSpan="4"/>
+
+    <TextView
+        android:id="@+id/tele_hatch"
+        android:text="@string/tele_hatch"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"/>
+
+    <TextView
+        android:id="@+id/thl_txt"
+        android:text="@string/on_low"
+        grid:layout_gravity="fill"
+        android:layout_width="1dp"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/thl_minus"
+        android:text="@string/minus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tele_hatch_lo"
+        android:text="0"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/thl_plus"
+        android:text="@string/plus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/thm_txt"
+        android:text="@string/on_middle"
+        grid:layout_gravity="fill"
+        android:layout_width="1dp"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/thm_minus"
+        android:text="@string/minus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tele_hatch_md"
+        android:text="0"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/thm_plus"
+        android:text="@string/plus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/thh_txt"
+        android:text="@string/on_high"
+        grid:layout_gravity="fill"
+        android:layout_width="1dp"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/thh_minus"
+        android:text="@string/minus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tele_hatch_hi"
+        android:text="0"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/thh_plus"
+        android:text="@string/plus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tele_cargo"
+        android:text="@string/tele_cargo"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"/>
+
+    <TextView
+        android:id="@+id/tcl_txt"
+        android:text="@string/on_low"
+        grid:layout_gravity="fill"
+        android:layout_width="1dp"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tcl_minus"
+        android:text="@string/minus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tele_cargo_lo"
+        android:text="0"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tcl_plus"
+        android:text="@string/plus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tcm_txt"
+        android:text="@string/on_middle"
+        grid:layout_gravity="fill"
+        android:layout_width="1dp"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tcm_minus"
+        android:text="@string/minus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tele_cargo_md"
+        android:text="0"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tcm_plus"
+        android:text="@string/plus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tch_txt"
+        android:text="@string/on_high"
+        grid:layout_gravity="fill"
+        android:layout_width="1dp"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tch_minus"
+        android:text="@string/minus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/tele_cargo_hi"
+        android:text="0"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tch_plus"
+        android:text="@string/plus"
+        android:minWidth="50dp"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/tele_hatch_human"
+        android:text="@string/tele_hatch_human"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/tele_hatch_floor"
+        android:text="@string/tele_hatch_floor"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/tele_cargo_human"
+        android:text="@string/tele_cargo_human"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/tele_cargo_floor"
+        android:text="@string/tele_cargo_floor"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/defense"
+        android:text="@string/defense"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider2"
+        grid:layout_columnSpan="4"/>
+
+    <TextView
+        android:id="@+id/endgame"
+        android:text="@string/endgame"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/climb_lvl_1"
+        android:text="@string/climb_lvl_1"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/climb_lvl_2"
+        android:text="@string/climb_lvl_2"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/climb_lvl_3"
+        android:text="@string/climb_lvl_3"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/assist_lvl_2"
+        android:text="@string/assist_lvl_2"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/assist_lvl_3"
+        android:text="@string/assist_lvl_3"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <View
+        style="@style/Divider"
+        android:id="@+id/divider4"
+        grid:layout_columnSpan="4"/>
+
+    <EditText
+        android:id="@+id/notes"
+        grid:layout_columnSpan="4"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    </android.support.v7.widget.GridLayout>
+
+</RelativeLayout>

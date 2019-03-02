@@ -70,6 +70,7 @@ public class ScoutingRec implements BaseColumns {
 		Y2017.add(new ScoutingBool("lose_gear", R.id.lose_gear));
 		Y2017.add(new ScoutingStr("notes", R.id.notes));
 	}
+
 	static private final ScoutingRec Y2018 = new ScoutingRec("2018",
 		R.string.scouting_2018, R.layout.activity_scouting_2018,
 		R.layout.browse_2018_detail);
@@ -99,7 +100,56 @@ public class ScoutingRec implements BaseColumns {
 		Y2018.add(new ScoutingStr("notes", R.id.notes));
 	}
 
-	static public final ScoutingRec REC = Y2018;
+	static private final ScoutingRec Y2019 = new ScoutingRec("2019",
+		R.string.scouting_2019, R.layout.activity_scouting_2019,
+		R.layout.browse_2019_detail);
+	static {
+		Y2019.add(new ScoutingBool("autonomous", R.id.autonomous));
+		Y2019.add(new ScoutingBool("vision_driver", R.id.vision_driver));
+		Y2019.add(new ScoutingBool("auto_lvl_1", R.id.auto_lvl_1));
+		Y2019.add(new ScoutingBool("auto_lvl_2", R.id.auto_lvl_2));
+		Y2019.add(new ScoutingBool("auto_hatch_lo",
+			R.id.auto_hatch_lo));
+		Y2019.add(new ScoutingBool("auto_hatch_md",
+			R.id.auto_hatch_md));
+		Y2019.add(new ScoutingBool("auto_hatch_hi",
+			R.id.auto_hatch_hi));
+		Y2019.add(new ScoutingBool("auto_cargo_lo",
+			R.id.auto_cargo_lo));
+		Y2019.add(new ScoutingBool("auto_cargo_md",
+			R.id.auto_cargo_md));
+		Y2019.add(new ScoutingBool("auto_cargo_hi",
+			R.id.auto_cargo_hi));
+		Y2019.add(new ScoutingInt("tele_hatch_lo", R.id.tele_hatch_lo,
+			R.id.thl_minus, R.id.thl_plus));
+		Y2019.add(new ScoutingInt("tele_hatch_md", R.id.tele_hatch_md,
+			R.id.thm_minus, R.id.thm_plus));
+		Y2019.add(new ScoutingInt("tele_hatch_hi", R.id.tele_hatch_hi,
+			R.id.thh_minus, R.id.thh_plus));
+		Y2019.add(new ScoutingInt("tele_cargo_lo", R.id.tele_cargo_lo,
+			R.id.tcl_minus, R.id.tcl_plus));
+		Y2019.add(new ScoutingInt("tele_cargo_md", R.id.tele_cargo_md,
+			R.id.tcm_minus, R.id.tcm_plus));
+		Y2019.add(new ScoutingInt("tele_cargo_hi", R.id.tele_cargo_hi,
+			R.id.tch_minus, R.id.tch_plus));
+		Y2019.add(new ScoutingBool("tele_cargo_human",
+			R.id.tele_cargo_human));
+		Y2019.add(new ScoutingBool("tele_cargo_floor",
+			R.id.tele_cargo_floor));
+		Y2019.add(new ScoutingBool("tele_hatch_human",
+			R.id.tele_hatch_human));
+		Y2019.add(new ScoutingBool("tele_hatch_floor",
+			R.id.tele_hatch_floor));
+		Y2019.add(new ScoutingBool("defense", R.id.defense));
+		Y2019.add(new ScoutingBool("climb_lvl_1", R.id.climb_lvl_1));
+		Y2019.add(new ScoutingBool("climb_lvl_2", R.id.climb_lvl_2));
+		Y2019.add(new ScoutingBool("climb_lvl_3", R.id.climb_lvl_3));
+		Y2019.add(new ScoutingBool("assist_lvl_2", R.id.assist_lvl_2));
+		Y2019.add(new ScoutingBool("assist_lvl_3", R.id.assist_lvl_3));
+		Y2019.add(new ScoutingStr("notes", R.id.notes));
+	}
+
+	static public final ScoutingRec REC = Y2019;
 
 	public final String year;
 
