@@ -81,21 +81,15 @@ public class TeamListActivity extends AppCompatActivity {
 	/** Create a loader for teams */
 	private Loader<Cursor> createLoader(Bundle b) {
 		return new CursorLoader(TeamListActivity.this,
-			Team.CONTENT_URI, COLS, null,
-			null, Team.COL_TEAM_NUMBER);
+			Team.CONTENT_URI, COLS, null, null,
+			Team.COL_TEAM_NUMBER);
 	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.team_list_activity);
-		Toolbar bar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(bar);
-		if (bar != null)
-			bar.setTitle(getText(R.string.title_team_list));
-		ActionBar ab = getSupportActionBar();
-		if (ab != null)
-			ab.setDisplayHomeAsUpEnabled(true);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		int[] cols = new int[] { R.id.team_number, R.id.team_nickname };
 		adapter = new SimpleCursorAdapter(this,
 			R.layout.team_list_entry, null, COLS, cols, 0);
@@ -108,8 +102,7 @@ public class TeamListActivity extends AppCompatActivity {
 			{
 				Cursor c = (Cursor) parent.getAdapter()
 					.getItem(position);
-				startDetailActivity(c.getString(
-					c.getColumnIndex(Team.COL_KEY)));
+				startDetailActivity(c);
 			}
 		});
 		getLoaderManager().initLoader(TEAM_LOADER_ID, null, cb);
@@ -121,7 +114,8 @@ public class TeamListActivity extends AppCompatActivity {
 	}
 
 	/** Start team detail activity */
-	private void startDetailActivity(String key) {
+	private void startDetailActivity(Cursor c) {
+		String key = c.getString(c.getColumnIndex(Team.COL_KEY));
 		Intent intent = new Intent(this, TeamDetailActivity.class);
 		intent.putExtra(Team.COL_KEY, key);
 		startActivity(intent);
@@ -130,17 +124,40 @@ public class TeamListActivity extends AppCompatActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.action_menu, menu);
+		inflater.inflate(R.menu.root_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (android.R.id.home == item.getItemId()) {
-			onBackPressed();
-			return true;
-		} else
+		if (R.id.action_bt_sync == item.getItemId())
+			return onBluetoothSyncSelected();
+		else
 			return super.onOptionsItemSelected(item);
+	}
+
+	private boolean onBluetoothSyncSelected() {
+		Intent intent = new Intent(this, SelectDeviceActivity.class);
+		startActivityForResult(intent, 1);
+		return true;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+		Intent data)
+	{
+		switch (resultCode) {
+		case RESULT_OK:
+			String address = data.getStringExtra(
+				SelectDeviceActivity.DEVICE_ADDRESS);
+			new BluetoothSyncTask(this, address).execute();
+			break;
+		case RESULT_CANCELED:
+			int res = data.getIntExtra(
+				SelectDeviceActivity.ERROR_CODE, 0);
+			showSnack(res);
+			break;
+		}
 	}
 
 	/** Show a snackbar */
