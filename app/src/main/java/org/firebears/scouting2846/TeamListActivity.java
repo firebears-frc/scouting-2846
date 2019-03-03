@@ -210,8 +210,10 @@ public class TeamListActivity extends AppCompatActivity {
 		case RESULT_OK:
 			break;
 		case RESULT_CANCELED:
-			int res = data.getIntExtra(ERROR_CODE, 0);
-			showSnack(res);
+			if (data != null) {
+				int res = data.getIntExtra(ERROR_CODE, 0);
+				showSnack(res);
+			}
 			break;
 		}
 	}
