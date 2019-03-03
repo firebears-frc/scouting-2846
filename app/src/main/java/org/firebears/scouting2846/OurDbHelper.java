@@ -50,7 +50,6 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		Team._ID +		" INTEGER PRIMARY KEY autoincrement, "+
 		Team.COL_KEY +		" TEXT UNIQUE NOT NULL, " +
 		Team.COL_TEAM_NUMBER +	" INTEGER UNIQUE NOT NULL, " +
-		Team.COL_NAME +		" TEXT NOT NULL, " +
 		Team.COL_NICKNAME +	" TEXT NOT NULL, " +
 		Team.COL_WEBSITE +	" TEXT, " +
 		Team.COL_LOCALITY +	" TEXT NOT NULL, " +

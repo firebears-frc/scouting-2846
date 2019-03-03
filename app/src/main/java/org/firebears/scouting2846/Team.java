@@ -35,7 +35,6 @@ public class Team implements BaseColumns {
 	static public final String TABLE_NAME = "team";
 	static public final String COL_KEY = "tm_key";
 	static public final String COL_TEAM_NUMBER = "team_number";
-	static public final String COL_NAME = "name";
 	static public final String COL_NICKNAME = "nickname";
 	static public final String COL_WEBSITE = "website";
 	static public final String COL_LOCALITY = "locality";
@@ -68,7 +67,6 @@ public class Team implements BaseColumns {
 		ContentValues cv = new ContentValues();
 		cv.put(COL_KEY, tm.optString("key"));
 		cv.put(COL_TEAM_NUMBER, tm.optInt("team_number"));
-		cv.put(COL_NAME, tm.optString("name"));
 		cv.put(COL_NICKNAME, tm.optString("nickname"));
 		if (tm.has("website"))
 			cv.put(COL_WEBSITE, tm.optString("website"));

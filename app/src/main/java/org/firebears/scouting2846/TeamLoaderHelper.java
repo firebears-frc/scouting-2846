@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  Douglas P Lau
+ * Copyright  2018-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -34,7 +34,6 @@ abstract public class TeamLoaderHelper extends LoaderHelper {
 
 	/** Columns to retrieve from the loader */
 	static private final String[] COLS = {
-		Team.COL_NAME,
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
 		Team.COL_WEBSITE,

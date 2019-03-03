@@ -83,7 +83,6 @@ public class TeamDetailFragment extends Fragment {
 			tv.setText(getText(R.string.rookie_year) + " " + t);
 		initScoutingSpinner();
 		setViewText(R.id.team_motto, c, Team.COL_MOTTO);
-		setViewText(R.id.team_name, c, Team.COL_NAME);
 	}
 
 	private void initScoutingSpinner() {
