@@ -61,7 +61,7 @@ public class ScoutingActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		REC.initContent(content, getTeamKey(), getMatchKey());
+		REC.initContent(content, getTeamNumber(), getMatchKey());
 		setContentView(REC.scouting_activity_res);
 		setSupportActionBar((Toolbar)
 			findViewById(R.id.detail_toolbar));
@@ -126,7 +126,7 @@ public class ScoutingActivity extends AppCompatActivity {
 		Bundle b = new Bundle();
 		b.putInt(REC.COL_SCOUTER, getScouter());
 		b.putString(REC.COL_MATCH_KEY, getMatchKey());
-		b.putString(Team.COL_KEY, getTeamKey());
+		b.putInt(Team.COL_TEAM_NUMBER, getTeamNumber());
 		return b;
 	}
 
@@ -138,8 +138,8 @@ public class ScoutingActivity extends AppCompatActivity {
 		return getIntent().getStringExtra(REC.COL_MATCH_KEY);
 	}
 
-	private String getTeamKey() {
-		return getIntent().getStringExtra(Team.COL_KEY);
+	private int getTeamNumber() {
+		return getIntent().getIntExtra(Team.COL_TEAM_NUMBER, 0);
 	}
 
 	@Override

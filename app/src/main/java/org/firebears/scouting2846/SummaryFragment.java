@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  Douglas P Lau
+ * Copyright  2018-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -52,9 +52,9 @@ public class SummaryFragment extends Fragment {
 		Toolbar tb = (Toolbar) rv.findViewById(R.id.detail_toolbar);
 		AppCompatActivity act = (AppCompatActivity) getActivity();
 		act.setSupportActionBar(tb);
-		String team_key = args.getString(rec.COL_TEAM_KEY);
-		tb.setTitle(team_key);
-		Log.d(TAG, "team " + team_key);
+		int team_num = args.getInt(rec.COL_TEAM_NUMBER);
+		tb.setTitle("#" + team_num);
+		Log.d(TAG, "team #" + team_num);
 		initView(rv);
 		return rv;
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -104,13 +104,13 @@ public class BrowseActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private String getTeamKey() {
-		return getIntent().getStringExtra(Team.COL_KEY);
+	private int getTeamNumber() {
+		return getIntent().getIntExtra(Team.COL_TEAM_NUMBER, 0);
 	}
 
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
-		b.putString(Team.COL_KEY, getTeamKey());
+		b.putInt(Team.COL_TEAM_NUMBER, getTeamNumber());
 		return b;
 	}
 
@@ -150,7 +150,7 @@ public class BrowseActivity extends AppCompatActivity {
 	}
 
 	private String getWhere() {
-		return REC.COL_TEAM_KEY + "='" + getTeamKey() + "'";
+		return REC.COL_TEAM_NUMBER + "=" + getTeamNumber();
 	}
 
 	private class ScoutingPagerAdapter extends FragmentStatePagerAdapter {

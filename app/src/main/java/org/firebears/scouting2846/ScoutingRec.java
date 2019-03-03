@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -42,7 +42,7 @@ public class ScoutingRec implements BaseColumns {
 	static public final String COL_SCOUTER = Param.ROW_SCOUTER;
 	static public final String COL_OBSERVATION = Param.ROW_OBSERVATION;
 	static public final String COL_MATCH_KEY = "match_key";
-	static public final String COL_TEAM_KEY = "tm_key";
+	static public final String COL_TEAM_NUMBER = "team_number";
 
 	static private final ScoutingRec Y2017 = new ScoutingRec("2017",
 		R.string.scouting_2017, R.layout.activity_scouting_2017,
@@ -174,11 +174,11 @@ public class ScoutingRec implements BaseColumns {
 		data.add(new ScoutingInt(COL_SCOUTER, 0));
 		data.add(new ScoutingInt(COL_OBSERVATION, 0));
 		data.add(new ScoutingStr(COL_MATCH_KEY, 0));
-		data.add(new ScoutingStr(COL_TEAM_KEY, 0));
+		data.add(new ScoutingInt(COL_TEAM_NUMBER, 0));
 	}
 
 	static public boolean isMeta(String c) {
-		return c.equals(COL_MATCH_KEY) || c.equals(COL_TEAM_KEY);
+		return c.equals(COL_MATCH_KEY) || c.equals(COL_TEAM_NUMBER);
 	}
 
 	private void add(ScoutingData sd) {
@@ -220,15 +220,16 @@ public class ScoutingRec implements BaseColumns {
 		          COL_SCOUTER + " INTEGER NOT NULL, " +
 		          COL_OBSERVATION + " INTEGER NOT NULL, " +
 		          COL_MATCH_KEY + " TEXT, " +
-		          COL_TEAM_KEY + " TEXT NOT NULL, ");
+		          COL_TEAM_NUMBER + " INTEGER NOT NULL, ");
 		for (int i = 5; i < data.size(); i++) {
 			ScoutingData sd = data.get(i);
 			sb.append(sd.sql());
 			sb.append(", ");
 		}
+		// FIXME: maybe add event ID somehow...
 		sb.append("UNIQUE (" + COL_SCOUTER + ", " +
 		                       COL_MATCH_KEY + ", " +
-		                       COL_TEAM_KEY +
+		                       COL_TEAM_NUMBER +
 		                 ") ON CONFLICT REPLACE)");
 		return sb.toString();
 	}
@@ -247,12 +248,12 @@ public class ScoutingRec implements BaseColumns {
 		Bundle b = new Bundle();
 		for (ScoutingData sd : data)
 			sd.summarize(b, v);
-		b.putString("title", b.getString(COL_TEAM_KEY) +
+		b.putString("title", "#" + b.getInt(COL_TEAM_NUMBER) +
 			" (" + v.size() + ")");
 		return b;
 	}
 
-	public void initContent(ContentValues cv, String team_key,
+	public void initContent(ContentValues cv, int team_num,
 		String match_key)
 	{
 		// Skip _ID column
@@ -261,7 +262,7 @@ public class ScoutingRec implements BaseColumns {
 			sd.init(cv);
 		}
 		cv.put(COL_MATCH_KEY, match_key);
-		cv.put(COL_TEAM_KEY, team_key);
+		cv.put(COL_TEAM_NUMBER, team_num);
 	}
 
 	public void updateContent(ContentValues cv, Cursor c) {

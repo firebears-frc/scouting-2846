@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  Douglas P Lau
+ * Copyright  2018-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to

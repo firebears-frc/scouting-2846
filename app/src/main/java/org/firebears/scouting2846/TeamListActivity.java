@@ -58,7 +58,6 @@ public class TeamListActivity extends AppCompatActivity {
 	static private final String[] COLS = {
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
-		Team.COL_KEY,
 		Team._ID,
 	};
 

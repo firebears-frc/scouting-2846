@@ -49,8 +49,8 @@ public class SummaryActivity extends AppCompatActivity {
 	static private final int OBS_LOADER_ID = 52;
 
 	/** Arguments for observations */
-	private final HashMap<String, ArrayList<Bundle>> observations =
-		new HashMap<String, ArrayList<Bundle>>();
+	private final HashMap<Integer, ArrayList<Bundle>> observations =
+		new HashMap<Integer, ArrayList<Bundle>>();
 
 	/** Summarized observation data */
 	private final ArrayList<Bundle> summary = new ArrayList<Bundle>();
@@ -100,21 +100,21 @@ public class SummaryActivity extends AppCompatActivity {
 	};
 
 	private void putObservation(Bundle b) {
-		String team_key = b.getString(REC.COL_TEAM_KEY);
-		ArrayList<Bundle> al = observations.get(team_key);
+		int team_num = b.getInt(REC.COL_TEAM_NUMBER);
+		ArrayList<Bundle> al = observations.get(team_num);
 		if (null == al) {
 			al = new ArrayList<Bundle>();
-			observations.put(team_key, al);
+			observations.put(team_num, al);
 		}
 		al.add(b);
-		Log.d(TAG, "team " + team_key + " count: " + al.size());
+		Log.d(TAG, "team #" + team_num + " count: " + al.size());
 	}
 
 	private void buildSummary() {
-		TreeSet<String> teams = new TreeSet<String>(
+		TreeSet<Integer> teams = new TreeSet<Integer>(
 			observations.keySet());
-		for (String team : teams) {
-			ArrayList<Bundle> v = observations.get(team);
+		for (Integer team_num : teams) {
+			ArrayList<Bundle> v = observations.get(team_num);
 			Log.d(TAG, "summary " + v.size());
 			Bundle b = REC.summarize(v);
 			summary.add(b);
@@ -150,7 +150,8 @@ public class SummaryActivity extends AppCompatActivity {
 		@Override
 		public CharSequence getPageTitle(int pos) {
 			Bundle b = summary.get(pos);
-			return b.getString(REC.COL_TEAM_KEY);
+			int team_num = b.getInt(REC.COL_TEAM_NUMBER);
+			return "" + team_num;
 		}
 	}
 }

@@ -60,7 +60,7 @@ abstract public class ScoutingLoaderHelper extends LoaderHelper {
 	private String getWhere(Bundle b) {
 		return REC.COL_SCOUTER + "=" + b.getInt(REC.COL_SCOUTER) + " AND "
 		     + REC.COL_MATCH_KEY + "='" + b.getString(REC.COL_MATCH_KEY) + "' AND "
-		     + Team.COL_KEY + "='" + b.getString(Team.COL_KEY) + "'";
+		     + Team.COL_TEAM_NUMBER + "=" + b.getInt(Team.COL_TEAM_NUMBER);
 	}
 
 	@Override
