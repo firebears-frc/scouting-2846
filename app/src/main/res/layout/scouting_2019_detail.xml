@@ -17,7 +17,7 @@
         android:id="@+id/team_lbl"
         grid:layout_columnSpan="4"
         android:gravity="center"
-	android:textStyle="bold"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/text_margin"/>
 
@@ -25,6 +25,14 @@
         style="@style/Divider"
         android:id="@+id/divider0"
         grid:layout_columnSpan="4"/>
+
+    <TextView
+        android:id="@+id/auto_vision"
+        android:text="@string/auto_vision"
+        android:textStyle="bold"
+        grid:layout_columnSpan="4"
+        android:gravity="center"
+        android:layout_width="match_parent"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/autonomous"
@@ -43,14 +51,6 @@
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
-        android:id="@+id/auto_lvl_1"
-        android:text="@string/auto_lvl_1"
-        grid:layout_columnSpan="4"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_lvl_2"
         android:text="@string/auto_lvl_2"
         grid:layout_columnSpan="4"
@@ -61,13 +61,14 @@
     <TextView
         android:id="@+id/auto_hatch"
         android:text="@string/auto_hatch"
-        grid:layout_columnSpan="4"
+        android:textStyle="bold"
         android:gravity="center"
+        grid:layout_columnSpan="4"
         android:layout_width="match_parent"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_hatch_lo"
-        android:text="@string/on_low"
+        android:text="@string/place_lo"
         grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -75,7 +76,7 @@
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_hatch_md"
-        android:text="@string/on_middle"
+        android:text="@string/place_md"
         grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -83,7 +84,7 @@
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_hatch_hi"
-        android:text="@string/on_high"
+        android:text="@string/place_hi"
         grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -92,13 +93,14 @@
     <TextView
         android:id="@+id/auto_cargo"
         android:text="@string/auto_cargo"
-        grid:layout_columnSpan="4"
+        android:textStyle="bold"
         android:gravity="center"
+        grid:layout_columnSpan="4"
         android:layout_width="match_parent"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_cargo_lo"
-        android:text="@string/on_low"
+        android:text="@string/place_lo"
         grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -106,7 +108,7 @@
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_cargo_md"
-        android:text="@string/on_middle"
+        android:text="@string/place_md"
         grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -114,7 +116,7 @@
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_cargo_hi"
-        android:text="@string/on_high"
+        android:text="@string/place_hi"
         grid:layout_columnSpan="4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -126,15 +128,45 @@
         grid:layout_columnSpan="4"/>
 
     <TextView
-        android:id="@+id/tele_hatch"
-        android:text="@string/tele_hatch"
+        android:id="@+id/teleop"
+        android:text="@string/teleop"
+        android:textStyle="bold"
         grid:layout_columnSpan="4"
         android:gravity="center"
         android:layout_width="match_parent"/>
 
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/defense"
+        android:text="@string/defense"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <TextView
+        android:id="@+id/tele_hatch"
+        android:text="@string/tele_hatch"
+        android:textStyle="bold"
+        android:gravity="center"
+        grid:layout_columnSpan="4"
+        android:layout_width="match_parent"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/hatch_human"
+        android:text="@string/from_human"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/hatch_floor"
+        android:text="@string/from_floor"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
     <TextView
         android:id="@+id/thl_txt"
-        android:text="@string/on_low"
+        android:text="@string/place_lo"
         grid:layout_gravity="fill"
         android:layout_width="1dp"
         android:layout_margin="@dimen/text_margin"/>
@@ -156,7 +188,7 @@
 
     <TextView
         android:id="@+id/thm_txt"
-        android:text="@string/on_middle"
+        android:text="@string/place_md"
         grid:layout_gravity="fill"
         android:layout_width="1dp"
         android:layout_margin="@dimen/text_margin"/>
@@ -178,7 +210,7 @@
 
     <TextView
         android:id="@+id/thh_txt"
-        android:text="@string/on_high"
+        android:text="@string/place_hi"
         grid:layout_gravity="fill"
         android:layout_width="1dp"
         android:layout_margin="@dimen/text_margin"/>
@@ -201,13 +233,28 @@
     <TextView
         android:id="@+id/tele_cargo"
         android:text="@string/tele_cargo"
-        grid:layout_columnSpan="4"
+        android:textStyle="bold"
         android:gravity="center"
+        grid:layout_columnSpan="4"
         android:layout_width="match_parent"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/cargo_human"
+        android:text="@string/from_human"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/cargo_floor"
+        android:text="@string/from_floor"
+        grid:layout_columnSpan="4"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/text_margin"/>
 
     <TextView
         android:id="@+id/tcl_txt"
-        android:text="@string/on_low"
+        android:text="@string/place_lo"
         grid:layout_gravity="fill"
         android:layout_width="1dp"
         android:layout_margin="@dimen/text_margin"/>
@@ -229,7 +276,7 @@
 
     <TextView
         android:id="@+id/tcm_txt"
-        android:text="@string/on_middle"
+        android:text="@string/place_md"
         grid:layout_gravity="fill"
         android:layout_width="1dp"
         android:layout_margin="@dimen/text_margin"/>
@@ -251,7 +298,7 @@
 
     <TextView
         android:id="@+id/tch_txt"
-        android:text="@string/on_high"
+        android:text="@string/place_hi"
         grid:layout_gravity="fill"
         android:layout_width="1dp"
         android:layout_margin="@dimen/text_margin"/>
@@ -271,41 +318,6 @@
         android:text="@string/plus"
         android:minWidth="50dp"/>
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/tele_hatch_human"
-        android:text="@string/tele_hatch_human"
-        grid:layout_columnSpan="4"
-        android:layout_width="fill_parent"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/tele_hatch_floor"
-        android:text="@string/tele_hatch_floor"
-        grid:layout_columnSpan="4"
-        android:layout_width="fill_parent"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/tele_cargo_human"
-        android:text="@string/tele_cargo_human"
-        grid:layout_columnSpan="4"
-        android:layout_width="fill_parent"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/tele_cargo_floor"
-        android:text="@string/tele_cargo_floor"
-        grid:layout_columnSpan="4"
-        android:layout_width="fill_parent"
-        android:layout_margin="@dimen/text_margin"/>
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/defense"
-        android:text="@string/defense"
-        grid:layout_columnSpan="4"
-        android:layout_width="fill_parent"
-        android:layout_margin="@dimen/text_margin"/>
-
     <View
         style="@style/Divider"
         android:id="@+id/divider2"
@@ -314,6 +326,7 @@
     <TextView
         android:id="@+id/endgame"
         android:text="@string/endgame"
+        android:textStyle="bold"
         grid:layout_columnSpan="4"
         android:gravity="center"
         android:layout_width="match_parent"

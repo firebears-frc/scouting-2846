@@ -119,27 +119,23 @@ public class ScoutingRec implements BaseColumns {
 			R.id.auto_cargo_md));
 		Y2019.add(new ScoutingBool("auto_cargo_hi",
 			R.id.auto_cargo_hi));
+		Y2019.add(new ScoutingBool("defense", R.id.defense));
+		Y2019.add(new ScoutingBool("hatch_human", R.id.hatch_human));
+		Y2019.add(new ScoutingBool("hatch_floor", R.id.hatch_floor));
 		Y2019.add(new ScoutingInt("tele_hatch_lo", R.id.tele_hatch_lo,
 			R.id.thl_minus, R.id.thl_plus));
 		Y2019.add(new ScoutingInt("tele_hatch_md", R.id.tele_hatch_md,
 			R.id.thm_minus, R.id.thm_plus));
 		Y2019.add(new ScoutingInt("tele_hatch_hi", R.id.tele_hatch_hi,
 			R.id.thh_minus, R.id.thh_plus));
+		Y2019.add(new ScoutingBool("cargo_human", R.id.cargo_human));
+		Y2019.add(new ScoutingBool("cargo_floor", R.id.cargo_floor));
 		Y2019.add(new ScoutingInt("tele_cargo_lo", R.id.tele_cargo_lo,
 			R.id.tcl_minus, R.id.tcl_plus));
 		Y2019.add(new ScoutingInt("tele_cargo_md", R.id.tele_cargo_md,
 			R.id.tcm_minus, R.id.tcm_plus));
 		Y2019.add(new ScoutingInt("tele_cargo_hi", R.id.tele_cargo_hi,
 			R.id.tch_minus, R.id.tch_plus));
-		Y2019.add(new ScoutingBool("tele_cargo_human",
-			R.id.tele_cargo_human));
-		Y2019.add(new ScoutingBool("tele_cargo_floor",
-			R.id.tele_cargo_floor));
-		Y2019.add(new ScoutingBool("tele_hatch_human",
-			R.id.tele_hatch_human));
-		Y2019.add(new ScoutingBool("tele_hatch_floor",
-			R.id.tele_hatch_floor));
-		Y2019.add(new ScoutingBool("defense", R.id.defense));
 		Y2019.add(new ScoutingBool("climb_lvl_1", R.id.climb_lvl_1));
 		Y2019.add(new ScoutingBool("climb_lvl_2", R.id.climb_lvl_2));
 		Y2019.add(new ScoutingBool("climb_lvl_3", R.id.climb_lvl_3));

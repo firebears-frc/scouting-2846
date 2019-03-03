@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
  * Scouting string data.
  */
 public class ScoutingStr implements ScoutingData {
+
+	static private final String TAG = "ScoutingStr";
 
 	/** Column name */
 	private final String col;
@@ -114,7 +117,10 @@ public class ScoutingStr implements ScoutingData {
 		if (res > 0) {
 			Object v = b.get(col);
 			TextView tv = (TextView) rv.findViewById(res);
-			tv.setText((v != null) ? v.toString() : "");
+			if (tv != null)
+				tv.setText((v != null) ? v.toString() : "");
+			else
+				Log.d(TAG, "missing resource for:" + col);
 		}
 	}
 

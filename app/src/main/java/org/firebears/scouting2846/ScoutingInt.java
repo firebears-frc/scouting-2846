@@ -140,8 +140,12 @@ public class ScoutingInt implements ScoutingData {
 	public void init(Bundle b, View rv) {
 		if (res > 0) {
 			Object v = b.get(col);
-			TextView tv = (TextView) rv.findViewById(res);
-			tv.setText((v != null) ? v.toString() : "");
+			Object o = (TextView) rv.findViewById(res);
+			if (o instanceof TextView) {
+				TextView tv = (TextView) o;
+				tv.setText((v != null) ? v.toString() : "");
+			} else
+				Log.d(TAG, "missing resource for:" + col);
 		}
 	}
 

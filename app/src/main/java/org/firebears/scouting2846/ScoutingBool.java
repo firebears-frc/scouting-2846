@@ -1,5 +1,5 @@
 /*
- * Copyright  2018  Douglas P Lau
+ * Copyright  2018-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -26,6 +26,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import org.json.JSONException;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
  * Scouting integer data.
  */
 public class ScoutingBool implements ScoutingData {
+
+	static private final String TAG = "ScoutingBool";
 
 	/** Column name */
 	private final String col;
@@ -129,7 +132,8 @@ public class ScoutingBool implements ScoutingData {
 					tv.setText((vi > 0) ? "Yes" : "No");
 				} else
 					tv.setText(ov.toString());
-			}
+			} else
+				Log.d(TAG, "missing resource for:" + col);
 		}
 	}
 
