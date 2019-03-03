@@ -78,6 +78,7 @@ abstract public class TeamLoaderHelper extends LoaderHelper {
 		if (c.getCount() == 1) {
 			c.moveToFirst();
 			onLoaded(c);
-		}
+		} else
+			onLoaded(null);
 	}
 }

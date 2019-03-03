@@ -49,6 +49,7 @@ public class TeamListActivity extends AppCompatActivity {
 
 	static private final int REQ_TEAM = 1;
 	static private final int REQ_BLUETOOTH = 2;
+	static private final int REQ_DETAIL = 3;
 	static public final String ERROR_CODE = "error_code";
 
 	/** Loader ID */
@@ -128,7 +129,7 @@ public class TeamListActivity extends AppCompatActivity {
 	private void startDetailActivity(int team_num) {
 		Intent intent = new Intent(this, TeamDetailActivity.class);
 		intent.putExtra(Team.COL_TEAM_NUMBER, team_num);
-		startActivity(intent);
+		startActivityForResult(intent, REQ_DETAIL);
 	}
 
 	@Override
@@ -158,6 +159,9 @@ public class TeamListActivity extends AppCompatActivity {
 			break;
 		case REQ_BLUETOOTH:
 			onBluetoothResult(rc, data);
+			break;
+		case REQ_DETAIL:
+			onDetailResult(rc, data);
 			break;
 		}
 	}
@@ -193,6 +197,17 @@ public class TeamListActivity extends AppCompatActivity {
 			String address = data.getStringExtra(
 				SelectDeviceActivity.DEVICE_ADDRESS);
 			new BluetoothSyncTask(this, address).execute();
+			break;
+		case RESULT_CANCELED:
+			int res = data.getIntExtra(ERROR_CODE, 0);
+			showSnack(res);
+			break;
+		}
+	}
+
+	private void onDetailResult(int rc, Intent data) {
+		switch (rc) {
+		case RESULT_OK:
 			break;
 		case RESULT_CANCELED:
 			int res = data.getIntExtra(ERROR_CODE, 0);

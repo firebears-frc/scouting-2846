@@ -21,8 +21,10 @@
  */
 package org.firebears.scouting2846;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +67,18 @@ public class TeamDetailFragment extends Fragment {
 	}
 
 	private void onTeamLoaded(Cursor c) {
+		if (c == null) {
+			Log.d(TAG, "team not found");
+			Activity a = getActivity();
+			if (a != null) {
+				Intent intent = new Intent();
+				intent.putExtra(TeamListActivity.ERROR_CODE,
+					R.string.invalid_number);
+				a.setResult(Activity.RESULT_CANCELED, intent);
+				a.finish();
+			}
+			return;
+		}
 		Log.d(TAG, "team loaded");
 		if (null == root_view)
 			return;

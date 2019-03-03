@@ -24,6 +24,7 @@ package org.firebears.scouting2846;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -34,6 +35,8 @@ import android.widget.TextView;
  * An activity to select a team.
  */
 public class SelectTeamActivity extends Activity {
+
+	static private final String TAG = "SelectTeamActivity";
 
 	static public final String TEAM_NUMBER = "team_number";
 
@@ -61,9 +64,10 @@ public class SelectTeamActivity extends Activity {
 
 	private void onSelected(String team) {
 		try {
-			int team_number = Integer.parseInt(team);
+			int team_num = Integer.parseInt(team);
 			Intent intent = new Intent();
-			intent.putExtra(TEAM_NUMBER, team_number);
+			intent.putExtra(TEAM_NUMBER, team_num);
+			Log.d(TAG, "team #" + team_num);
 			setResult(Activity.RESULT_OK, intent);
 		} catch (NumberFormatException e) {
 			Intent intent = new Intent();
