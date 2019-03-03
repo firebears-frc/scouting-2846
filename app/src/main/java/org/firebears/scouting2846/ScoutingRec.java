@@ -106,7 +106,6 @@ public class ScoutingRec implements BaseColumns {
 	static {
 		Y2019.add(new ScoutingBool("autonomous", R.id.autonomous));
 		Y2019.add(new ScoutingBool("vision_driver", R.id.vision_driver));
-		Y2019.add(new ScoutingBool("auto_lvl_1", R.id.auto_lvl_1));
 		Y2019.add(new ScoutingBool("auto_lvl_2", R.id.auto_lvl_2));
 		Y2019.add(new ScoutingBool("auto_hatch_lo",
 			R.id.auto_hatch_lo));
