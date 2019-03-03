@@ -26,11 +26,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 
 /**
  * Team loader helper.
  */
 abstract public class TeamLoaderHelper extends LoaderHelper {
+
+	static private final String TAG = "TeamLoaderHelper";
 
 	/** Columns to retrieve from the loader */
 	static private final String[] COLS = {
@@ -55,17 +58,19 @@ abstract public class TeamLoaderHelper extends LoaderHelper {
 	/** Create a team loader */
 	@Override
 	protected Loader<Cursor> createLoader(Bundle b) {
-		if (b.containsKey(Team.COL_KEY)) {
-			String key = b.getString(Team.COL_KEY);
+		if (b.containsKey(Team.COL_TEAM_NUMBER)) {
+			int team_num = b.getInt(Team.COL_TEAM_NUMBER);
+			Log.d(TAG, "team #" + team_num);
 			return new CursorLoader(context, Team.CONTENT_URI,
-				COLS, Team.COL_KEY + "='" + key + "'", null,
-				null);
+				COLS, Team.COL_TEAM_NUMBER + "=" + team_num,
+				null, null);
 		} else
 			return null;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+		Log.d(TAG, "load finished: " + c.getCount());
 		if (c.getCount() == 1) {
 			c.moveToFirst();
 			onLoaded(c);

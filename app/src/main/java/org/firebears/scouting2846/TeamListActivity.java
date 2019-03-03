@@ -49,6 +49,7 @@ public class TeamListActivity extends AppCompatActivity {
 
 	static private final int REQ_TEAM = 1;
 	static private final int REQ_BLUETOOTH = 2;
+	static public final String ERROR_CODE = "error_code";
 
 	/** Loader ID */
 	static private final int TEAM_LOADER_ID = 39;
@@ -121,13 +122,13 @@ public class TeamListActivity extends AppCompatActivity {
 
 	/** Start team detail activity */
 	private void startDetailActivity(Cursor c) {
-		String team = c.getString(c.getColumnIndex(Team.COL_KEY));
-		startDetailActivity(team);
+		int team_num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
+		startDetailActivity(team_num);
 	}
 
-	private void startDetailActivity(String team) {
+	private void startDetailActivity(int team_num) {
 		Intent intent = new Intent(this, TeamDetailActivity.class);
-		intent.putExtra(Team.COL_KEY, team);
+		intent.putExtra(Team.COL_TEAM_NUMBER, team_num);
 		startActivity(intent);
 	}
 
@@ -171,10 +172,12 @@ public class TeamListActivity extends AppCompatActivity {
 	private void onTeamResult(int rc, Intent data) {
 		switch (rc) {
 		case RESULT_OK:
-			String team = data.getStringExtra(
-				SelectTeamActivity.TEAM_NUMBER);
-			Log.d(TAG, "team #" + team);
-			startDetailActivity(team);
+			int team_num = data.getIntExtra(
+				SelectTeamActivity.TEAM_NUMBER, 0);
+			if (team_num != 0) {
+				Log.d(TAG, "team #" + team_num);
+				startDetailActivity(team_num);
+			}
 			break;
 		}
 	}
@@ -193,8 +196,7 @@ public class TeamListActivity extends AppCompatActivity {
 			new BluetoothSyncTask(this, address).execute();
 			break;
 		case RESULT_CANCELED:
-			int res = data.getIntExtra(
-				SelectDeviceActivity.ERROR_CODE, 0);
+			int res = data.getIntExtra(ERROR_CODE, 0);
 			showSnack(res);
 			break;
 		}

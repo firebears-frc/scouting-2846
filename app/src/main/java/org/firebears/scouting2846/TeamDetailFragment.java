@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.widget.Toolbar;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ import java.util.ArrayList;
  * A fragment representing a single Team detail screen.
  */
 public class TeamDetailFragment extends Fragment {
+
+	static private final String TAG = "TeamDetailFragment";
 
 	/** Required constructor */
 	public TeamDetailFragment() { }
@@ -62,16 +65,17 @@ public class TeamDetailFragment extends Fragment {
 	}
 
 	private void onTeamLoaded(Cursor c) {
+		Log.d(TAG, "team loaded");
 		if (null == root_view)
 			return;
 		Toolbar bar = (Toolbar) getActivity().findViewById(
 			R.id.detail_toolbar);
 		if (bar != null) {
-			int num = c.getInt(c.getColumnIndex(
+			int team_num = c.getInt(c.getColumnIndex(
 				Team.COL_TEAM_NUMBER));
 			String nick = c.getString(c.getColumnIndex(
 				Team.COL_NICKNAME));
-			bar.setTitle("" + num + ' ' + nick);
+			bar.setTitle("" + team_num + ' ' + nick);
 		}
 		TextView tv = setViewText(R.id.team_website, c,
 			Team.COL_WEBSITE);

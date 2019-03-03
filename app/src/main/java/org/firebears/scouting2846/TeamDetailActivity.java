@@ -59,7 +59,7 @@ public class TeamDetailActivity extends AppCompatActivity {
 	/** Create arguments for fragment */
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
-		b.putString(Team.COL_KEY, getTeamKey());
+		b.putInt(Team.COL_TEAM_NUMBER, getTeamNumber());
 		return b;
 	}
 
@@ -72,14 +72,14 @@ public class TeamDetailActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private String getTeamKey() {
-		return getIntent().getStringExtra(Team.COL_KEY);
+	private int getTeamNumber() {
+		return getIntent().getIntExtra(Team.COL_TEAM_NUMBER, 0);
 	}
 
 	public void startScouting(View v) {
 		Intent intent = new Intent(this, ScoutingActivity.class);
 		intent.putExtra(ScoutingRec.COL_MATCH_KEY, getMatch());
-		intent.putExtra(Team.COL_KEY, getTeamKey());
+		intent.putExtra(Team.COL_TEAM_NUMBER, getTeamNumber());
 		startActivity(intent);
 	}
 
@@ -99,7 +99,7 @@ public class TeamDetailActivity extends AppCompatActivity {
 
 	public void startBrowse(View v) {
 		Intent intent = new Intent(this, BrowseActivity.class);
-		intent.putExtra(Team.COL_KEY, getTeamKey());
+		intent.putExtra(Team.COL_TEAM_NUMBER, getTeamNumber());
 		startActivity(intent);
 	}
 }

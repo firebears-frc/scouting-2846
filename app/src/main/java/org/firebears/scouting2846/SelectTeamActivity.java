@@ -60,9 +60,17 @@ public class SelectTeamActivity extends Activity {
 	};
 
 	private void onSelected(String team) {
-		Intent intent = new Intent();
-		intent.putExtra(TEAM_NUMBER, team);
-		setResult(Activity.RESULT_OK, intent);
+		try {
+			int team_number = Integer.parseInt(team);
+			Intent intent = new Intent();
+			intent.putExtra(TEAM_NUMBER, team_number);
+			setResult(Activity.RESULT_OK, intent);
+		} catch (NumberFormatException e) {
+			Intent intent = new Intent();
+			intent.putExtra(TeamListActivity.ERROR_CODE,
+				R.string.invalid_number);
+			setResult(RESULT_CANCELED, intent);
+		}
 		finish();
 	}
 

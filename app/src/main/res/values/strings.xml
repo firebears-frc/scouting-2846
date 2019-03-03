@@ -10,6 +10,7 @@
     <string name="bt_required">No bluetooth adapter</string>
     <string name="bt_disabled">Please enable bluetooth</string>
     <string name="bt_no_devices">Please pair bluetooth device</string>
+    <string name="invalid_number">Invalid team number</string>
     <string name="teams">Teams</string>
     <string name="summary">Summary</string>
     <string name="rookie_year">Rookie year</string>
