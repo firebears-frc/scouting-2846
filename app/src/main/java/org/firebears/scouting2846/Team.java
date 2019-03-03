@@ -46,39 +46,4 @@ public class Team implements BaseColumns {
 
 	static public final Uri CONTENT_URI = OurContentProvider.buildUri(
 		TABLE_NAME);
-
-	/** Columns required in team table */
-	static private final String[] TEAM_REQ = {
-		"key",
-		"team_number",
-		"name",
-		"nickname",
-		"locality",
-		"location",
-		"rookie_year",
-	};
-
-	/** Parse a JSON team object from TBA */
-	static public ContentValues parse(JSONObject tm) {
-		for (String col: TEAM_REQ) {
-			if (tm.isNull(col))
-				return null;
-		}
-		ContentValues cv = new ContentValues();
-		cv.put(COL_KEY, tm.optString("key"));
-		cv.put(COL_TEAM_NUMBER, tm.optInt("team_number"));
-		cv.put(COL_NICKNAME, tm.optString("nickname"));
-		if (tm.has("website"))
-			cv.put(COL_WEBSITE, tm.optString("website"));
-		cv.put(COL_LOCALITY, tm.optString("locality"));
-		if (tm.has("region"))
-			cv.put(COL_REGION, tm.optString("region"));
-		if (tm.has("country_name"))
-			cv.put(COL_COUNTRY, tm.optString("country_name"));
-		cv.put(COL_LOCATION, tm.optString("location"));
-		cv.put(COL_ROOKIE_YEAR, tm.optInt("rookie_year"));
-		if (tm.has("motto"))
-			cv.put(COL_MOTTO, tm.optString("motto"));
-		return cv;
-	}
 }

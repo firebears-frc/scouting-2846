@@ -39,6 +39,10 @@ abstract public class TeamLoaderHelper extends LoaderHelper {
 	static private final String[] COLS = {
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
+		Team.COL_LOCALITY, // city
+		Team.COL_REGION,
+		Team.COL_COUNTRY,
+		Team.COL_LOCATION,
 		Team.COL_WEBSITE,
 		Team.COL_ROOKIE_YEAR,
 		Team.COL_MOTTO,

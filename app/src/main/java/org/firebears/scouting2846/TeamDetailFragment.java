@@ -77,6 +77,9 @@ public class TeamDetailFragment extends Fragment {
 				Team.COL_NICKNAME));
 			bar.setTitle("" + team_num + ' ' + nick);
 		}
+		setViewText(R.id.locality, c, Team.COL_LOCALITY);
+		setViewText(R.id.region, c, Team.COL_REGION);
+		setViewText(R.id.country, c, Team.COL_COUNTRY);
 		TextView tv = setViewText(R.id.team_website, c,
 			Team.COL_WEBSITE);
 		Linkify.addLinks(tv, Linkify.WEB_URLS);
