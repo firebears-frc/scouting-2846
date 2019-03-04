@@ -67,6 +67,7 @@
     <string name="auto_cargo">Cargo (Auto)</string>
     <string name="tele_hatch">Hatch (Teleop)</string>
     <string name="tele_cargo">Cargo (Teleop)</string>
+    <string name="cargo_ship">Cargo ship</string>
     <string name="place_lo">Place low</string>
     <string name="place_md">Place middle</string>
     <string name="place_hi">Place high</string>

@@ -362,11 +362,27 @@
         android:layout_toRightOf="@id/cff_txt"/>
 
     <TextView
+        android:id="@+id/tcs_txt"
+        android:text="@string/cargo_ship"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cff_txt"/>
+
+    <TextView
+        android:id="@+id/cargo_ship"
+        android:text="0"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cargo_floor"
+        android:layout_toRightOf="@id/tcs_txt"/>
+
+    <TextView
         android:id="@+id/tcl_txt"
         android:text="@string/place_lo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cff_txt"/>
+        android:layout_below="@id/tcs_txt"/>
 
     <TextView
         android:id="@+id/tele_cargo_lo"
@@ -374,7 +390,7 @@
         android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cargo_floor"
+        android:layout_below="@id/cargo_ship"
         android:layout_toRightOf="@id/tcl_txt"/>
 
     <TextView

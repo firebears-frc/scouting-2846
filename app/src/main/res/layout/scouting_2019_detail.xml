@@ -253,6 +253,28 @@
         android:layout_margin="@dimen/text_margin"/>
 
     <TextView
+        android:id="@+id/tcs_txt"
+        android:text="@string/cargo_ship"
+        grid:layout_gravity="fill"
+        android:layout_width="1dp"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tcs_minus"
+        android:text="@string/minus"
+        android:minWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/cargo_ship"
+        android:text="0"
+        android:layout_margin="@dimen/text_margin"/>
+
+    <Button
+        android:id="@+id/tcs_plus"
+        android:text="@string/plus"
+        android:minWidth="50dp"/>
+
+    <TextView
         android:id="@+id/tcl_txt"
         android:text="@string/place_lo"
         grid:layout_gravity="fill"

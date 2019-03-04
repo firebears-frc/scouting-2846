@@ -130,6 +130,8 @@ public class ScoutingRec implements BaseColumns {
 			R.id.thh_minus, R.id.thh_plus));
 		Y2019.add(new ScoutingBool("cargo_human", R.id.cargo_human));
 		Y2019.add(new ScoutingBool("cargo_floor", R.id.cargo_floor));
+		Y2019.add(new ScoutingInt("cargo_ship", R.id.cargo_ship,
+			R.id.tcs_minus, R.id.tcs_plus));
 		Y2019.add(new ScoutingInt("tele_cargo_lo", R.id.tele_cargo_lo,
 			R.id.tcl_minus, R.id.tcl_plus));
 		Y2019.add(new ScoutingInt("tele_cargo_md", R.id.tele_cargo_md,
