@@ -166,6 +166,7 @@ public class TeamListActivity extends AppCompatActivity {
 			onDetailResult(rc, data);
 			break;
 		}
+		restartLoader();
 	}
 
 	private boolean onSelectTeamSelected() {
@@ -226,7 +227,6 @@ public class TeamListActivity extends AppCompatActivity {
 			}
 			break;
 		}
-		restartLoader();
 	}
 
 	/** Show a snackbar */
