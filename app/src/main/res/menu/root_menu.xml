@@ -6,6 +6,9 @@
         android:id="@+id/action_select_team"
         android:title="@string/action_select_team"/>
     <item
+        android:id="@+id/action_summary"
+        android:title="@string/action_summary"/>
+    <item
         android:id="@+id/action_bt_sync"
         android:title="@string/action_bt_sync"/>
 </menu>

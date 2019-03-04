@@ -68,7 +68,7 @@ public class SummaryActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse);
-		// FIXME: Load list of matches for event
+		// FIXME: Load list of matches for "event"
 		LoaderManager lm = getSupportLoaderManager();
 		lm.initLoader(OBS_LOADER_ID, null, cb);
 	}
@@ -88,7 +88,7 @@ public class SummaryActivity extends AppCompatActivity {
 			while (c.moveToNext()) {
 				Bundle b = new Bundle();
 				REC.updateBundle(b, c);
-				// FIXME: only from current event
+				// FIXME: only from selected week
 				putObservation(b);
 			}
 			buildSummary();
@@ -116,7 +116,7 @@ public class SummaryActivity extends AppCompatActivity {
 		for (Integer team_num : teams) {
 			ArrayList<Bundle> v = observations.get(team_num);
 			Log.d(TAG, "summary " + v.size());
-			Bundle b = REC.summarize(v);
+			Bundle b = REC.summarize(team_num, v);
 			summary.add(b);
 		}
 	}

@@ -239,12 +239,15 @@ public class ScoutingRec implements BaseColumns {
 			sd.update(b, c);
 	}
 
-	public Bundle summarize(ArrayList<Bundle> v) {
+	public Bundle summarize(int team_num, ArrayList<Bundle> v) {
 		Bundle b = new Bundle();
 		for (ScoutingData sd : data)
 			sd.summarize(b, v);
-		b.putString("title", "#" + b.getInt(COL_TEAM_NUMBER) +
-			" (" + v.size() + ")");
+		b.putInt(COL_TEAM_NUMBER, team_num);
+		String title = "" + v.size() + " observation";
+		if (v.size() != 1)
+			title = title + "s";
+		b.putString("title", title);
 		return b;
 	}
 

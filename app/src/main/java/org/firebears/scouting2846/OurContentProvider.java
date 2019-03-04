@@ -65,9 +65,11 @@ public class OurContentProvider extends ContentProvider {
 		String suri = uri.toString();
 		if (suri.startsWith(Param.CONTENT_URI.toString()))
 			return Param.TABLE_NAME;
-		else if (suri.startsWith(Team.CONTENT_URI.toString())) {
+		else if (suri.startsWith(Team.CONTENT_URI.toString()))
 			return Team.TABLE_NAME;
-		} else if (suri.startsWith(ScoutingRec.REC.getContentUri()
+		else if (suri.startsWith(Team.OBS_CONTENT_URI.toString()))
+			return Team.OBS_VIEW_NAME;
+		else if (suri.startsWith(ScoutingRec.REC.getContentUri()
 			.toString()))
 		{
 			return ScoutingRec.REC.table_name;

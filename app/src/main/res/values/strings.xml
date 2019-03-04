@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Scouting 2846!</string>
     <string name="title_team_list">Team List</string>
-    <string name="action_bt_sync">Bluetooth Sync</string>
     <string name="action_select_team">Select Team</string>
+    <string name="action_summary">Team Summary</string>
+    <string name="action_bt_sync">Bluetooth Sync</string>
     <string name="team_number">Team Number</string>
     <string name="sync_complete">Sync Complete</string>
     <string name="sync_failed">Sync Failed</string>

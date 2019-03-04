@@ -33,6 +33,7 @@ import org.json.JSONObject;
 public class Team implements BaseColumns {
 
 	static public final String TABLE_NAME = "team";
+	static public final String OBS_VIEW_NAME = "obs_" + TABLE_NAME;
 	static public final String COL_KEY = "tm_key";
 	static public final String COL_TEAM_NUMBER = "team_number";
 	static public final String COL_NICKNAME = "nickname";
@@ -46,4 +47,6 @@ public class Team implements BaseColumns {
 
 	static public final Uri CONTENT_URI = OurContentProvider.buildUri(
 		TABLE_NAME);
+	static public final Uri OBS_CONTENT_URI = OurContentProvider.buildUri(
+		OBS_VIEW_NAME);
 }

@@ -45,6 +45,28 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		"DROP TABLE IF EXISTS " + Param.TABLE_NAME;
 
 	/** SQL statement to create team table */
+	static private final String SQL_TEAM_OBS =
+		"CREATE VIEW " + Team.OBS_VIEW_NAME + " AS SELECT " +
+		"t." + Team._ID + ", " +
+		Team.COL_KEY + ", " +
+		"t." + Team.COL_TEAM_NUMBER + ", " +
+		Team.COL_NICKNAME + ", " +
+		Team.COL_WEBSITE + ", " +
+		Team.COL_LOCALITY + ", " +
+		Team.COL_REGION + ", " +
+		Team.COL_COUNTRY + ", " +
+		Team.COL_LOCATION + ", " +
+		Team.COL_ROOKIE_YEAR + ", " +
+		Team.COL_MOTTO +
+		" FROM " + Team.TABLE_NAME + " t INNER JOIN " +
+		ScoutingRec.REC.table_name + " o ON t." +
+		Team.COL_TEAM_NUMBER + " = o." + ScoutingRec.REC.COL_TEAM_NUMBER;
+
+	/** SQL statement to drop team table */
+	static private final String SQL_DROP_TEAMS =
+		"DROP TABLE IF EXISTS " + Team.TABLE_NAME;
+
+	/** SQL statement to create team / observation view */
 	static private final String SQL_CREATE_TEAMS =
 		"CREATE TABLE " + Team.TABLE_NAME + " (" +
 		Team._ID +		" INTEGER PRIMARY KEY autoincrement, "+
@@ -58,10 +80,6 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		Team.COL_LOCATION +	" TEXT, " +
 		Team.COL_ROOKIE_YEAR +	" INTEGER, " +
 		Team.COL_MOTTO +	" TEXT)";
-
-	/** SQL statement to drop team table */
-	static private final String SQL_DROP_TEAMS =
-		"DROP TABLE IF EXISTS " + Team.TABLE_NAME;
 
 	/** Create our DB helper */
 	public OurDbHelper(Context ctx) {
@@ -93,6 +111,7 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		db.execSQL(SQL_INSERT_TEAMS_14);
 		db.execSQL(SQL_INSERT_TEAMS_15);
 		db.execSQL(ScoutingRec.REC.sqlCreate());
+		db.execSQL(SQL_TEAM_OBS);
 		initParams(db);
 	}
 

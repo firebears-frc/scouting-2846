@@ -88,7 +88,7 @@ public class TeamListActivity extends AppCompatActivity {
 	/** Create a loader for teams */
 	private Loader<Cursor> createLoader(Bundle b) {
 		return new CursorLoader(TeamListActivity.this,
-			Team.CONTENT_URI, COLS, null, null,
+			Team.OBS_CONTENT_URI, COLS, null, null,
 			Team.COL_TEAM_NUMBER);
 	}
 
@@ -116,7 +116,7 @@ public class TeamListActivity extends AppCompatActivity {
 		startService(new Intent(this, BluetoothSyncService.class));
 	}
 
-	public void restartLoader() {
+	private void restartLoader() {
 		getLoaderManager().restartLoader(TEAM_LOADER_ID, null, cb);
 	}
 
@@ -144,6 +144,8 @@ public class TeamListActivity extends AppCompatActivity {
 		switch (item.getItemId()) {
 		case R.id.action_select_team:
 			return onSelectTeamSelected();
+		case R.id.action_summary:
+			return onSummarySelected();
 		case R.id.action_bt_sync:
 			return onBluetoothSyncSelected();
 		default:
@@ -185,6 +187,14 @@ public class TeamListActivity extends AppCompatActivity {
 		}
 	}
 
+	private boolean onSummarySelected() {
+		int week = 0; // FIXME
+		Intent intent = new Intent(this, SummaryActivity.class);
+		intent.putExtra("week", week);
+		startActivity(intent);
+		return true;
+	}
+
 	private boolean onBluetoothSyncSelected() {
 		Intent intent = new Intent(this, SelectDeviceActivity.class);
 		startActivityForResult(intent, REQ_BLUETOOTH);
@@ -216,6 +226,7 @@ public class TeamListActivity extends AppCompatActivity {
 			}
 			break;
 		}
+		restartLoader();
 	}
 
 	/** Show a snackbar */
