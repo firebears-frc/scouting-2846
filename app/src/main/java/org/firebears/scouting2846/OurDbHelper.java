@@ -58,9 +58,11 @@ public class OurDbHelper extends SQLiteOpenHelper {
 		Team.COL_LOCATION + ", " +
 		Team.COL_ROOKIE_YEAR + ", " +
 		Team.COL_MOTTO +
-		" FROM " + Team.TABLE_NAME + " t INNER JOIN " +
+		" FROM " + Team.TABLE_NAME + " t JOIN " +
 		ScoutingRec.REC.table_name + " o ON t." +
-		Team.COL_TEAM_NUMBER + " = o." + ScoutingRec.REC.COL_TEAM_NUMBER;
+		Team.COL_TEAM_NUMBER + " = o." +
+		ScoutingRec.REC.COL_TEAM_NUMBER + " GROUP BY o." +
+		ScoutingRec.REC.COL_TEAM_NUMBER;
 
 	/** SQL statement to drop team table */
 	static private final String SQL_DROP_TEAMS =
