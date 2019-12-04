@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,14 +21,15 @@
  */
 package org.firebears.scouting2846;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.support.v4.app.LoaderManager;
 import android.support.v7.widget.Toolbar;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,21 +43,7 @@ import java.util.ArrayList;
  */
 public class TeamDetailFragment extends Fragment {
 
-	/** Argument for team id */
-	static public final String ARG_TEAM_KEY = "team_key";
-
-	/** Team detail loader ID */
-	static private final int TEAM_DETAIL_LOADER_ID = 40;
-
-	/** Columns to retrieve from the loader */
-	static private final String[] COLS = {
-		Team.COL_NAME,
-		Team.COL_TEAM_NUMBER,
-		Team.COL_NICKNAME,
-		Team.COL_WEBSITE,
-		Team.COL_ROOKIE_YEAR,
-		Team.COL_MOTTO,
-	};
+	static private final String TAG = "TeamDetailFragment";
 
 	/** Required constructor */
 	public TeamDetailFragment() { }
@@ -64,48 +51,60 @@ public class TeamDetailFragment extends Fragment {
 	/** Root view */
 	private View root_view;
 
-	/** Callbacks for loader */
-	private final LoaderCallbacks<Cursor> cb =
-		new LoaderCallbacks<Cursor>()
-	{
-		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (TEAM_DETAIL_LOADER_ID == id)
-			      ? createLoader(b)
-			      : null;
-		}
-		@Override
-		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-			if (null == root_view || c.getCount() != 1)
-				return;
-			c.moveToFirst();
-			Toolbar bar = (Toolbar) getActivity().findViewById(
-				R.id.detail_toolbar);
-			if (bar != null) {
-				int num = c.getInt(c.getColumnIndex(
-					Team.COL_TEAM_NUMBER));
-				String nick = c.getString(c.getColumnIndex(
-					Team.COL_NICKNAME));
-				bar.setTitle("" + num + ' ' + nick);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		addLoaderCallbacks(new TeamLoaderHelper(getContext()) {
+			protected void onLoaded(Cursor c) {
+				onTeamLoaded(c);
 			}
-			TextView tv = setViewText(R.id.team_website, c,
-				Team.COL_WEBSITE);
-			Linkify.addLinks(tv, Linkify.WEB_URLS);
-			tv = (TextView) root_view.findViewById(
-				R.id.team_rookie_year);
-			String t = c.getString(c.getColumnIndex(
-				Team.COL_ROOKIE_YEAR));
-			if (t != null) {
-				tv.setText(getText(R.string.rookie_year) +
-					" " + t);
+		});
+	}
+
+	private void addLoaderCallbacks(LoaderHelper helper) {
+		LoaderManager lm = getLoaderManager();
+		lm.initLoader(helper.getId(), getArguments(), helper);
+	}
+
+	private void onTeamLoaded(Cursor c) {
+		if (c == null) {
+			Log.d(TAG, "team not found");
+			Activity a = getActivity();
+			if (a != null) {
+				Intent intent = new Intent();
+				intent.putExtra(TeamListActivity.ERROR_CODE,
+					R.string.invalid_number);
+				a.setResult(Activity.RESULT_CANCELED, intent);
+				a.finish();
 			}
-			initScoutingSpinner();
-			setViewText(R.id.team_motto, c, Team.COL_MOTTO);
-			setViewText(R.id.team_name, c, Team.COL_NAME);
+			return;
 		}
-		@Override
-		public void onLoaderReset(Loader<Cursor> loader) { }
-	};
+		Log.d(TAG, "team loaded");
+		if (null == root_view)
+			return;
+		Toolbar bar = (Toolbar) getActivity().findViewById(
+			R.id.detail_toolbar);
+		if (bar != null) {
+			int team_num = c.getInt(c.getColumnIndex(
+				Team.COL_TEAM_NUMBER));
+			String nick = c.getString(c.getColumnIndex(
+				Team.COL_NICKNAME));
+			bar.setTitle("" + team_num + ' ' + nick);
+		}
+		setViewText(R.id.locality, c, Team.COL_LOCALITY);
+		setViewText(R.id.region, c, Team.COL_REGION);
+		setViewText(R.id.country, c, Team.COL_COUNTRY);
+		TextView tv = setViewText(R.id.team_website, c,
+			Team.COL_WEBSITE);
+		Linkify.addLinks(tv, Linkify.WEB_URLS);
+		tv = (TextView) root_view.findViewById(R.id.team_rookie_year);
+		String t = c.getString(c.getColumnIndex(
+			Team.COL_ROOKIE_YEAR));
+		if (t != null)
+			tv.setText(getText(R.string.rookie_year) + " " + t);
+		initScoutingSpinner();
+		setViewText(R.id.team_motto, c, Team.COL_MOTTO);
+	}
 
 	private void initScoutingSpinner() {
 		ArrayList<String> items = new ArrayList<String>();
@@ -133,24 +132,6 @@ public class TeamDetailFragment extends Fragment {
 		if (t != null && !t.equals("null"))
 			tv.setText(t);
 		return tv;
-	}
-
-	/** Create a loader for Team details */
-	private Loader<Cursor> createLoader(Bundle b) {
-		if (b.containsKey(ARG_TEAM_KEY)) {
-			String key = b.getString(ARG_TEAM_KEY);
-			return new CursorLoader(getContext(),
-				Team.CONTENT_URI, COLS, Team.COL_KEY + "='" +
-				key + "'", null, null);
-		} else
-			return null;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getLoaderManager().initLoader(TEAM_DETAIL_LOADER_ID,
-			getArguments(), cb);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -28,11 +28,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Content provider for DB stuff.
  */
 public class OurContentProvider extends ContentProvider {
+
+	static private final String TAG = "OurContentProvider";
 
 	/** Base content URI */
 	static private final String BASE_URI =
@@ -62,20 +65,15 @@ public class OurContentProvider extends ContentProvider {
 		String suri = uri.toString();
 		if (suri.startsWith(Param.CONTENT_URI.toString()))
 			return Param.TABLE_NAME;
-		else if (suri.startsWith(EventTeam.CONTENT_URI.toString()))
-			return EventTeam.TABLE_NAME;
-		else if (suri.startsWith(FRCEvent.CONTENT_URI.toString()))
-			return FRCEvent.TABLE_NAME;
-		else if (suri.startsWith(Team.CONTENT_URI.toString())) {
-			if (sel != null && sel.contains(EventTeam.COL_EVENT))
-				return EventTeam.VIEW_NAME;
-			else
-				return Team.TABLE_NAME;
-		} else if (suri.startsWith(Match.CONTENT_URI.toString()))
-			return Match.TABLE_NAME;
-		else if (suri.startsWith(Scouting2017.CONTENT_URI.toString()))
-			return Scouting2017.TABLE_NAME;
-		else
+		else if (suri.startsWith(Team.CONTENT_URI.toString()))
+			return Team.TABLE_NAME;
+		else if (suri.startsWith(Team.OBS_CONTENT_URI.toString()))
+			return Team.OBS_VIEW_NAME;
+		else if (suri.startsWith(ScoutingRec.REC.getContentUri()
+			.toString()))
+		{
+			return ScoutingRec.REC.table_name;
+		} else
 			return null;
 	}
 
@@ -85,6 +83,7 @@ public class OurContentProvider extends ContentProvider {
 	{
 		String tn = getTableName(uri, selection);
 		if (tn != null) {
+			Log.d(TAG, "query " + tn + " selection: " + selection);
 			SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 			qb.setTables(tn);
 			return qb.query(dbHelper.getReadableDatabase(),

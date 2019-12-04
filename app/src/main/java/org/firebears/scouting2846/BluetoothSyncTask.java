@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -42,13 +42,13 @@ public class BluetoothSyncTask extends AsyncTask<Void, Void, Void> {
 	private final BluetoothAdapter adapter =
 		BluetoothAdapter.getDefaultAdapter();
 
-	private final EventListActivity context;
+	private final TeamListActivity context;
 
 	private final String address;
 
 	private boolean failed = false;
 
-	public BluetoothSyncTask(EventListActivity ctx, String a) {
+	public BluetoothSyncTask(TeamListActivity ctx, String a) {
 		context = ctx;
 		address = a;
 	}

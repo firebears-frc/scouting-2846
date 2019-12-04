@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -32,11 +32,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Browsing fragment for 2017 (Steamworks).
+ * Browsing fragment.
  */
-public class Browse2017Fragment extends Fragment {
+public class BrowseFragment extends Fragment {
 
-	static private final String TAG = "Browse2017Fragment";
+	static private final String TAG = "BrowseFragment";
+
+	static public final String THIS_SCOUTER = "this_scouter";
+
+	/** Scouting rec */
+	private final ScoutingRec rec = ScoutingRec.REC;
 
 	private Bundle args;
 
@@ -45,8 +50,7 @@ public class Browse2017Fragment extends Fragment {
 		Bundle savedInstanceState)
 	{
 		args = getArguments();
-		View rv = inflater.inflate(R.layout.browse_2017_detail,
-			vg, false);
+		View rv = inflater.inflate(rec.browse_detail_res, vg, false);
 		Toolbar tb = (Toolbar) rv.findViewById(R.id.detail_toolbar);
 		AppCompatActivity act = (AppCompatActivity) getActivity();
 		act.setSupportActionBar(tb);
@@ -59,37 +63,13 @@ public class Browse2017Fragment extends Fragment {
 	}
 
 	private void initView(View rv) {
-		initString(rv, R.id.ah_txt, Scouting2017.COL_AUTO_HIGH_GOAL);
-		initString(rv, R.id.al_txt, Scouting2017.COL_AUTO_LOW_GOAL);
-		initBool(rv, R.id.ag_txt, Scouting2017.COL_AUTO_GEAR);
-		initBool(rv, R.id.bl_txt, Scouting2017.COL_AUTO_BASELINE);
-		initString(rv, R.id.th_txt, Scouting2017.COL_HIGH_GOAL);
-		initString(rv, R.id.tl_txt, Scouting2017.COL_LOW_GOAL);
-		initString(rv, R.id.tg_txt, Scouting2017.COL_PLACE_GEAR);
-		initBool(rv, R.id.cl_txt, Scouting2017.COL_CLIMB_ROPE);
-		initBool(rv, R.id.tp_txt, Scouting2017.COL_TOUCH_PAD);
-		initBool(rv, R.id.bh_txt, Scouting2017.COL_BALL_HUMAN);
-		initBool(rv, R.id.bf_txt, Scouting2017.COL_BALL_FLOOR);
-		initBool(rv, R.id.bp_txt, Scouting2017.COL_BALL_HOPPER);
-		initBool(rv, R.id.pe_txt, Scouting2017.COL_PILOT_EFFECTIVE);
-		initBool(rv, R.id.rr_txt, Scouting2017.COL_RELEASE_ROPE);
-		initBool(rv, R.id.lg_txt, Scouting2017.COL_LOSE_GEAR);
-		initString(rv, R.id.notes, Scouting2017.COL_NOTES);
-	}
-
-	private void initString(View rv, int res, String col) {
-		String v = (args.containsKey(col))
-		         ? args.get(col).toString()
-		         : "";
-		TextView tv = (TextView) rv.findViewById(res);
-		tv.setText(v);
-	}
-
-	private void initBool(View rv, int res, String col) {
-		int v = (args.containsKey(col))
-		      ? args.getInt(col)
-		      : 0;
-		TextView tv = (TextView) rv.findViewById(res);
-		tv.setText(v != 0 ? "Yes" : "No");
+		int s0 = args.getInt(THIS_SCOUTER, 0);
+		int s1 = args.getInt(ScoutingRec.COL_SCOUTER, 0);
+		TextView tv = (TextView) rv.findViewById(R.id.my_obs);
+		tv.setText((s0 != 0) && (s0 == s1)
+			? R.string.my_observation
+		        : R.string.other_scouter);
+		for (ScoutingData sd : rec.getAllData())
+			sd.init(args, rv);
 	}
 }

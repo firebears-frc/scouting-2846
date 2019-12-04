@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -60,7 +59,7 @@ public class TeamDetailActivity extends AppCompatActivity {
 	/** Create arguments for fragment */
 	private Bundle createArguments() {
 		Bundle b = new Bundle();
-		b.putString(TeamDetailFragment.ARG_TEAM_KEY, getTeamKey());
+		b.putInt(Team.COL_TEAM_NUMBER, getTeamNumber());
 		return b;
 	}
 
@@ -73,16 +72,14 @@ public class TeamDetailActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private String getTeamKey() {
-		return getIntent().getStringExtra(
-			TeamDetailFragment.ARG_TEAM_KEY);
+	private int getTeamNumber() {
+		return getIntent().getIntExtra(Team.COL_TEAM_NUMBER, 0);
 	}
 
 	public void startScouting(View v) {
-		Intent intent = new Intent(this, Scouting2017Activity.class);
-		intent.putExtra(Scouting2017Activity.ARG_MATCH_KEY,getMatch());
-		intent.putExtra(Scouting2017Activity.ARG_TEAM_KEY,
-			getTeamKey());
+		Intent intent = new Intent(this, ScoutingActivity.class);
+		intent.putExtra(ScoutingRec.COL_MATCH_KEY, getMatch());
+		intent.putExtra(Team.COL_TEAM_NUMBER, getTeamNumber());
 		startActivity(intent);
 	}
 
@@ -101,9 +98,8 @@ public class TeamDetailActivity extends AppCompatActivity {
 	}
 
 	public void startBrowse(View v) {
-		Intent intent = new Intent(this, Browse2017Activity.class);
-		intent.putExtra(Browse2017Activity.ARG_TEAM_KEY,
-			getTeamKey());
+		Intent intent = new Intent(this, BrowseActivity.class);
+		intent.putExtra(Team.COL_TEAM_NUMBER, getTeamNumber());
 		startActivity(intent);
 	}
 }

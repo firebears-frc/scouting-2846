@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -24,6 +24,7 @@ package org.firebears.scouting2846;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.provider.BaseColumns;
 import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
  * Helper to marshall JSON messages.
@@ -107,13 +109,13 @@ public class Marshaller {
 	}
 
 	static private final String[] COLS = {
-		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
+		REC.COL_SCOUTER, REC.COL_OBSERVATION,
 	};
 
 	static private String lookupFinalObservations(ContentResolver cr)
 		throws IOException, JSONException
 	{
-		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS, null, null,
+		Cursor c = cr.query(REC.getContentUri(), COLS, null, null,
 			null);
 		try {
 			if (c != null)
@@ -132,8 +134,8 @@ public class Marshaller {
 	{
 		HashMap<Integer, Integer> map =
 			new HashMap<Integer, Integer>();
-		int cs = c.getColumnIndex(Scouting2017.COL_SCOUTER);
-		int co = c.getColumnIndex(Scouting2017.COL_OBSERVATION);
+		int cs = c.getColumnIndex(REC.COL_SCOUTER);
+		int co = c.getColumnIndex(REC.COL_OBSERVATION);
 		while (c.moveToNext()) {
 			int s = c.getInt(cs);
 			int o = c.getInt(co);
@@ -151,15 +153,15 @@ public class Marshaller {
 		for (Integer s : map.keySet()) {
 			JSONObject jo = new JSONObject();
 			Integer o = map.get(s);
-			jo.put(Scouting2017.COL_SCOUTER, s);
-			jo.put(Scouting2017.COL_OBSERVATION, o);
+			jo.put(REC.COL_SCOUTER, s);
+			jo.put(REC.COL_OBSERVATION, o);
 			ja.put(jo);
 		}
 		Log.d(TAG, "final observations: " + ja.length());
 		return ja;
 	}
 
-	static public String lookupExtraObservations(ContentResolver cr,
+	static private String lookupExtraObservations(ContentResolver cr,
 		String msg) throws IOException, JSONException
 	{
 		HashMap<Integer, Integer> map = parseFinalObservations(msg);
@@ -174,31 +176,18 @@ public class Marshaller {
 		JSONArray ja = new JSONArray(msg);
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject jo = ja.getJSONObject(i);
-			int s = jo.getInt(Scouting2017.COL_SCOUTER);
-			int o = jo.getInt(Scouting2017.COL_OBSERVATION);
+			int s = jo.getInt(REC.COL_SCOUTER);
+			int o = jo.getInt(REC.COL_OBSERVATION);
 			map.put(s, o);
 		}
 		return map;
 	}
 
-	static private final String[] COLS_ALL = {
-		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
-		Scouting2017.COL_MATCH, Scouting2017.COL_TEAM_KEY,
-		Scouting2017.COL_AUTO_HIGH_GOAL,Scouting2017.COL_AUTO_LOW_GOAL,
-		Scouting2017.COL_AUTO_GEAR, Scouting2017.COL_AUTO_BASELINE,
-		Scouting2017.COL_HIGH_GOAL, Scouting2017.COL_LOW_GOAL,
-		Scouting2017.COL_PLACE_GEAR, Scouting2017.COL_CLIMB_ROPE,
-		Scouting2017.COL_TOUCH_PAD, Scouting2017.COL_BALL_HUMAN,
-		Scouting2017.COL_BALL_FLOOR, Scouting2017.COL_BALL_HOPPER,
-		Scouting2017.COL_PILOT_EFFECTIVE,Scouting2017.COL_RELEASE_ROPE,
-		Scouting2017.COL_LOSE_GEAR, Scouting2017.COL_NOTES,
-	};
-
 	static private JSONArray lookupExtraObservations(ContentResolver cr,
 		HashMap<Integer, Integer> map) throws IOException,
 		JSONException
 	{
-		Cursor c = cr.query(Scouting2017.CONTENT_URI, COLS_ALL, null,
+		Cursor c = cr.query(REC.getContentUri(), REC.getCols(), null,
 			null, null);
 		try {
 			if (c != null)
@@ -216,8 +205,8 @@ public class Marshaller {
 		HashMap<Integer, Integer> map) throws JSONException
 	{
 		JSONArray ja = new JSONArray();
-		int cs = c.getColumnIndex(Scouting2017.COL_SCOUTER);
-		int co = c.getColumnIndex(Scouting2017.COL_OBSERVATION);
+		int cs = c.getColumnIndex(REC.COL_SCOUTER);
+		int co = c.getColumnIndex(REC.COL_OBSERVATION);
 		while (c.moveToNext()) {
 			int s = c.getInt(cs);
 			int o = c.getInt(co);
@@ -231,46 +220,25 @@ public class Marshaller {
 		return ja;
 	}
 
-	static private final String[] COLS_INT = {
-		Scouting2017.COL_SCOUTER, Scouting2017.COL_OBSERVATION,
-		Scouting2017.COL_AUTO_HIGH_GOAL,Scouting2017.COL_AUTO_LOW_GOAL,
-		Scouting2017.COL_AUTO_GEAR, Scouting2017.COL_AUTO_BASELINE,
-		Scouting2017.COL_HIGH_GOAL, Scouting2017.COL_LOW_GOAL,
-		Scouting2017.COL_PLACE_GEAR, Scouting2017.COL_CLIMB_ROPE,
-		Scouting2017.COL_TOUCH_PAD, Scouting2017.COL_BALL_HUMAN,
-		Scouting2017.COL_BALL_FLOOR, Scouting2017.COL_BALL_HOPPER,
-		Scouting2017.COL_PILOT_EFFECTIVE,Scouting2017.COL_RELEASE_ROPE,
-		Scouting2017.COL_LOSE_GEAR,
-	};
-
-	static private final String[] COLS_STR = {
-		Scouting2017.COL_MATCH, Scouting2017.COL_TEAM_KEY,
-		Scouting2017.COL_NOTES,
-	};
-
 	static private JSONObject buildObservation(Cursor c)
 		throws JSONException
 	{
 		JSONObject jo = new JSONObject();
-		for (String i : COLS_INT) {
-			int v = c.getInt(c.getColumnIndex(i));
-			jo.put(i, v);
-		}
-		for (String i : COLS_STR) {
-			String v = c.getString(c.getColumnIndex(i));
-			jo.put(i, v);
+		for (ScoutingData sd : REC.getAllData()) {
+			if (!sd.getCol().equals(BaseColumns._ID))
+				sd.update(jo, c);
 		}
 		return jo;
 	}
 
-	static public void parseExtraObservations(ContentResolver cr,
+	static private void parseExtraObservations(ContentResolver cr,
 		String obs) throws JSONException
 	{
 		JSONArray ja = new JSONArray(obs);
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject jo = ja.getJSONObject(i);
-			ContentValues cv = Scouting2017.parse(jo);
-			cr.insert(Scouting2017.CONTENT_URI, cv);
+			ContentValues cv = REC.parse(jo);
+			cr.insert(REC.getContentUri(), cv);
 		}
 		Log.d(TAG, "received " + ja.length() + " observations");
 	}

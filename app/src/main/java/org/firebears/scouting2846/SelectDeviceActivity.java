@@ -27,7 +27,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -41,7 +40,6 @@ import java.util.Set;
 public class SelectDeviceActivity extends Activity {
 
 	static public final String DEVICE_ADDRESS = "device_address";
-	static public final String ERROR_CODE = "error_code";
 
 	/** Map of device names to addresses */
 	private final HashMap<String, BluetoothDevice> devices =
@@ -81,7 +79,7 @@ public class SelectDeviceActivity extends Activity {
 
 	private void cancelResult(int res) {
 		Intent intent = new Intent();
-		intent.putExtra(ERROR_CODE, res);
+		intent.putExtra(TeamListActivity.ERROR_CODE, res);
 		setResult(RESULT_CANCELED, intent);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -34,52 +34,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import java.util.ArrayList;
+import static org.firebears.scouting2846.ScoutingRec.REC;
 
 /**
- * Browsing activity for 2017 (Steamworks).
+ * Browsing activity.
  */
-public class Browse2017Activity extends AppCompatActivity {
+public class BrowseActivity extends AppCompatActivity {
 
-	static private final String TAG = "Browse2017Activity";
-
-	/** Activity Arguments */
-	static public final String ARG_TEAM_KEY = "team_key";
+	static private final String TAG = "BrowseActivity";
 
 	/** Scouting loader ID */
-	static private final int TEAM_LOADER_ID = 50;
-	static private final int SCOUTING_2017_LOADER_ID = 51;
+	static private final int SCOUTING_LOADER_ID = 51;
 
-	/** Columns to retrieve from the loader */
-	static private final String[] TEAM_COLS = {
-		Team.COL_TEAM_NUMBER,
-		Team.COL_NICKNAME,
-	};
-
-	/** Columns to retrieve from the loader */
-	static private final String[] COLS = {
-		Scouting2017.COL_ID,
-		Scouting2017.COL_MATCH,
-		Scouting2017.COL_TEAM_KEY,
-		Scouting2017.COL_AUTO_HIGH_GOAL,
-		Scouting2017.COL_AUTO_LOW_GOAL,
-		Scouting2017.COL_AUTO_GEAR,
-		Scouting2017.COL_AUTO_BASELINE,
-		Scouting2017.COL_HIGH_GOAL,
-		Scouting2017.COL_LOW_GOAL,
-		Scouting2017.COL_PLACE_GEAR,
-		Scouting2017.COL_CLIMB_ROPE,
-		Scouting2017.COL_TOUCH_PAD,
-		Scouting2017.COL_BALL_HUMAN,
-		Scouting2017.COL_BALL_FLOOR,
-		Scouting2017.COL_BALL_HOPPER,
-		Scouting2017.COL_PILOT_EFFECTIVE,
-		Scouting2017.COL_RELEASE_ROPE,
-		Scouting2017.COL_LOSE_GEAR,
-		Scouting2017.COL_NOTES,
-	};
-
-	/** Arguments for team info */
-	private final Bundle team_args = new Bundle();
+	/** Default arguments */
+	private final Bundle def_args = new Bundle();
 
 	/** Arguments for observations */
 	private final ArrayList<Bundle> observations = new ArrayList<Bundle>();
@@ -87,9 +55,44 @@ public class Browse2017Activity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_browse_2017);
+		setContentView(R.layout.activity_browse);
+		addLoaderCallbacks(new ParamLoaderHelper(this) {
+			protected void onLoaded(Cursor c) {
+				onParamLoaded(c);
+			}
+		});
+		addLoaderCallbacks(new TeamLoaderHelper(this) {
+			protected void onLoaded(Cursor c) {
+				onTeamLoaded(c);
+			}
+		});
+	}
+
+	private void addLoaderCallbacks(LoaderHelper helper) {
 		LoaderManager lm = getSupportLoaderManager();
-		lm.initLoader(TEAM_LOADER_ID, null, team_cb);
+		lm.initLoader(helper.getId(), createArguments(), helper);
+	}
+
+	private void onParamLoaded(Cursor c) {
+		int ni = c.getColumnIndex(Param.COL_NAME);
+		int vi = c.getColumnIndex(Param.COL_VALUE);
+		while (c.moveToNext()) {
+			String n = c.getString(ni);
+			int v = c.getInt(vi);
+			Log.d(TAG, n + ": " + v);
+			if (Param.ROW_SCOUTER.equals(n))
+				def_args.putInt(BrowseFragment.THIS_SCOUTER,v);
+		}
+	}
+
+	private void onTeamLoaded(Cursor c) {
+		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
+		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
+		Log.d(TAG, "team " + num + " " + nick);
+		def_args.putInt(Team.COL_TEAM_NUMBER, num);
+		def_args.putString(Team.COL_NICKNAME, nick);
+		LoaderManager lm = getSupportLoaderManager();
+		lm.initLoader(SCOUTING_LOADER_ID, null, cb);
 	}
 
 	@Override
@@ -101,45 +104,14 @@ public class Browse2017Activity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/** Callbacks for team loader */
-	private final LoaderCallbacks<Cursor> team_cb =
-		new LoaderCallbacks<Cursor>()
-	{
-		@Override
-		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (TEAM_LOADER_ID == id)
-			      ? createTeamLoader()
-			      : null;
-		}
-		@Override
-		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-			if (c.getCount() == 1)
-				onTeamLoaded(c);
-		}
-		@Override
-		public void onLoaderReset(Loader<Cursor> loader) { }
-	};
-
-	/** Create a loader for team name */
-	private Loader<Cursor> createTeamLoader() {
-		String key = getTeamKey();
-		return new CursorLoader(this, Team.CONTENT_URI,
-			TEAM_COLS, Team.COL_KEY + "='" + key + "'", null,null);
+	private int getTeamNumber() {
+		return getIntent().getIntExtra(Team.COL_TEAM_NUMBER, 0);
 	}
 
-	private String getTeamKey() {
-		return getIntent().getStringExtra(ARG_TEAM_KEY);
-	}
-
-	private void onTeamLoaded(Cursor c) {
-		c.moveToFirst();
-		int num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
-		String nick = c.getString(c.getColumnIndex(Team.COL_NICKNAME));
-		Log.d(TAG, "team " + num + " " + nick);
-		team_args.putInt(Team.COL_TEAM_NUMBER, num);
-		team_args.putString(Team.COL_NICKNAME, nick);
-		LoaderManager lm = getSupportLoaderManager();
-		lm.initLoader(SCOUTING_2017_LOADER_ID, null, cb);
+	private Bundle createArguments() {
+		Bundle b = new Bundle();
+		b.putInt(Team.COL_TEAM_NUMBER, getTeamNumber());
+		return b;
 	}
 
 	/** Callbacks for loader */
@@ -148,19 +120,20 @@ public class Browse2017Activity extends AppCompatActivity {
 	{
 		@Override
 		public Loader<Cursor> onCreateLoader(int id, Bundle b) {
-			return (SCOUTING_2017_LOADER_ID == id)
+			return (SCOUTING_LOADER_ID == id)
 			      ? createLoader()
 			      : null;
 		}
 		@Override
 		public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
 			while (c.moveToNext()) {
-				Bundle b = new Bundle(team_args);
-				Scouting2017.updateBundle(b, c);
+				Bundle b = new Bundle(def_args);
+				REC.updateBundle(b, c);
 				Log.d(TAG, "match " + b.getString(
-					Scouting2017.COL_MATCH));
+					REC.COL_MATCH_KEY));
 				observations.add(b);
 			}
+			// FIXME: if no observations, use blank fragment
 			ViewPager vp = (ViewPager) findViewById(R.id.pager);
 			vp.setAdapter(new ScoutingPagerAdapter());
 		}
@@ -171,13 +144,13 @@ public class Browse2017Activity extends AppCompatActivity {
 	/** Create a loader for scouting details */
 	private Loader<Cursor> createLoader() {
 		String where = getWhere();
-		return new CursorLoader(this, Scouting2017.CONTENT_URI,
-			COLS, where, null, Scouting2017.COL_MATCH + ',' +
-			Scouting2017.COL_ID);
+		return new CursorLoader(this, REC.getContentUri(),
+			REC.getCols(), where, null,
+			REC.COL_MATCH_KEY + ',' + REC._ID);
 	}
 
 	private String getWhere() {
-		return Scouting2017.COL_TEAM_KEY + "='" + getTeamKey() + "'";
+		return REC.COL_TEAM_NUMBER + "=" + getTeamNumber();
 	}
 
 	private class ScoutingPagerAdapter extends FragmentStatePagerAdapter {
@@ -188,7 +161,7 @@ public class Browse2017Activity extends AppCompatActivity {
 
 		@Override
 		public Fragment getItem(int pos) {
-			Fragment f = new Browse2017Fragment();
+			Fragment f = new BrowseFragment();
 			f.setArguments(observations.get(pos));
 			return f;
 		}
@@ -201,7 +174,7 @@ public class Browse2017Activity extends AppCompatActivity {
 		@Override
 		public CharSequence getPageTitle(int pos) {
 			Bundle b = observations.get(pos);
-			String m = b.getString(Scouting2017.COL_MATCH);
+			String m = b.getString(REC.COL_MATCH_KEY);
 			if ("".equals(m))
 				return getString(R.string.pit);
 			else

@@ -30,7 +30,7 @@
         android:layout_below="@id/divider0"/>
 
     <TextView
-        android:id="@+id/auto_high"
+        android:id="@+id/ah_txt"
         android:text="@string/high_goal"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
@@ -44,11 +44,10 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/autonomous"
-        android:layout_toRightOf="@id/auto_high"
-        android:onClick="minusAutoHigh"/>
+        android:layout_toRightOf="@id/ah_txt"/>
 
     <TextView
-        android:id="@+id/ah_txt"
+        android:id="@+id/auto_high"
         android:text="0"
         android:gravity="center"
         android:layout_width="48dp"
@@ -63,15 +62,14 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/autonomous"
-        android:layout_toRightOf="@id/ah_txt"
-        android:onClick="plusAutoHigh"/>
+        android:layout_toRightOf="@id/auto_high"/>
 
     <TextView
-        android:id="@+id/auto_low"
+        android:id="@+id/al_txt"
         android:text="@string/low_goal"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/auto_high"
+        android:layout_below="@id/ah_txt"
         android:layout_margin="@dimen/text_margin" />
 
     <Button
@@ -80,16 +78,15 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ah_minus"
-        android:layout_toRightOf="@id/auto_low"
-        android:onClick="minusAutoLow"/>
+        android:layout_toRightOf="@id/al_txt"/>
 
     <TextView
-        android:id="@+id/al_txt"
+        android:id="@+id/auto_low"
         android:text="0"
         android:gravity="center"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ah_txt"
+        android:layout_below="@id/auto_high"
         android:layout_toRightOf="@id/al_minus"
         android:layout_margin="@dimen/text_margin" />
 
@@ -99,15 +96,14 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ah_plus"
-        android:layout_toRightOf="@id/al_txt"
-        android:onClick="plusAutoLow"/>
+        android:layout_toRightOf="@id/auto_low"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/auto_gear"
         android:text="@string/gear"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/auto_low"
+        android:layout_below="@id/al_txt"
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat
@@ -136,7 +132,7 @@
         android:layout_margin="@dimen/text_margin" />
 
     <TextView
-        android:id="@+id/tele_high"
+        android:id="@+id/th_txt"
         android:text="@string/high_goal"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
@@ -150,11 +146,10 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/teleop"
-        android:layout_toRightOf="@id/tele_high"
-        android:onClick="minusTeleHigh"/>
+        android:layout_toRightOf="@id/th_txt"/>
 
     <TextView
-        android:id="@+id/th_txt"
+        android:id="@+id/tele_high"
         android:text="0"
         android:gravity="center"
         android:layout_width="48dp"
@@ -169,15 +164,14 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/teleop"
-        android:layout_toRightOf="@id/th_txt"
-        android:onClick="plusTeleHigh"/>
+        android:layout_toRightOf="@id/tele_high"/>
 
     <TextView
-        android:id="@+id/tele_low"
+        android:id="@+id/tl_txt"
         android:text="@string/low_goal"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tele_high"
+        android:layout_below="@id/th_txt"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -186,16 +180,15 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/th_minus"
-        android:layout_toRightOf="@id/tele_low"
-        android:onClick="minusTeleLow"/>
+        android:layout_toRightOf="@id/tl_txt"/>
 
     <TextView
-        android:id="@+id/tl_txt"
+        android:id="@+id/tele_low"
         android:text="0"
         android:gravity="center"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/th_txt"
+        android:layout_below="@id/tele_high"
         android:layout_toRightOf="@id/tl_minus"
         android:layout_margin="@dimen/text_margin"/>
 
@@ -205,15 +198,14 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/th_plus"
-        android:layout_toRightOf="@id/tl_txt"
-        android:onClick="plusTeleLow"/>
+        android:layout_toRightOf="@id/tele_low"/>
 
     <TextView
-        android:id="@+id/tele_gear"
+        android:id="@+id/tg_txt"
         android:text="@string/gear"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tele_low"
+        android:layout_below="@id/tl_txt"
         android:layout_margin="@dimen/text_margin"/>
 
     <Button
@@ -222,16 +214,15 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tl_minus"
-        android:layout_toRightOf="@id/tele_gear"
-        android:onClick="minusTeleGear"/>
+        android:layout_toRightOf="@id/tg_txt"/>
 
     <TextView
-        android:id="@+id/tg_txt"
+        android:id="@+id/tele_gear"
         android:text="0"
         android:gravity="center"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tl_txt"
+        android:layout_below="@id/tele_low"
         android:layout_toRightOf="@id/tg_minus"
         android:layout_margin="@dimen/text_margin"/>
 
@@ -241,15 +232,14 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tl_plus"
-        android:layout_toRightOf="@id/tg_txt"
-        android:onClick="plusTeleGear"/>
+        android:layout_toRightOf="@id/tele_gear"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/climb"
         android:text="@string/climb"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tele_gear"
+        android:layout_below="@id/tg_txt"
         android:layout_margin="@dimen/text_margin"/>
 
     <android.support.v7.widget.SwitchCompat

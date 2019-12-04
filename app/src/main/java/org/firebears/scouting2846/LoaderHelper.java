@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,46 +21,41 @@
  */
 package org.firebears.scouting2846;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.os.AsyncTask;
+import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 
 /**
- * Task to store scouting observation.
+ * Loader helper.
  */
-public class StoreObservation extends AsyncTask<Void, Void, Void> {
+abstract public class LoaderHelper implements LoaderCallbacks<Cursor> {
 
-	/** WHERE clause for updating observation number */
-	static private final String WHERE_OBS =
-		Param.COL_NAME + "='" + Param.ROW_OBSERVATION + "'";
+	/** Context */
+	protected final Context context;
 
-	private final ScoutingActivity context;
-
-	private final ContentValues content;
-
-	public StoreObservation(ScoutingActivity ctx, ContentValues cv) {
-		context = ctx;
-		content = cv;
+	/** Create loader helper */
+	protected LoaderHelper(Context c) {
+		context = c;
 	}
 
+	/** Get the loader ID */
+	abstract public int getId();
+
+	/** Called on loader created */
 	@Override
-	protected Void doInBackground(Void... v) {
-		insert(context.getContentResolver());
-		return null;
+	public Loader<Cursor> onCreateLoader(int id, Bundle b) {
+		return (getId() == id) ? createLoader(b) : null;
 	}
 
-	private void insert(ContentResolver cr) {
-		updateObservation(cr, content.getAsInteger(
-			Param.ROW_OBSERVATION));
-		cr.insert(context.getContentUri(), content);
-	}
+	/** Create a loader */
+	abstract protected Loader<Cursor> createLoader(Bundle b);
 
-	private void updateObservation(ContentResolver cr, Integer obs) {
-		ContentValues pv = new ContentValues();
-		pv.put(Param.COL_VALUE, obs);
-		cr.update(Param.CONTENT_URI, pv, WHERE_OBS, null);
-	}
+	/** Called when fully loaded */
+	abstract protected void onLoaded(Cursor c);
 
+	/** Called on loader reset */
 	@Override
-	protected void onPostExecute(Void v) { }
+	public void onLoaderReset(Loader<Cursor> loader) { }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2017-2019  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -31,6 +31,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,10 +45,12 @@ import android.widget.ListView;
  */
 public class TeamListActivity extends AppCompatActivity {
 
-	/** Argument for event id */
-	static public final String ARG_EVENT_ID = "event_id";
-	static public final String ARG_EVENT_KEY = "event_key";
-	static public final String ARG_EVENT_SHORT = "event_short";
+	static private final String TAG = "TeamListActivity";
+
+	static private final int REQ_TEAM = 1;
+	static private final int REQ_BLUETOOTH = 2;
+	static private final int REQ_DETAIL = 3;
+	static public final String ERROR_CODE = "error_code";
 
 	/** Loader ID */
 	static private final int TEAM_LOADER_ID = 39;
@@ -56,8 +59,7 @@ public class TeamListActivity extends AppCompatActivity {
 	static private final String[] COLS = {
 		Team.COL_TEAM_NUMBER,
 		Team.COL_NICKNAME,
-		Team.COL_KEY,
-		Team.COL_ID,
+		Team._ID,
 	};
 
 	/** Cursor adapter */
@@ -86,40 +88,15 @@ public class TeamListActivity extends AppCompatActivity {
 	/** Create a loader for teams */
 	private Loader<Cursor> createLoader(Bundle b) {
 		return new CursorLoader(TeamListActivity.this,
-			Team.CONTENT_URI, COLS, getSelectionClause(),
-			null, Team.COL_TEAM_NUMBER);
-	}
-
-	private String getSelectionClause() {
-		int event_id = getEventId();
-		return (event_id > 0) ? ("event_id=" + event_id) : null;
-	}
-
-	private int getEventId() {
-		return getIntent().getIntExtra(ARG_EVENT_ID, 0);
-	}
-
-	private String getEventKey() {
-		return getIntent().getStringExtra(ARG_EVENT_KEY);
-	}
-
-	private String getEventShortName() {
-		return getIntent().getStringExtra(ARG_EVENT_SHORT);
+			Team.OBS_CONTENT_URI, COLS, null, null,
+			Team.COL_TEAM_NUMBER);
 	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.team_list_activity);
-		Toolbar bar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(bar);
-		if (bar != null) {
-			bar.setTitle(getEventShortName() + ' ' + getText(
-				R.string.title_team_list));
-		}
-		ActionBar ab = getSupportActionBar();
-		if (ab != null)
-			ab.setDisplayHomeAsUpEnabled(true);
+		setContentView(R.layout.activity_team_list);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		int[] cols = new int[] { R.id.team_number, R.id.team_nickname };
 		adapter = new SimpleCursorAdapter(this,
 			R.layout.team_list_entry, null, COLS, cols, 0);
@@ -132,48 +109,129 @@ public class TeamListActivity extends AppCompatActivity {
 			{
 				Cursor c = (Cursor) parent.getAdapter()
 					.getItem(position);
-				startDetailActivity(c.getString(
-					c.getColumnIndex(Team.COL_KEY)));
+				startDetailActivity(c);
 			}
 		});
 		getLoaderManager().initLoader(TEAM_LOADER_ID, null, cb);
+		startService(new Intent(this, BluetoothSyncService.class));
 	}
 
-	public void restartLoader() {
+	private void restartLoader() {
 		getLoaderManager().restartLoader(TEAM_LOADER_ID, null, cb);
 	}
 
 	/** Start team detail activity */
-	private void startDetailActivity(String key) {
+	private void startDetailActivity(Cursor c) {
+		int team_num = c.getInt(c.getColumnIndex(Team.COL_TEAM_NUMBER));
+		startDetailActivity(team_num);
+	}
+
+	private void startDetailActivity(int team_num) {
 		Intent intent = new Intent(this, TeamDetailActivity.class);
-		intent.putExtra(TeamDetailFragment.ARG_TEAM_KEY, key);
-		startActivity(intent);
+		intent.putExtra(Team.COL_TEAM_NUMBER, team_num);
+		startActivityForResult(intent, REQ_DETAIL);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.action_menu, menu);
+		inflater.inflate(R.menu.root_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (android.R.id.home == item.getItemId()) {
-			onBackPressed();
-			return true;
-		} else if (R.id.action_refresh == item.getItemId())
-			return onRefreshSelected();
-		else
+		switch (item.getItemId()) {
+		case R.id.action_select_team:
+			return onSelectTeamSelected();
+		case R.id.action_summary:
+			return onSummarySelected();
+		case R.id.action_bt_sync:
+			return onBluetoothSyncSelected();
+		default:
 			return super.onOptionsItemSelected(item);
+		}
 	}
 
-	private boolean onRefreshSelected() {
-		View v = findViewById(R.id.team_list);
-		Snackbar.make(v, R.string.fetch_teams, Snackbar.LENGTH_LONG)
-		        .show();
-		new FetchEventTeams(this, getEventId(),
-			getEventKey()).execute();
+	@Override
+	protected void onActivityResult(int req, int rc, Intent data) {
+		switch (req) {
+		case REQ_TEAM:
+			onTeamResult(rc, data);
+			break;
+		case REQ_BLUETOOTH:
+			onBluetoothResult(rc, data);
+			break;
+		case REQ_DETAIL:
+			onDetailResult(rc, data);
+			break;
+		}
+		restartLoader();
+	}
+
+	private boolean onSelectTeamSelected() {
+		Intent intent = new Intent(this, SelectTeamActivity.class);
+		startActivityForResult(intent, REQ_TEAM);
 		return true;
+	}
+
+	private void onTeamResult(int rc, Intent data) {
+		switch (rc) {
+		case RESULT_OK:
+			int team_num = data.getIntExtra(
+				SelectTeamActivity.TEAM_NUMBER, 0);
+			if (team_num != 0) {
+				Log.d(TAG, "team #" + team_num);
+				startDetailActivity(team_num);
+			}
+			break;
+		}
+	}
+
+	private boolean onSummarySelected() {
+		int week = 0; // FIXME
+		Intent intent = new Intent(this, SummaryActivity.class);
+		intent.putExtra("week", week);
+		startActivity(intent);
+		return true;
+	}
+
+	private boolean onBluetoothSyncSelected() {
+		Intent intent = new Intent(this, SelectDeviceActivity.class);
+		startActivityForResult(intent, REQ_BLUETOOTH);
+		return true;
+	}
+
+	private void onBluetoothResult(int rc, Intent data) {
+		switch (rc) {
+		case RESULT_OK:
+			String address = data.getStringExtra(
+				SelectDeviceActivity.DEVICE_ADDRESS);
+			new BluetoothSyncTask(this, address).execute();
+			break;
+		case RESULT_CANCELED:
+			int res = data.getIntExtra(ERROR_CODE, 0);
+			showSnack(res);
+			break;
+		}
+	}
+
+	private void onDetailResult(int rc, Intent data) {
+		switch (rc) {
+		case RESULT_OK:
+			break;
+		case RESULT_CANCELED:
+			if (data != null) {
+				int res = data.getIntExtra(ERROR_CODE, 0);
+				showSnack(res);
+			}
+			break;
+		}
+	}
+
+	/** Show a snackbar */
+	public void showSnack(int res) {
+		View v = findViewById(R.id.team_list);
+		Snackbar.make(v, res, Snackbar.LENGTH_LONG).show();
 	}
 }

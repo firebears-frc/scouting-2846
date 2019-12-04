@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018  Douglas P Lau
+ * Copyright  2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,32 +21,53 @@
  */
 package org.firebears.scouting2846;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.net.Uri;
-import android.provider.BaseColumns;
+import android.os.Bundle;
+import android.view.View;
+import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
 
 /**
- * DB stuff for a Team.
+ * Scouting data.
  */
-public class Team implements BaseColumns {
+public interface ScoutingData {
 
-	static public final String TABLE_NAME = "team";
-	static public final String OBS_VIEW_NAME = "obs_" + TABLE_NAME;
-	static public final String COL_KEY = "tm_key";
-	static public final String COL_TEAM_NUMBER = "team_number";
-	static public final String COL_NICKNAME = "nickname";
-	static public final String COL_WEBSITE = "website";
-	static public final String COL_LOCALITY = "locality";
-	static public final String COL_REGION = "region";
-	static public final String COL_COUNTRY = "country";
-	static public final String COL_LOCATION = "location";
-	static public final String COL_ROOKIE_YEAR = "rookie_year";
-	static public final String COL_MOTTO = "motto";
+	/** Column name */
+	String getCol();
 
-	static public final Uri CONTENT_URI = OurContentProvider.buildUri(
-		TABLE_NAME);
-	static public final Uri OBS_CONTENT_URI = OurContentProvider.buildUri(
-		OBS_VIEW_NAME);
+	/** Get SQL for column */
+	String sql();
+
+	/** Init content values */
+	void init(ContentValues cv);
+
+	/** Init a view with data from content values */
+	void init(ContentValues cv, Activity rv);
+
+	/** Init a view with data from a bundle */
+	void init(Bundle b, View rv);
+
+	/** Init content values with JSON data */
+	void init(ContentValues cv, JSONObject jo) throws JSONException;
+
+	/** Check if content values contains changed data */
+	boolean hasData(ContentValues cv);
+
+	/** Update ContentValues with data from a cursor */
+	void update(ContentValues cv, Cursor c);
+
+	/** Update ContentValues with data from view */
+	void update(ContentValues cv, Activity rv);
+
+	/** Update a bundle with data from a cursor */
+	void update(Bundle b, Cursor c);
+
+	/** Update a JSON object with data from a cursor */
+	void update(JSONObject jo, Cursor c) throws JSONException;
+
+	/** Summarize data */
+	void summarize(Bundle b, ArrayList<Bundle> v);
 }

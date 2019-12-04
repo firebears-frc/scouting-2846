@@ -1,5 +1,5 @@
 /*
- * Copyright  2017  Douglas P Lau
+ * Copyright  2018  Douglas P Lau
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,22 +21,44 @@
  */
 package org.firebears.scouting2846;
 
-import android.net.Uri;
-import android.provider.BaseColumns;
+import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 
 /**
- * DB stuff for an Event/Team relation.
+ * Param loader helper.
  */
-public class EventTeam implements BaseColumns {
+abstract public class ParamLoaderHelper extends LoaderHelper {
 
-	static public final String TABLE_NAME =
-		FRCEvent.TABLE_NAME + "_" + Team.TABLE_NAME;
-	static public final String VIEW_NAME = TABLE_NAME + "_view";
+	/** Columns to retrieve from the loader */
+	static private final String[] COLS = {
+		Param.COL_NAME,
+		Param.COL_VALUE,
+	};
 
-	static public final String COL_ID = "_id";
-	static public final String COL_EVENT = "event_id";
-	static public final String COL_TEAM = "team_id";
+	/** Create param loader helper */
+	public ParamLoaderHelper(Context c) {
+		super(c);
+	}
 
-	static public final Uri CONTENT_URI = OurContentProvider.buildUri(
-		TABLE_NAME);
+	/** Get loader ID */
+	@Override
+	public int getId() {
+		return 46;
+	}
+
+	/** Create a param loader */
+	@Override
+	protected Loader<Cursor> createLoader(Bundle b) {
+		return new CursorLoader(context, Param.CONTENT_URI, COLS, null,
+			null, null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+		onLoaded(c);
+	}
 }
